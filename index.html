@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Colegio Bautista Shalom</title>
+  <link rel="icon" type="image/png" href="logo_cbs.png">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Lato:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy: #0d2260;
+      --navy-dark: #091a4d;
+      --gold: #f5a800;
+      --gold-dark: #e09500;
+      --white: #ffffff;
+      --light-gray: #f4f6fa;
+      --text-dark: #1a1a2e;
+      --card-shadow: 0 8px 32px rgba(13,34,96,0.13);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Lato', sans-serif;
+      color: var(--text-dark);
+      background: var(--white);
+      overflow-x: hidden;
+    }
+
+    /* ── NAVBAR ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 5%;
+      height: 70px;
+      box-shadow: 0 2px 16px rgba(13,34,96,0.10);
+      animation: slideDown .6s ease both;
+    }
+    @keyframes slideDown {
+      from { transform: translateY(-100%); opacity: 0; }
+      to   { transform: translateY(0);    opacity: 1; }
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+    .logo img {
+      height: 42px;
+      width: auto;
+    }
+    .logo-text {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: 1.2rem;
+      color: var(--navy);
+      letter-spacing: .5px;
+    }
+    .logo-text span { color: var(--gold); }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      font-size: .92rem;
+      color: var(--navy);
+      text-decoration: none;
+      position: relative;
+      transition: color .25s;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px; left: 0;
+      width: 0; height: 2px;
+      background: var(--gold);
+      transition: width .3s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-links a:hover::after { width: 100%; }
+
+    .btn-apply {
+      background: var(--gold);
+      color: var(--navy);
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: .9rem;
+      padding: 10px 24px;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: background .25s, transform .2s, box-shadow .2s;
+      box-shadow: 0 4px 14px rgba(245,168,0,.35);
+    }
+    .btn-apply:hover {
+      background: var(--gold-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 22px rgba(245,168,0,.45);
+    }
+
+    /* ── HERO ── */
+    .hero {
+      background: var(--navy);
+      position: relative;
+      overflow: hidden;
+      min-height: 540px;
+      display: flex;
+      align-items: center;
+      padding: 60px 5% 100px;
+    }
+
+    /* Wavy bottom */
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -2px; left: 0; right: 0;
+      height: 90px;
+      background: var(--white);
+      clip-path: ellipse(55% 100% at 50% 100%);
+    }
+
+    /* Gold decorative curve top-right */
+    .hero-gold-arc {
+      position: absolute;
+      bottom: 0; right: 0;
+      width: 55%;
+      height: 100%;
+      background: var(--gold);
+      clip-path: ellipse(80% 60% at 90% 110%);
+      opacity: .18;
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 520px;
+      animation: fadeInUp .8s .2s ease both;
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-content h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 900;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      color: var(--white);
+      line-height: 1.1;
+      margin-bottom: 8px;
+    }
+    .hero-content h1 span { color: var(--gold); }
+
+    .hero-content p {
+      font-size: 1.05rem;
+      color: rgba(255,255,255,.85);
+      margin-bottom: 32px;
+      font-style: italic;
+    }
+    .hero-content p strong { font-style: normal; font-weight: 700; color: var(--white); }
+
+    .hero-buttons {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      background: var(--gold);
+      color: var(--navy);
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: .95rem;
+      padding: 13px 30px;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: background .25s, transform .2s, box-shadow .2s;
+      box-shadow: 0 4px 16px rgba(245,168,0,.4);
+    }
+    .btn-primary:hover {
+      background: var(--gold-dark);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(245,168,0,.5);
+    }
+    .btn-outline {
+      background: transparent;
+      color: var(--white);
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: .95rem;
+      padding: 12px 28px;
+      border-radius: 8px;
+      text-decoration: none;
+      border: 2px solid rgba(255,255,255,.6);
+      transition: border-color .25s, background .25s, transform .2s;
+    }
+    .btn-outline:hover {
+      border-color: var(--white);
+      background: rgba(255,255,255,.1);
+      transform: translateY(-3px);
+    }
+
+    /* Hero image */
+    .hero-image {
+      position: absolute;
+      right: 5%;
+      bottom: 0;
+      z-index: 2;
+      height: 95%;
+      display: flex;
+      align-items: flex-end;
+      animation: fadeInRight .9s .3s ease both;
+    }
+    @keyframes fadeInRight {
+      from { opacity: 0; transform: translateX(60px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+    .hero-image img {
+      height: 100%;
+      max-height: 500px;
+      object-fit: contain;
+      filter: drop-shadow(0 20px 40px rgba(0,0,0,.35));
+    }
+
+    /* Floating icons */
+    .float-icon {
+      position: absolute;
+      z-index: 3;
+      animation: floatBob 3s ease-in-out infinite;
+      font-size: 2.2rem;
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,.3));
+    }
+    @keyframes floatBob {
+      0%,100% { transform: translateY(0) rotate(-5deg); }
+      50%      { transform: translateY(-12px) rotate(5deg); }
+    }
+    .fi-bulb  { top: 22%; right: 30%; animation-delay: 0s; }
+    .fi-globe { top: 69%; right: 44%; animation-delay: .5s; }
+    .fi-plane { top: 18%; right: 20%; animation-delay: 1s; font-size: 1.8rem; }
+    .fi-paint { top: 69%; right: 18%; animation-delay: 1.5s; }
+
+    /* ── FEATURES STRIP ── */
+    .features {
+      background: var(--white);
+      display: flex;
+      justify-content: center;
+      gap: 0;
+      padding: 40px 5%;
+      border-bottom: 1px solid #e8eaf0;
+    }
+    .feature-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 0 48px;
+      border-right: 1px solid #dde1ee;
+      animation: fadeInUp .7s ease both;
+    }
+    .feature-item:last-child { border-right: none; }
+    .feature-item:nth-child(2) { animation-delay: .15s; }
+    .feature-item:nth-child(3) { animation-delay: .3s; }
+
+    .feature-icon {
+      font-size: 2.4rem;
+      flex-shrink: 0;
+      filter: drop-shadow(0 2px 6px rgba(13,34,96,.2));
+    }
+    .feature-item h3 {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--navy);
+    }
+
+    /* ── PROGRAMS ── */
+    .programs {
+      background: var(--navy);
+      padding: 70px 5% 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    .programs::before {
+      content: '';
+      position: absolute;
+      top: -80px; left: 0; right: 0;
+      height: 90px;
+      background: var(--white);
+      clip-path: ellipse(55% 100% at 50% 0%);
+    }
+
+    .section-header {
+      text-align: left;
+      margin-bottom: 40px;
+    }
+    .section-header h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 900;
+      font-size: clamp(1.7rem, 3vw, 2.4rem);
+      color: var(--white);
+      margin-bottom: 6px;
+    }
+    .section-header p {
+      color: rgba(255,255,255,.75);
+      font-style: italic;
+      font-size: 1rem;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+
+    .card {
+      background: var(--white);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: var(--card-shadow);
+      transition: transform .3s, box-shadow .3s;
+      animation: fadeInUp .7s ease both;
+    }
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 48px rgba(13,34,96,.22);
+    }
+    .card:nth-child(2) { animation-delay: .15s; }
+    .card:nth-child(3) { animation-delay: .3s; }
+
+    .card-img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      display: block;
+    }
+    .card-body {
+      padding: 22px 22px 28px;
+    }
+    .card-body h3 {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: 1.15rem;
+      color: var(--navy);
+      margin-bottom: 10px;
+    }
+    .card-lines {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 18px;
+    }
+    .card-line {
+      height: 8px;
+      background: #e8eaf0;
+      border-radius: 4px;
+    }
+    .card-line:last-child { width: 70%; }
+
+    .btn-card {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--gold);
+      color: var(--navy);
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: .88rem;
+      padding: 10px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: background .25s, transform .2s;
+    }
+    .btn-card:hover { background: var(--gold-dark); transform: translateX(4px); }
+    .btn-card.dark { background: var(--navy); color: var(--white); }
+    .btn-card.dark:hover { background: var(--navy-dark); }
+
+    /* ── BOTTOM 2-COL ── */
+    .bottom-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      background: var(--navy);
+      padding: 0 5% 70px;
+    }
+
+    /* Admissions card */
+    .admissions-card {
+      background: var(--navy-dark);
+      border: 2px solid var(--gold);
+      border-radius: 16px;
+      padding: 40px 36px;
+      margin-right: 14px;
+      position: relative;
+      overflow: hidden;
+      animation: fadeInUp .7s .1s ease both;
+    }
+    .admissions-card::after {
+      content: '✈️';
+      position: absolute;
+      right: 28px; bottom: 24px;
+      font-size: 3.5rem;
+      opacity: .25;
+      animation: floatBob 4s ease-in-out infinite;
+    }
+    .admissions-card h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 900;
+      font-size: 1.6rem;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+    .admissions-card p {
+      color: rgba(255,255,255,.75);
+      font-style: italic;
+      font-size: 1rem;
+      margin-bottom: 24px;
+    }
+
+    /* Events card */
+    .events-card {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 36px 32px;
+      margin-left: 14px;
+      animation: fadeInUp .7s .2s ease both;
+    }
+    .events-card h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 900;
+      font-size: 1.5rem;
+      color: var(--navy);
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .events-card h2::after {
+      content: '✨';
+      font-size: 1rem;
+    }
+
+    .event-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 0;
+      border-bottom: 1px solid #e8eaf0;
+      transition: background .2s;
+    }
+    .event-item:last-child { border-bottom: none; }
+    .event-icon {
+      font-size: 1.5rem;
+      width: 36px;
+      text-align: center;
+    }
+    .event-text {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: .95rem;
+      color: var(--navy);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--navy-dark);
+      color: rgba(255,255,255,.6);
+      text-align: center;
+      padding: 22px;
+      font-size: .88rem;
+    }
+    footer span { color: var(--gold); font-weight: 700; }
+
+    /* ── SCROLL ANIMATIONS ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .cards-grid { grid-template-columns: 1fr; max-width: 400px; margin: 0 auto; }
+      .bottom-section { grid-template-columns: 1fr; }
+      .admissions-card { margin-right: 0; margin-bottom: 20px; }
+      .events-card { margin-left: 0; }
+      .hero-image { display: none; }
+      .features { flex-direction: column; align-items: center; gap: 20px; }
+      .feature-item { border-right: none; border-bottom: 1px solid #dde1ee; padding: 0 0 20px; width: 100%; max-width: 320px; justify-content: center; }
+      .feature-item:last-child { border-bottom: none; }
+      nav { padding: 0 4%; }
+      .nav-links { gap: 16px; }
+    }
+    @media (max-width: 600px) {
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <a href="#" class="logo">
+    <img src="logo_shalom.png" alt="Logo Shalom" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'"/>
+    <div style="display:none; align-items:center; justify-content:center; width:42px; height:42px; background:var(--navy); border-radius:8px; font-size:1.4rem;">🎓</div>
+    <div class="logo-text">COLEGIO BAUTISTA <span>SHALOM</span></div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#">Inicio</a></li>
+    <li><a href="#">Nosotros</a></li>
+    <li><a href="#programas">Programas</a></li>
+    <li><a href="admisiones.html">Admisiones</a></li>
+    <li><a href="#">Contacto</a></li>
+  </ul>
+  <a href="registro.html" class="btn-apply">Iniciar Sesión</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-gold-arc"></div>
+
+  <!-- Floating decorative icons -->
+  <div class="float-icon fi-bulb">💡</div>
+  <div class="float-icon fi-globe">🌍</div>
+  <div class="float-icon fi-plane">✈️</div>
+  <div class="float-icon fi-paint">🎨</div>
+
+  <div class="hero-content">
+    <h1>Inspirando<br><span>Futuros Brillantes.</span></h1>
+    <p>Empoderando a los estudiantes para <strong>alcanzar sus sueños.</strong></p>
+    <div class="hero-buttons">
+      <a href="admisiones.html" class="btn-primary">Comenzar</a>
+      <a href="#" class="btn-outline">Tomar un Tour &nbsp;›</a>
+    </div>
+  </div>
+
+  <!-- Hero visual placeholder (graduation student) -->
+  <div class="hero-image">
+    <img
+      src="https://images.unsplash.com/photo-1627556704302-624286467c65?w=500&q=80"
+      alt="Estudiante graduada"
+      onerror="this.style.display='none'"
+    />
+  </div>
+</section>
+
+<!-- FEATURES STRIP -->
+<div class="features">
+  <div class="feature-item">
+    <span class="feature-icon">🎓</span>
+    <h3>Excelencia Académica</h3>
+  </div>
+  <div class="feature-item">
+    <span class="feature-icon">👨‍🏫</span>
+    <h3>Docentes Capacitados</h3>
+  </div>
+  <div class="feature-item">
+    <span class="feature-icon">🎨</span>
+    <h3>Actividades Creativas</h3>
+  </div>
+</div>
+
+<!-- PROGRAMS -->
+<section class="programs" id="programas">
+  <div class="section-header reveal">
+    <h2>Nuestros Programas</h2>
+    <p>Explora nuestros cursos y actividades diversas.</p>
+  </div>
+
+  <div class="cards-grid">
+    <!-- Card 1 -->
+    <div class="card reveal">
+      <img
+        src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80"
+        alt="Nivel-Preprimaria"
+        class="card-img"
+      />
+      <div class="card-body">
+        <h3>Preprimaria</h3>
+        <div class="card-lines">
+          <div class="card-line"></div>
+          <div class="card-line"></div>
+        </div>
+        <a href="#" class="btn-card">Saber Más &nbsp;›</a>
+      </div>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="card reveal">
+      <img
+        src="https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=600&q=80"
+        alt="Nivel-Primaria"
+        class="card-img"
+      />
+      <div class="card-body">
+        <h3>Primaria</h3>
+        <div class="card-lines">
+          <div class="card-line"></div>
+          <div class="card-line"></div>
+        </div>
+        <a href="#" class="btn-card dark">Saber Más &nbsp;›</a>
+      </div>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="card reveal">
+      <img
+        src="https://images.unsplash.com/photo-1587560699334-cc4ff634909a?w=600&q=80"
+        alt="Basicos-Diversificado"
+        class="card-img"
+      />
+      <div class="card-body">
+        <h3>Basicos y Diversificado</h3>
+        <div class="card-lines">
+          <div class="card-line"></div>
+          <div class="card-line"></div>
+        </div>
+        <a href="#" class="btn-card">Saber Más &nbsp;›</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BOTTOM SECTION -->
+<div class="bottom-section">
+  <!-- Admissions -->
+  <div class="admissions-card reveal">
+    <h2>¡Admisiones Abiertas!</h2>
+    <p>Únete a nosotros para un <em>Futuro Brillante</em></p>
+    <a href="#" class="btn-primary">Aplica Ahora &nbsp;›</a>
+  </div>
+
+  <!-- Events -->
+  <div class="events-card reveal">
+    <h2>Próximos Eventos</h2>
+    <div class="event-item">
+      <span class="event-icon">🌊</span>
+      <span class="event-text">Splash day - 26 de Marzo</span>
+    </div>
+    <div class="event-item">
+      <span class="event-icon">🔬</span>
+      <span class="event-text">Feria de Ciencias - 10 de Junio</span>
+    </div>
+    <div class="event-item">
+      <span class="event-icon">🏆</span>
+      <span class="event-text">Día Deportivo - 8 de Julio</span>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  &copy; 2026 <span>Colegio Bautista Shalom Guatemala</span>. Todos los derechos reservados.
+</footer>
+
+<script>
+  // Scroll-reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  revealEls.forEach(el => observer.observe(el));
+
+  // Navbar active link highlight
+  document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', function() {
+      document.querySelectorAll('.nav-links a').forEach(l => l.style.color = '');
+      this.style.color = 'var(--gold)';
+    });
+  });
+</script>
+</body>
+</html>
