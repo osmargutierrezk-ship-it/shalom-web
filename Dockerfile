@@ -1,10 +1,12 @@
 # ─────────────────────────────────────────────
-#  CBS Web — PHP 8.2 + Apache
+#  CBS Web — PHP 8.2 + Apache + PostgreSQL
 # ─────────────────────────────────────────────
 FROM php:8.2-apache
 
-# Instalar extensión mysqli
-RUN docker-php-ext-install mysqli && docker-php-ext-enable mysqli
+# Instalar extensiones necesarias para MySQL y PostgreSQL
+RUN apt-get update && apt-get install -y libpq-dev \
+    && docker-php-ext-install mysqli pgsql pdo_pgsql \
+    && docker-php-ext-enable mysqli pgsql pdo_pgsql
 
 # Habilitar mod_rewrite por si se necesita en el futuro
 RUN a2enmod rewrite
