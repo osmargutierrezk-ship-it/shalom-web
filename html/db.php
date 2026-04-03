@@ -1,20 +1,24 @@
 <?php
 /**
- * db.php — Conexión centralizada a MySQL
- * Lee las credenciales desde variables de entorno (definidas en docker-compose.yml).
- * Si no existen las env vars, usa los valores por defecto para desarrollo local.
+ * db.php — Conexión centralizada a PostgreSQL
+ * Usa la variable de entorno DATABASE definida en Render.
  */
-function getDB(): mysqli {
-    $host = getenv('DB_HOST') ?: 'localhost';
-    $user = getenv('DB_USER') ?: 'root';
-    $pass = getenv('DB_PASS') ?: '';
-    $name = getenv('DB_NAME') ?: 'formulario_db';
 
-    $conn = new mysqli($host, $user, $pass, $name);
-    if ($conn->connect_error) {
+function getDB() {
+    $databaseUrl = getenv("DATABASE");
+
+    if (!$databaseUrl) {
+        http_response_code(500);
+        die(json_encode(['error' => 'No se encontró la variable DATABASE']));
+    }
+
+    // Conexión directa con pg_connect usando la URL completa
+    $conn = pg_connect($databaseUrl);
+
+    if (!$conn) {
         http_response_code(500);
         die(json_encode(['error' => 'Error de conexión a la base de datos']));
     }
-    $conn->set_charset('utf8mb4');
+
     return $conn;
 }
