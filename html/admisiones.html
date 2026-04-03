@@ -9,91 +9,49 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --navy:      #0d2260;
-      --navy-dark: #091a4d;
-      --navy-mid:  #122878;
-      --gold:      #f5a800;
-      --gold-dark: #e09500;
-      --white:     #ffffff;
-      --light:     #f4f6fa;
-      --border:    #dde1ee;
-      --text:      #1a1a2e;
-      --shadow:    0 8px 32px rgba(13,34,96,0.13);
+      --navy:      #0d2260; --navy-dark: #091a4d; --navy-mid: #122878;
+      --gold:      #f5a800; --gold-dark: #e09500;
+      --white:     #ffffff; --light: #f4f6fa; --border: #dde1ee;
+      --text:      #1a1a2e; --shadow: 0 8px 32px rgba(13,34,96,0.13);
     }
     html { scroll-behavior: smooth; }
     body { font-family: 'Lato', sans-serif; color: var(--text); background: var(--white); overflow-x: hidden; }
+    @keyframes spin       { to { transform: rotate(360deg); } }
+    @keyframes slideDown  { from{transform:translateY(-100%);opacity:0;} to{transform:translateY(0);opacity:1;} }
+    @keyframes fadeInUp   { from{opacity:0;transform:translateY(36px);} to{opacity:1;transform:translateY(0);} }
+    @keyframes toastIn    { from{opacity:0;transform:translateX(70px) scale(.95);} to{opacity:1;transform:translateX(0) scale(1);} }
+    @keyframes toastOut   { from{opacity:1;transform:translateX(0) scale(1);} to{opacity:0;transform:translateX(70px) scale(.93);} }
 
     /* ── TOAST ── */
-    #toast-container {
-      position: fixed; top: 88px; right: 24px; z-index: 9999;
-      display: flex; flex-direction: column; gap: 12px;
-      pointer-events: none;
-    }
-    .toast {
-      display: flex; align-items: flex-start; gap: 14px;
-      background: var(--white); border-radius: 14px; padding: 18px 20px;
-      min-width: 300px; max-width: 400px;
-      box-shadow: 0 12px 40px rgba(13,34,96,.20), 0 2px 8px rgba(0,0,0,.08);
-      border-left: 5px solid var(--gold);
-      pointer-events: all; position: relative; overflow: hidden;
-      animation: toastIn .4s cubic-bezier(.22,1,.36,1) both;
-    }
-    .toast.success { border-left-color: #27ae60; }
-    .toast.error   { border-left-color: #e74c3c; }
-    .toast.hide    { animation: toastOut .35s ease forwards; }
-    @keyframes toastIn  { from { opacity:0; transform:translateX(70px) scale(.95); } to { opacity:1; transform:translateX(0) scale(1); } }
-    @keyframes toastOut { from { opacity:1; transform:translateX(0) scale(1); } to { opacity:0; transform:translateX(70px) scale(.93); } }
-    .toast-icon  { font-size: 1.9rem; flex-shrink: 0; line-height: 1; margin-top: 1px; }
-    .toast-body  { flex: 1; }
+    #toast-container { position:fixed; top:88px; right:24px; z-index:9999; display:flex; flex-direction:column; gap:12px; pointer-events:none; }
+    .toast { display:flex; align-items:flex-start; gap:14px; background:var(--white); border-radius:14px; padding:18px 20px; min-width:300px; max-width:400px; box-shadow:0 12px 40px rgba(13,34,96,.20),0 2px 8px rgba(0,0,0,.08); border-left:5px solid var(--gold); pointer-events:all; position:relative; overflow:hidden; animation:toastIn .4s cubic-bezier(.22,1,.36,1) both; }
+    .toast.success { border-left-color:#27ae60; }
+    .toast.error   { border-left-color:#e74c3c; }
+    .toast.hide    { animation:toastOut .35s ease forwards; }
+    .toast-icon  { font-size:1.9rem; flex-shrink:0; line-height:1; margin-top:1px; }
+    .toast-body  { flex:1; }
     .toast-title { font-family:'Montserrat',sans-serif; font-weight:800; font-size:.95rem; color:var(--navy); margin-bottom:3px; }
     .toast-msg   { font-size:.85rem; color:#5a6480; line-height:1.45; }
-    .toast-close {
-      background:none; border:none; cursor:pointer; color:#b0b8ce;
-      font-size:1.05rem; line-height:1; flex-shrink:0; padding:0; transition:color .2s;
-    }
+    .toast-close { background:none; border:none; cursor:pointer; color:#b0b8ce; font-size:1.05rem; flex-shrink:0; padding:0; transition:color .2s; }
     .toast-close:hover { color:var(--navy); }
-    .toast-progress {
-      position:absolute; bottom:0; left:0; height:3px;
-      background:var(--gold); border-radius:0 0 0 14px;
-      width:100%;
-    }
+    .toast-progress { position:absolute; bottom:0; left:0; height:3px; background:var(--gold); border-radius:0 0 0 14px; width:100%; }
     .toast.success .toast-progress { background:#27ae60; }
     .toast.error   .toast-progress { background:#e74c3c; }
-    .toast-progress.running { transition: width linear; width:0%; }
 
     /* ── NAVBAR ── */
-    nav {
-      position:sticky; top:0; z-index:100; background:var(--white);
-      display:flex; align-items:center; justify-content:space-between;
-      padding:0 5%; height:70px;
-      box-shadow:0 2px 16px rgba(13,34,96,.10);
-      animation:slideDown .6s ease both;
-    }
-    @keyframes slideDown { from{transform:translateY(-100%);opacity:0;} to{transform:translateY(0);opacity:1;} }
+    nav { position:sticky; top:0; z-index:100; background:var(--white); display:flex; align-items:center; justify-content:space-between; padding:0 5%; height:70px; box-shadow:0 2px 16px rgba(13,34,96,.10); animation:slideDown .6s ease both; }
     .logo { display:flex; align-items:center; gap:10px; text-decoration:none; }
     .logo img { height:42px; width:auto; }
-    .logo-fallback {
-      display:none; align-items:center; justify-content:center;
-      width:42px; height:42px; background:var(--navy); border-radius:8px; font-size:1.4rem;
-    }
+    .logo-fallback { display:none; align-items:center; justify-content:center; width:42px; height:42px; background:var(--navy); border-radius:8px; font-size:1.4rem; }
     .logo-text { font-family:'Montserrat',sans-serif; font-weight:800; font-size:1.15rem; color:var(--navy); }
     .logo-text span { color:var(--gold); }
     .nav-links { display:flex; align-items:center; gap:28px; list-style:none; }
-    .nav-links a {
-      font-family:'Montserrat',sans-serif; font-weight:600; font-size:.9rem;
-      color:var(--navy); text-decoration:none; position:relative; transition:color .25s;
-    }
+    .nav-links a { font-family:'Montserrat',sans-serif; font-weight:600; font-size:.9rem; color:var(--navy); text-decoration:none; position:relative; transition:color .25s; }
     .nav-links a::after { content:''; position:absolute; bottom:-4px; left:0; width:0; height:2px; background:var(--gold); transition:width .3s; }
     .nav-links a:hover, .nav-links a.active { color:var(--gold); }
     .nav-links a:hover::after, .nav-links a.active::after { width:100%; }
-    .btn-nav {
-      background:var(--gold); color:var(--navy);
-      font-family:'Montserrat',sans-serif; font-weight:800; font-size:.88rem;
-      padding:10px 22px; border-radius:8px; text-decoration:none;
-      transition:background .25s, transform .2s, box-shadow .2s;
-      box-shadow:0 4px 14px rgba(245,168,0,.35);
-    }
-    .btn-nav:hover { background:var(--gold-dark); transform:translateY(-2px); box-shadow:0 8px 22px rgba(245,168,0,.45); }
+    .btn-nav { background:var(--gold); color:var(--navy); font-family:'Montserrat',sans-serif; font-weight:800; font-size:.88rem; padding:10px 22px; border-radius:8px; text-decoration:none; transition:background .25s,transform .2s,box-shadow .2s; box-shadow:0 4px 14px rgba(245,168,0,.35); }
+    .btn-nav:hover { background:var(--gold-dark); transform:translateY(-2px); }
 
     /* ── PAGE HERO ── */
     .page-hero { background:var(--navy); padding:70px 5% 110px; position:relative; overflow:hidden; text-align:center; }
@@ -101,7 +59,6 @@
     .page-hero::before { content:''; position:absolute; inset:0; background-image:radial-gradient(rgba(255,255,255,.07) 1px,transparent 1px); background-size:28px 28px; pointer-events:none; }
     .hero-arc { position:absolute; bottom:0; left:-10%; width:50%; height:100%; background:var(--gold); clip-path:ellipse(60% 40% at 0% 100%); opacity:.12; pointer-events:none; }
     .page-hero-content { position:relative; z-index:2; animation:fadeInUp .8s .2s ease both; }
-    @keyframes fadeInUp { from{opacity:0;transform:translateY(36px);} to{opacity:1;transform:translateY(0);} }
     .page-hero .badge { display:inline-block; background:rgba(245,168,0,.18); color:var(--gold); border:1px solid rgba(245,168,0,.4); font-family:'Montserrat',sans-serif; font-weight:700; font-size:.8rem; letter-spacing:2px; text-transform:uppercase; padding:5px 16px; border-radius:40px; margin-bottom:18px; }
     .page-hero h1 { font-family:'Montserrat',sans-serif; font-weight:900; font-size:clamp(2rem,5vw,3.4rem); color:var(--white); line-height:1.1; margin-bottom:14px; }
     .page-hero h1 span { color:var(--gold); }
@@ -112,11 +69,8 @@
 
     /* ── SHARED ── */
     .section { padding:72px 5%; }
-    .section-light { background:var(--light); }
-    .section-navy  { background:var(--navy); }
-    .section-white { background:var(--white); }
-    .section-header { margin-bottom:48px; }
-    .section-header.center { text-align:center; }
+    .section-light { background:var(--light); } .section-navy { background:var(--navy); } .section-white { background:var(--white); }
+    .section-header { margin-bottom:48px; } .section-header.center { text-align:center; }
     .section-header h2 { font-family:'Montserrat',sans-serif; font-weight:900; font-size:clamp(1.6rem,3vw,2.3rem); color:var(--navy); margin-bottom:8px; }
     .section-navy .section-header h2 { color:var(--white); }
     .section-header p { color:#5a6480; font-style:italic; font-size:1rem; }
@@ -129,7 +83,7 @@
     .reveal-right { opacity:0; transform:translateX(36px);  transition:opacity .7s ease,transform .7s ease; }
     .reveal-left.visible, .reveal-right.visible { opacity:1; transform:translateX(0); }
     .btn-gold { display:inline-flex; align-items:center; gap:8px; background:var(--gold); color:var(--navy); font-family:'Montserrat',sans-serif; font-weight:800; font-size:.92rem; padding:13px 28px; border-radius:9px; text-decoration:none; transition:background .25s,transform .2s,box-shadow .2s; box-shadow:0 4px 16px rgba(245,168,0,.38); }
-    .btn-gold:hover { background:var(--gold-dark); transform:translateY(-3px); box-shadow:0 8px 24px rgba(245,168,0,.5); }
+    .btn-gold:hover { background:var(--gold-dark); transform:translateY(-3px); }
 
     /* ── STEPS ── */
     .steps-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:0; position:relative; }
@@ -144,7 +98,7 @@
     .levels-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:28px; }
     .level-card { border-radius:18px; overflow:hidden; box-shadow:var(--shadow); background:var(--white); transition:transform .35s,box-shadow .35s; position:relative; }
     .level-card:hover { transform:translateY(-10px); box-shadow:0 24px 56px rgba(13,34,96,.2); }
-    .level-card-top { padding:28px; background:var(--navy); position:relative; overflow:hidden; border-bottom:4px solid var(--gold); }
+    .level-card-top { padding:28px; background:var(--navy); border-bottom:4px solid var(--gold); }
     .level-card-top .level-icon { font-size:2.6rem; margin-bottom:10px; display:block; }
     .level-card-top h3 { font-family:'Montserrat',sans-serif; font-weight:900; font-size:1.3rem; color:var(--white); }
     .level-card-top .tag { display:inline-block; background:var(--gold); color:var(--navy); font-family:'Montserrat',sans-serif; font-weight:700; font-size:.72rem; padding:3px 10px; border-radius:20px; margin-top:8px; letter-spacing:.5px; }
@@ -171,7 +125,7 @@
     .schedule-table tbody tr:last-child { border-bottom:none; }
     .schedule-table td { padding:13px 18px; font-size:.92rem; color:var(--text); }
     .schedule-table td:first-child { font-family:'Montserrat',sans-serif; font-weight:700; color:var(--navy); }
-    .time-badge { display:inline-block; background:rgba(13,34,96,.08); color:var(--navy); font-family:'Montserrat',sans-serif; font-weight:700; font-size:.8rem; padding:3px 10px; border-radius:20px; }
+    .time-badge   { display:inline-block; background:rgba(13,34,96,.08); color:var(--navy); font-family:'Montserrat',sans-serif; font-weight:700; font-size:.8rem; padding:3px 10px; border-radius:20px; }
     .closed-badge { display:inline-block; background:#fef3f3; color:#c0392b; font-family:'Montserrat',sans-serif; font-weight:700; font-size:.8rem; padding:3px 10px; border-radius:20px; }
     .schedule-info { display:flex; flex-direction:column; gap:20px; }
     .info-box { background:var(--white); border-radius:14px; padding:24px 26px; box-shadow:var(--shadow); border-left:5px solid var(--gold); transition:transform .3s; }
@@ -210,7 +164,7 @@
     .form-group select option { background:var(--navy); color:var(--white); }
     .form-group textarea { resize:vertical; min-height:100px; }
     .btn-submit { width:100%; background:var(--gold); color:var(--navy); font-family:'Montserrat',sans-serif; font-weight:900; font-size:1rem; padding:15px; border-radius:9px; border:none; cursor:pointer; transition:background .25s,transform .2s,box-shadow .2s; box-shadow:0 4px 18px rgba(245,168,0,.4); letter-spacing:.3px; }
-    .btn-submit:hover { background:var(--gold-dark); transform:translateY(-3px); box-shadow:0 8px 28px rgba(245,168,0,.5); }
+    .btn-submit:hover { background:var(--gold-dark); transform:translateY(-3px); }
     .btn-submit:disabled { opacity:.65; cursor:not-allowed; transform:none !important; }
 
     /* ── FAQ ── */
@@ -240,31 +194,23 @@
 
     /* ── RESPONSIVE ── */
     @media(max-width:1000px){
-      .levels-grid{grid-template-columns:1fr 1fr;}
-      .steps-grid{grid-template-columns:1fr 1fr;gap:32px;}
-      .steps-grid::before{display:none;}
-      .schedule-wrapper{grid-template-columns:1fr;}
-      .contact-grid{grid-template-columns:1fr;}
-      .req-grid{grid-template-columns:1fr 1fr;}
+      .levels-grid{grid-template-columns:1fr 1fr;} .steps-grid{grid-template-columns:1fr 1fr;gap:32px;} .steps-grid::before{display:none;}
+      .schedule-wrapper{grid-template-columns:1fr;} .contact-grid{grid-template-columns:1fr;} .req-grid{grid-template-columns:1fr 1fr;}
     }
     @media(max-width:700px){
-      .levels-grid,.steps-grid,.req-grid{grid-template-columns:1fr;}
-      .spec-grid,.form-row{grid-template-columns:1fr;}
-      .nav-links{display:none;}
-      #toast-container{right:12px;left:12px;}
-      .toast{min-width:unset;width:100%;}
+      .levels-grid,.steps-grid,.req-grid{grid-template-columns:1fr;} .spec-grid,.form-row{grid-template-columns:1fr;} .nav-links{display:none;}
+      #toast-container{right:12px;left:12px;} .toast{min-width:unset;width:100%;}
     }
   </style>
 </head>
 <body>
 
-<!-- TOAST CONTAINER -->
 <div id="toast-container"></div>
 
 <!-- NAVBAR -->
 <nav>
   <a href="index.html" class="logo">
-    <img src="logo_shalom.png" alt="Logo Shalom" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+    <img src="logo_cbs.png" alt="Logo CBS" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
     <div class="logo-fallback">🎓</div>
     <div class="logo-text">COLEGIO BAUTISTA <span>SHALOM</span></div>
   </a>
@@ -285,19 +231,13 @@
     <div class="badge">📋 Ciclo Escolar 2026</div>
     <h1>Admisiones<br><span>Abiertas</span></h1>
     <p>Inicia el proceso de inscripción y asegura el futuro académico de tu hijo en Colegio Bautista Shalom.</p>
-    <div class="breadcrumb">
-      <a href="index.html">Inicio</a><span>/</span><span>Admisiones</span>
-    </div>
+    <div class="breadcrumb"><a href="index.html">Inicio</a><span>/</span><span>Admisiones</span></div>
   </div>
 </section>
 
 <!-- PROCESO -->
 <section class="section section-light">
-  <div class="section-header center reveal">
-    <h2>Proceso de Admisión</h2>
-    <p>Cuatro pasos sencillos para unirte a nuestra comunidad educativa.</p>
-    <div class="accent-line"></div>
-  </div>
+  <div class="section-header center reveal"><h2>Proceso de Admisión</h2><p>Cuatro pasos sencillos para unirte a nuestra comunidad educativa.</p><div class="accent-line"></div></div>
   <div class="steps-grid">
     <div class="step reveal" style="transition-delay:.05s"><div class="step-num">1</div><h3>Solicitud en Línea</h3><p>Completa el formulario de pre-inscripción con los datos del estudiante y el nivel educativo deseado.</p></div>
     <div class="step reveal" style="transition-delay:.15s"><div class="step-num">2</div><h3>Entrega de Documentos</h3><p>Presenta los documentos requeridos según el nivel académico en nuestra oficina de admisiones.</p></div>
@@ -310,30 +250,12 @@
 <section class="section section-white" id="niveles">
   <div class="section-header reveal"><h2>Niveles Educativos</h2><p>Ofrecemos una formación completa desde Preprimaria hasta Diversificado.</p><div class="accent-line"></div></div>
   <div class="levels-grid">
-    <div class="level-card reveal" style="transition-delay:.05s">
-      <div class="level-card-top"><span class="level-icon">🌱</span><h3>Preprimaria</h3><span class="tag">4 – 6 años</span></div>
-      <div class="level-card-body"><p>Etapa fundamental de estimulación temprana donde desarrollamos habilidades cognitivas, sociales y emocionales a través del juego.</p><ul class="subjects-list"><li>Lectoescritura inicial</li><li>Matemática lúdica</li><li>Expresión artística</li><li>Educación física</li><li>Valores y convivencia</li></ul><a href="#contacto" class="btn-gold">Inscribirme ›</a></div>
-    </div>
-    <div class="level-card reveal" style="transition-delay:.15s">
-      <div class="level-card-top"><span class="level-icon">📚</span><h3>Primaria</h3><span class="tag">1° – 6° Primaria</span></div>
-      <div class="level-card-body"><p>Formación académica sólida con enfoque integral, fomentando el pensamiento crítico y el amor por el aprendizaje.</p><ul class="subjects-list"><li>Comunicación y Lenguaje</li><li>Matemáticas</li><li>Ciencias Naturales</li><li>Estudios Sociales</li><li>Inglés desde 1° primaria</li><li>Computación e Informática</li></ul><a href="#contacto" class="btn-gold">Inscribirme ›</a></div>
-    </div>
-    <div class="level-card reveal" style="transition-delay:.25s">
-      <div class="level-card-top"><span class="level-icon">🔬</span><h3>Básicos</h3><span class="tag">1° – 3° Básico</span></div>
-      <div class="level-card-body"><p>Ciclo básico con pensum enriquecido que prepara a los jóvenes para el nivel diversificado con bases académicas firmes.</p><ul class="subjects-list"><li>Matemáticas avanzadas</li><li>Ciencias Naturales y Biología</li><li>Física y Química básica</li><li>Inglés intensivo</li><li>Historia y Ciencias Sociales</li><li>Programación básica</li></ul><a href="#contacto" class="btn-gold">Inscribirme ›</a></div>
-    </div>
-    <div class="level-card reveal" style="transition-delay:.1s">
-      <div class="level-card-top"><span class="level-icon">💼</span><h3>Perito Contador</h3><span class="tag">Diversificado · 3 años</span></div>
-      <div class="level-card-body"><p>Carrera técnica reconocida por el MINEDUC que forma profesionales en contabilidad, administración y finanzas.</p><div class="spec-grid"><div class="spec-item"><h4>4°. Año</h4><p>Contabilidad General, Economía</p></div><div class="spec-item"><h4>5°. Año</h4><p>Contabilidad Aplicada, Costos</p></div><div class="spec-item"><h4>6°. Año</h4><p>Auditoría, Fiscal y Tributario</p></div><div class="spec-item"><h4>Título</h4><p>Perito Contador Certificado</p></div></div><a href="#contacto" class="btn-gold">Inscribirme ›</a></div>
-    </div>
-    <div class="level-card reveal" style="transition-delay:.2s">
-      <div class="level-card-top"><span class="level-icon">🎓</span><h3>Bachiller en Ciencias</h3><span class="tag">Diversificado · 2 años</span></div>
-      <div class="level-card-body"><p>Prepara a los estudiantes para la educación superior con énfasis en ciencias exactas, biológicas y humanísticas.</p><div class="spec-grid"><div class="spec-item"><h4>5°. Año</h4><p>Física, Química, Biología</p></div><div class="spec-item"><h4>6°. Año</h4><p>Cálculo, Estadística, Filosofía</p></div></div><ul class="subjects-list" style="margin-top:8px"><li>Inglés avanzado (B2)</li><li>Orientación universitaria</li><li>Proyecto de investigación</li></ul><a href="#contacto" class="btn-gold">Inscribirme ›</a></div>
-    </div>
-    <div class="level-card reveal" style="transition-delay:.3s">
-      <div class="level-card-top"><span class="level-icon">💻</span><h3>Bachiller en Computación</h3><span class="tag">Diversificado · 2 años</span></div>
-      <div class="level-card-body"><p>Formación tecnológica de vanguardia orientada al desarrollo de software, redes y sistemas de información.</p><div class="spec-grid"><div class="spec-item"><h4>5°. Año</h4><p>Programación Web, Redes</p></div><div class="spec-item"><h4>6°. Año</h4><p>Base de Datos, Desarrollo App</p></div></div><ul class="subjects-list" style="margin-top:8px"><li>Desarrollo en Python / JavaScript</li><li>Diseño y UX Digital</li><li>Proyecto tecnológico final</li></ul><a href="#contacto" class="btn-gold">Inscribirme ›</a></div>
-    </div>
+    <div class="level-card reveal" style="transition-delay:.05s"><div class="level-card-top"><span class="level-icon">🌱</span><h3>Preprimaria</h3><span class="tag">4 – 6 años</span></div><div class="level-card-body"><p>Etapa fundamental de estimulación temprana donde desarrollamos habilidades cognitivas, sociales y emocionales a través del juego.</p><ul class="subjects-list"><li>Lectoescritura inicial</li><li>Matemática lúdica</li><li>Expresión artística</li><li>Educación física</li><li>Valores y convivencia</li></ul><a href="#contacto" class="btn-gold">Inscribirme ›</a></div></div>
+    <div class="level-card reveal" style="transition-delay:.15s"><div class="level-card-top"><span class="level-icon">📚</span><h3>Primaria</h3><span class="tag">1° – 6° Primaria</span></div><div class="level-card-body"><p>Formación académica sólida con enfoque integral, fomentando el pensamiento crítico y el amor por el aprendizaje.</p><ul class="subjects-list"><li>Comunicación y Lenguaje</li><li>Matemáticas</li><li>Ciencias Naturales</li><li>Estudios Sociales</li><li>Inglés desde 1° primaria</li><li>Computación e Informática</li></ul><a href="#contacto" class="btn-gold">Inscribirme ›</a></div></div>
+    <div class="level-card reveal" style="transition-delay:.25s"><div class="level-card-top"><span class="level-icon">🔬</span><h3>Básicos</h3><span class="tag">1° – 3° Básico</span></div><div class="level-card-body"><p>Ciclo básico con pensum enriquecido que prepara a los jóvenes para el nivel diversificado con bases académicas firmes.</p><ul class="subjects-list"><li>Matemáticas avanzadas</li><li>Ciencias Naturales y Biología</li><li>Física y Química básica</li><li>Inglés intensivo</li><li>Historia y Ciencias Sociales</li><li>Programación básica</li></ul><a href="#contacto" class="btn-gold">Inscribirme ›</a></div></div>
+    <div class="level-card reveal" style="transition-delay:.1s"><div class="level-card-top"><span class="level-icon">💼</span><h3>Perito Contador</h3><span class="tag">Diversificado · 3 años</span></div><div class="level-card-body"><p>Carrera técnica reconocida por el MINEDUC que forma profesionales en contabilidad, administración y finanzas.</p><div class="spec-grid"><div class="spec-item"><h4>4°. Año</h4><p>Contabilidad General, Economía</p></div><div class="spec-item"><h4>5°. Año</h4><p>Contabilidad Aplicada, Costos</p></div><div class="spec-item"><h4>6°. Año</h4><p>Auditoría, Fiscal y Tributario</p></div><div class="spec-item"><h4>Título</h4><p>Perito Contador Certificado</p></div></div><a href="#contacto" class="btn-gold">Inscribirme ›</a></div></div>
+    <div class="level-card reveal" style="transition-delay:.2s"><div class="level-card-top"><span class="level-icon">🎓</span><h3>Bachiller en Ciencias</h3><span class="tag">Diversificado · 2 años</span></div><div class="level-card-body"><p>Prepara a los estudiantes para la educación superior con énfasis en ciencias exactas, biológicas y humanísticas.</p><div class="spec-grid"><div class="spec-item"><h4>5°. Año</h4><p>Física, Química, Biología</p></div><div class="spec-item"><h4>6°. Año</h4><p>Cálculo, Estadística, Filosofía</p></div></div><ul class="subjects-list" style="margin-top:8px"><li>Inglés avanzado (B2)</li><li>Orientación universitaria</li><li>Proyecto de investigación</li></ul><a href="#contacto" class="btn-gold">Inscribirme ›</a></div></div>
+    <div class="level-card reveal" style="transition-delay:.3s"><div class="level-card-top"><span class="level-icon">💻</span><h3>Bachiller en Computación</h3><span class="tag">Diversificado · 2 años</span></div><div class="level-card-body"><p>Formación tecnológica de vanguardia orientada al desarrollo de software, redes y sistemas de información.</p><div class="spec-grid"><div class="spec-item"><h4>5°. Año</h4><p>Programación Web, Redes</p></div><div class="spec-item"><h4>6°. Año</h4><p>Base de Datos, Desarrollo App</p></div></div><ul class="subjects-list" style="margin-top:8px"><li>Desarrollo en Python / JavaScript</li><li>Diseño y UX Digital</li><li>Proyecto tecnológico final</li></ul><a href="#contacto" class="btn-gold">Inscribirme ›</a></div></div>
   </div>
 </section>
 
@@ -381,12 +303,12 @@
 <section class="section section-light" id="faq">
   <div class="section-header center reveal"><h2>Preguntas Frecuentes</h2><p>Resolvemos tus dudas sobre el proceso de admisión.</p><div class="accent-line"></div></div>
   <div class="faq-list">
-    <div class="faq-item reveal"><button class="faq-q">¿Cuándo abren las inscripciones para el ciclo 2026?<span class="faq-icon">+</span></button><div class="faq-a">Las inscripciones para el ciclo escolar 2026 están abiertas desde el mes de octubre de 2025. Te recomendamos inscribirte a la brevedad posible ya que los cupos por sección son limitados.</div></div>
-    <div class="faq-item reveal"><button class="faq-q">¿Hay evaluación de ingreso o examen de admisión?<span class="faq-icon">+</span></button><div class="faq-a">Para Preprimaria y Primaria no se requiere examen de admisión. Para Básicos y Diversificado se realiza una evaluación diagnóstica breve (no eliminatoria) con el objetivo de conocer el nivel del estudiante y brindarle el apoyo adecuado desde el inicio.</div></div>
-    <div class="faq-item reveal"><button class="faq-q">¿Cuál es el costo de la matrícula y mensualidad?<span class="faq-icon">+</span></button><div class="faq-a">Los costos varían según el nivel educativo. Para conocer el detalle de matrícula, cuota de inscripción y mensualidades, te invitamos a comunicarte directamente con nuestra oficina de admisiones o visitar el colegio. Contamos con planes de pago accesibles.</div></div>
-    <div class="faq-item reveal"><button class="faq-q">¿El colegio está autorizado por el MINEDUC?<span class="faq-icon">+</span></button><div class="faq-a">Sí. Colegio Bautista Shalom está debidamente registrado y autorizado por el Ministerio de Educación de Guatemala (MINEDUC). Todos nuestros títulos y diplomas son oficialmente reconocidos a nivel nacional.</div></div>
-    <div class="faq-item reveal"><button class="faq-q">¿Ofrecen transporte escolar?<span class="faq-icon">+</span></button><div class="faq-a">Sí contamos con servicio de transporte escolar en rutas seleccionadas. El servicio tiene un costo adicional y los cupos son limitados. Consulta disponibilidad de rutas al momento de tu inscripción.</div></div>
-    <div class="faq-item reveal"><button class="faq-q">¿Se aceptan estudiantes con necesidades educativas especiales?<span class="faq-icon">+</span></button><div class="faq-a">Nuestra filosofía es inclusiva. Evaluamos cada caso individualmente para asegurar que podemos brindar el apoyo adecuado. Contamos con orientación educativa y nos coordinamos con los padres para garantizar el bienestar del estudiante.</div></div>
+    <div class="faq-item reveal"><button class="faq-q">¿Cuándo abren las inscripciones para el ciclo 2026?<span class="faq-icon">+</span></button><div class="faq-a">Las inscripciones para el ciclo escolar 2026 están abiertas desde el mes de octubre de 2025. Los cupos por sección son limitados.</div></div>
+    <div class="faq-item reveal"><button class="faq-q">¿Hay evaluación de ingreso o examen de admisión?<span class="faq-icon">+</span></button><div class="faq-a">Para Preprimaria y Primaria no se requiere examen. Para Básicos y Diversificado se realiza una evaluación diagnóstica breve (no eliminatoria).</div></div>
+    <div class="faq-item reveal"><button class="faq-q">¿Cuál es el costo de la matrícula y mensualidad?<span class="faq-icon">+</span></button><div class="faq-a">Los costos varían según el nivel. Contáctanos directamente para el detalle de matrícula, cuota de inscripción y mensualidades. Contamos con planes de pago accesibles.</div></div>
+    <div class="faq-item reveal"><button class="faq-q">¿El colegio está autorizado por el MINEDUC?<span class="faq-icon">+</span></button><div class="faq-a">Sí. Colegio Bautista Shalom está debidamente registrado y autorizado por el Ministerio de Educación de Guatemala (MINEDUC).</div></div>
+    <div class="faq-item reveal"><button class="faq-q">¿Ofrecen transporte escolar?<span class="faq-icon">+</span></button><div class="faq-a">Sí contamos con servicio de transporte en rutas seleccionadas, con costo adicional. Consulta disponibilidad al momento de inscribirte.</div></div>
+    <div class="faq-item reveal"><button class="faq-q">¿Se aceptan estudiantes con necesidades educativas especiales?<span class="faq-icon">+</span></button><div class="faq-a">Nuestra filosofía es inclusiva. Evaluamos cada caso individualmente y nos coordinamos con los padres para garantizar el bienestar del estudiante.</div></div>
   </div>
 </section>
 
@@ -396,12 +318,13 @@
   <div class="contact-grid">
     <div class="contact-info">
       <div class="contact-item reveal" style="transition-delay:.05s"><div class="contact-icon-wrap">📍</div><div><h4>Dirección</h4><p>12 Calle 5-42, Zona 1<br/>Ciudad de Guatemala, Guatemala</p></div></div>
-      <div class="contact-item reveal" style="transition-delay:.12s"><div class="contact-icon-wrap">📞</div><div><h4>Teléfonos</h4><a href="tel:+50222345678">(502) 2234-5678</a><br/><a href="https://api.whatsapp.com/send?phone=50241778833&text=mensaje">(502) 5567-8901 — WhatsApp</a></div></div>
-      <div class="contact-item reveal" style="transition-delay:.19s"><div class="contact-icon-wrap">✉️</div><div><h4>Correo Electrónico</h4><a href="mailto:admisiones@educacionshalom.edu.gt">admisiones@educacionshalom.edu.gt</a><br/><a href="mailto:info@educacionshalom.edu.gt">info@educacionshalom.edu.gt</a></div></div>
+      <div class="contact-item reveal" style="transition-delay:.12s"><div class="contact-icon-wrap">📞</div><div><h4>Teléfonos</h4><a href="tel:+50222345678">(502) 2234-5678</a><br/><a href="https://api.whatsapp.com/send?phone=50241778833&text=Hola,%20me%20interesa%20informaci%C3%B3n%20sobre%20admisiones">(502) 4177-8833 — WhatsApp</a></div></div>
+      <div class="contact-item reveal" style="transition-delay:.19s"><div class="contact-icon-wrap">✉️</div><div><h4>Correo Electrónico</h4><a href="mailto:admisiones@cbs.edu.gt">admisiones@cbs.edu.gt</a><br/><a href="mailto:info@cbs.edu.gt">info@cbs.edu.gt</a></div></div>
       <div class="contact-item reveal" style="transition-delay:.26s"><div class="contact-icon-wrap">⏰</div><div><h4>Horario de Oficina</h4><p>Lunes a Viernes: 8:00 a.m. – 5:00 p.m.<br/>Sábados: 8:00 a.m. – 12:00 p.m.</p></div></div>
       <div class="contact-item reveal" style="transition-delay:.33s"><div class="contact-icon-wrap">📱</div><div><h4>Redes Sociales</h4><a href="#">Facebook: /Colegio Bautista Shalom</a><br/><a href="#">Instagram: @Colegio_Bautista_Shalom_gt</a></div></div>
     </div>
 
+    <!-- Sin action/method: el JS con fetch maneja el envío sin recargar -->
     <form class="contact-form reveal-right" id="formulario">
       <h3>Formulario de Pre-inscripción</h3>
       <div class="form-row">
@@ -449,11 +372,10 @@
 
 <script>
 /* ══════════════════════════════════════════
-   TOAST NOTIFICATION SYSTEM
+   TOAST SYSTEM
 ══════════════════════════════════════════ */
-function showToast({ icon = '🔔', title = '', message = '', type = 'default', duration = 5000 }) {
+function showToast({ icon = '🔔', title = '', message = '', type = 'default', duration = 5500 }) {
   const container = document.getElementById('toast-container');
-
   const toast = document.createElement('div');
   toast.className = 'toast ' + type;
   toast.innerHTML = `
@@ -466,106 +388,89 @@ function showToast({ icon = '🔔', title = '', message = '', type = 'default', 
     <div class="toast-progress"></div>
   `;
   container.appendChild(toast);
-
-  // Animate progress bar (CSS transition approach — reliable across browsers)
   const bar = toast.querySelector('.toast-progress');
-  // Start at 100%, transition to 0% over 'duration' ms
   bar.style.transition = 'none';
   bar.style.width = '100%';
   requestAnimationFrame(() => requestAnimationFrame(() => {
     bar.style.transition = `width ${duration}ms linear`;
     bar.style.width = '0%';
   }));
-
-  // Close button
-  toast.querySelector('.toast-close').addEventListener('click', () => dismiss(toast));
-
-  // Auto dismiss
-  const timer = setTimeout(() => dismiss(toast), duration);
-  toast._autoTimer = timer;
+  toast.querySelector('.toast-close').addEventListener('click', () => dismissToast(toast));
+  toast._timer = setTimeout(() => dismissToast(toast), duration);
 }
-
-function dismiss(toast) {
-  clearTimeout(toast._autoTimer);
+function dismissToast(toast) {
+  clearTimeout(toast._timer);
   toast.classList.add('hide');
-  // Remove after animation ends (~350ms)
   setTimeout(() => toast.remove(), 400);
 }
 
 /* ══════════════════════════════════════════
-   FORM SUBMIT — intercept & show toast
+   FORM → fetch → guardar.php
+   Sin recargar la página. Un solo flujo limpio.
 ══════════════════════════════════════════ */
 document.getElementById('formulario').addEventListener('submit', function (e) {
-  e.preventDefault(); // ← Evita recarga de página
+  e.preventDefault(); // ← evita recarga
 
-  const btn      = this.querySelector('.btn-submit');
-  const nombre   = (this.querySelector('[name="estudiante"]').value || '').trim();
-  const nivel    = this.querySelector('[name="nivel"]').value;
-  const padre    = (this.querySelector('[name="padre"]').value || '').trim();
+  const btn    = this.querySelector('.btn-submit');
+  const padre  = (this.querySelector('[name="padre"]').value      || '').trim();
+  const nombre = (this.querySelector('[name="estudiante"]').value || '').trim();
+  const nivel  = this.querySelector('[name="nivel"]').value;
 
-  // Estado de carga en el botón
+  // Estado de carga
   btn.disabled = true;
-  btn.innerHTML = '<span style="display:inline-flex;align-items:center;gap:8px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="animation:spin .8s linear infinite"><circle cx="12" cy="12" r="10" stroke-opacity=".25"/><path d="M12 2a10 10 0 0 1 10 10" /></svg> Enviando…</span>';
+  btn.innerHTML = `<span style="display:inline-flex;align-items:center;gap:8px">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
+         style="animation:spin .8s linear infinite">
+      <circle cx="12" cy="12" r="10" stroke-opacity=".25"/>
+      <path d="M12 2a10 10 0 0 1 10 10"/>
+    </svg>Enviando…</span>`;
 
-  // Agrega keyframe de spin si no existe
-  if (!document.getElementById('spin-style')) {
-    const s = document.createElement('style');
-    s.id = 'spin-style';
-    s.textContent = '@keyframes spin{to{transform:rotate(360deg)}}';
-    document.head.appendChild(s);
-  }
-
-  // Simula envío al servidor (reemplaza con fetch() real si tienes backend PHP)
-  const formData = new FormData(this);
-
-fetch("guardar.php", {
-  method: "POST",
-  body: formData
-})
-.then(res => res.text())
-.then(response => {
-  btn.disabled = false;
-  btn.textContent = '🚀 Enviar Solicitud';
-
-  showToast({
-    icon: '✅',
-    title: '¡Solicitud enviada!',
-    message: response,
-    type: 'success',
-    duration: 6000
-  });
-
-  this.reset();
-})
-.catch(error => {
-  btn.disabled = false;
-  btn.textContent = '🚀 Enviar Solicitud';
-
-  showToast({
-    icon: '❌',
-    title: 'Error',
-    message: 'No se pudo enviar la solicitud',
-    type: 'error'
-  });
-
-  console.error(error);
-});
-    // Restablecer botón
+  fetch('guardar.php', {
+    method: 'POST',
+    body: new FormData(this)   // envía todos los campos del form
+  })
+  .then(res => res.text().then(text => ({ ok: res.ok, text })))
+  .then(({ ok, text }) => {
+    // Restaurar botón siempre
     btn.disabled = false;
     btn.textContent = '🚀 Enviar Solicitud';
 
-    // ✅ Toast de éxito
+    if (ok) {
+      // ✅ Guardado con éxito en PostgreSQL
+      showToast({
+        icon: '✅',
+        title: '¡Solicitud recibida con éxito!',
+        message: `Hola <strong>${padre || 'estimado padre/madre'}</strong>, la solicitud de
+                  <strong>${nombre || 'el estudiante'}</strong> para
+                  <em>${nivel || 'el nivel seleccionado'}</em>
+                  fue enviada correctamente. Nos comunicaremos pronto.`,
+        type: 'success',
+        duration: 7000
+      });
+      this.reset(); // limpia el formulario
+    } else {
+      // ❌ El backend devolvió 4xx / 5xx
+      showToast({
+        icon: '❌',
+        title: 'Error al enviar',
+        message: text || 'No se pudo guardar la solicitud. Intenta de nuevo.',
+        type: 'error',
+        duration: 6000
+      });
+    }
+  })
+  .catch(() => {
+    // 📡 Error de red
+    btn.disabled = false;
+    btn.textContent = '🚀 Enviar Solicitud';
     showToast({
-      icon: '✅',
-      title: '¡Solicitud recibida con éxito!',
-      message: `Hola <strong>${padre || 'estimado padre'}</strong>, la solicitud de <strong>${nombre || 'el estudiante'}</strong> para <em>${nivel || 'el nivel seleccionado'}</em> fue enviada. Nos comunicaremos pronto.`,
-      type: 'success',
+      icon: '📡',
+      title: 'Sin conexión',
+      message: 'No se pudo contactar al servidor. Verifica tu conexión e intenta nuevamente.',
+      type: 'error',
       duration: 6000
     });
-
-    // Limpiar formulario
-    this.reset();
-
+  });
 });
 
 /* ══════════════════════════════════════════
@@ -573,10 +478,7 @@ fetch("guardar.php", {
 ══════════════════════════════════════════ */
 const obs = new IntersectionObserver(entries => {
   entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-      obs.unobserve(entry.target);
-    }
+    if (entry.isIntersecting) { entry.target.classList.add('visible'); obs.unobserve(entry.target); }
   });
 }, { threshold: 0.12 });
 document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => obs.observe(el));
@@ -594,7 +496,7 @@ document.querySelectorAll('.faq-q').forEach(btn => {
 });
 
 /* ══════════════════════════════════════════
-   NAVBAR LOGO FALLBACK
+   LOGO FALLBACK
 ══════════════════════════════════════════ */
 document.querySelector('.logo img').addEventListener('error', function () {
   this.style.display = 'none';
