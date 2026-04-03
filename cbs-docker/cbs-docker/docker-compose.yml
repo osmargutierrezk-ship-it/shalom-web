@@ -1,0 +1,86 @@
+version: "3.9"
+
+# ═══════════════════════════════════════════════════════════════
+#  Colegio Bautista Shalom — Stack completo
+#  Servicios:
+#    • web       → PHP 8.2 + Apache  (puerto 8080)
+#    • db        → MySQL 8.0          (puerto 3306, interno)
+#    • phpmyadmin→ GUI para la BD     (puerto 8081)
+# ═══════════════════════════════════════════════════════════════
+
+services:
+
+  # ── Base de datos MySQL ──────────────────────────────────────
+  db:
+    image: mysql:8.0
+    container_name: cbs_db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root          # Contraseña del usuario root
+      MYSQL_DATABASE: formulario_db      # Base de datos inicial (igual al PHP)
+      MYSQL_USER: cbs_user               # Usuario adicional opcional
+      MYSQL_PASSWORD: cbs_pass
+    volumes:
+      - db_data:/var/lib/mysql           # Persistencia de datos
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql  # Esquema inicial
+    ports:
+      - "3306:3306"                      # Expone MySQL al host (opcional)
+    networks:
+      - cbs_net
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ── Aplicación PHP + Apache ──────────────────────────────────
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: cbs_web
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy       # Espera a que MySQL esté listo
+    environment:
+      # Variables de entorno para la conexión a BD (puedes usarlas en PHP)
+      DB_HOST: db
+      DB_NAME: formulario_db
+      DB_USER: root
+      DB_PASS: root
+    ports:
+      - "8080:80"                        # Acceso: http://localhost:8080
+    volumes:
+      - ./html:/var/www/html             # Hot-reload del código fuente
+    networks:
+      - cbs_net
+
+  # ── phpMyAdmin ───────────────────────────────────────────────
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: cbs_phpmyadmin
+    restart: unless-stopped
+    depends_on:
+      - db
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_USER: root
+      PMA_PASSWORD: root
+      UPLOAD_LIMIT: 50M
+    ports:
+      - "8081:80"                        # Acceso: http://localhost:8081
+    networks:
+      - cbs_net
+
+# ── Volúmenes persistentes ───────────────────────────────────
+volumes:
+  db_data:
+    name: cbs_db_data
+
+# ── Red interna ──────────────────────────────────────────────
+networks:
+  cbs_net:
+    name: cbs_network
+    driver: bridge

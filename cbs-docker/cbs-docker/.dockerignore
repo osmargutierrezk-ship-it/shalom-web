@@ -1,0 +1,15 @@
+# Control de versiones
+.git
+.gitignore
+
+# Docs
+README.md
+*.md
+
+# Archivos del sistema operativo
+.DS_Store
+Thumbs.db
+
+# Archivos de entorno locales (nunca incluir en la imagen)
+.env
+.env.*
