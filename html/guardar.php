@@ -1,7 +1,7 @@
 <?php
 require_once 'db.php';
 
-$conn = getDB();
+$pdo = getDB();
 
 $padre      = trim($_POST['padre']      ?? '');
 $estudiante = trim($_POST['estudiante'] ?? '');
@@ -17,17 +17,22 @@ if (!$padre || !$estudiante || !$telefono || !$email || !$nivel || !$grado) {
     exit;
 }
 
-$sql  = "INSERT INTO solicitudes (padre, estudiante, telefono, email, nivel, grado, mensaje)
-         VALUES (?, ?, ?, ?, ?, ?, ?)";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("sssssss", $padre, $estudiante, $telefono, $email, $nivel, $grado, $mensaje);
-
-if ($stmt->execute()) {
+try {
+    $stmt = $pdo->prepare(
+        "INSERT INTO solicitudes (padre, estudiante, telefono, email, nivel, grado, mensaje)
+         VALUES (:padre, :estudiante, :telefono, :email, :nivel, :grado, :mensaje)"
+    );
+    $stmt->execute([
+        ':padre'      => $padre,
+        ':estudiante' => $estudiante,
+        ':telefono'   => $telefono,
+        ':email'      => $email,
+        ':nivel'      => $nivel,
+        ':grado'      => $grado,
+        ':mensaje'    => $mensaje ?: null,
+    ]);
     echo "Solicitud enviada correctamente";
-} else {
+} catch (PDOException $e) {
     http_response_code(500);
     echo "Error al guardar";
 }
-
-$stmt->close();
-$conn->close();

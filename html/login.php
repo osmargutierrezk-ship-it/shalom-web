@@ -2,7 +2,7 @@
 session_start();
 require_once 'db.php';
 
-$conn = getDB();
+$pdo = getDB();
 
 $correo   = trim($_POST['email']    ?? '');
 $password = trim($_POST['password'] ?? '');
@@ -13,27 +13,28 @@ if (!$correo || !$password) {
     exit;
 }
 
-$stmt = $conn->prepare("SELECT nombre, password, codigo FROM usuarios WHERE correo = ?");
-$stmt->bind_param("s", $correo);
-$stmt->execute();
-$result = $stmt->get_result();
+try {
+    $stmt = $pdo->prepare(
+        "SELECT nombre, password, codigo FROM usuarios WHERE correo = :correo"
+    );
+    $stmt->execute([':correo' => $correo]);
+    $user = $stmt->fetch();
 
-if ($result->num_rows === 0) {
-    http_response_code(401);
-    echo "Usuario no encontrado";
-    exit;
+    if (!$user) {
+        http_response_code(401);
+        echo "Usuario no encontrado";
+        exit;
+    }
+
+    if (password_verify($password, $user['password'])) {
+        $_SESSION['usuario'] = $user['nombre'];
+        $_SESSION['codigo']  = $user['codigo'];
+        echo "Login exitoso";
+    } else {
+        http_response_code(401);
+        echo "Contraseña incorrecta";
+    }
+} catch (PDOException $e) {
+    http_response_code(500);
+    echo "Error del servidor";
 }
-
-$user = $result->fetch_assoc();
-
-if (password_verify($password, $user['password'])) {
-    $_SESSION['usuario'] = $user['nombre'];
-    $_SESSION['codigo']  = $user['codigo'];
-    echo "Login exitoso";
-} else {
-    http_response_code(401);
-    echo "Contraseña incorrecta";
-}
-
-$stmt->close();
-$conn->close();

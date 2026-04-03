@@ -1,7 +1,7 @@
 <?php
 require_once 'db.php';
 
-$conn = getDB();
+$pdo = getDB();
 
 $nombre   = trim($_POST['nombre']   ?? '');
 $correo   = trim($_POST['correo']   ?? '');
@@ -15,41 +15,47 @@ if (!$nombre || !$correo || !$telefono || !$codigo || !$password) {
     exit;
 }
 
-// 1. Verificar código estudiantil válido
-$check = $conn->prepare("SELECT id FROM estudiantes WHERE codigo = ?");
-$check->bind_param("s", $codigo);
-$check->execute();
-if ($check->get_result()->num_rows === 0) {
-    http_response_code(400);
-    echo "Código estudiantil no válido";
-    exit;
-}
-$check->close();
+try {
+    // 1. Verificar que el código estudiantil existe
+    $check = $pdo->prepare("SELECT id FROM estudiantes WHERE codigo = :codigo");
+    $check->execute([':codigo' => $codigo]);
+    if (!$check->fetch()) {
+        http_response_code(400);
+        echo "Código estudiantil no válido";
+        exit;
+    }
 
-// 2. Verificar que el código no esté ya registrado
-$dup = $conn->prepare("SELECT id FROM usuarios WHERE codigo = ?");
-$dup->bind_param("s", $codigo);
-$dup->execute();
-if ($dup->get_result()->num_rows > 0) {
-    http_response_code(409);
-    echo "Este código ya está registrado";
-    exit;
-}
-$dup->close();
+    // 2. Verificar que el código no esté ya registrado
+    $dup = $pdo->prepare("SELECT id FROM usuarios WHERE codigo = :codigo");
+    $dup->execute([':codigo' => $codigo]);
+    if ($dup->fetch()) {
+        http_response_code(409);
+        echo "Este código ya está registrado";
+        exit;
+    }
 
-// 3. Insertar nuevo usuario con contraseña hasheada
-$hash = password_hash($password, PASSWORD_DEFAULT);
-$stmt = $conn->prepare(
-    "INSERT INTO usuarios (nombre, correo, telefono, password, codigo) VALUES (?, ?, ?, ?, ?)"
-);
-$stmt->bind_param("sssss", $nombre, $correo, $telefono, $hash, $codigo);
-
-if ($stmt->execute()) {
+    // 3. Insertar con contraseña hasheada
+    $hash = password_hash($password, PASSWORD_DEFAULT);
+    $stmt = $pdo->prepare(
+        "INSERT INTO usuarios (nombre, correo, telefono, password, codigo)
+         VALUES (:nombre, :correo, :telefono, :password, :codigo)"
+    );
+    $stmt->execute([
+        ':nombre'   => $nombre,
+        ':correo'   => $correo,
+        ':telefono' => $telefono,
+        ':password' => $hash,
+        ':codigo'   => $codigo,
+    ]);
     echo "Registro exitoso";
-} else {
-    http_response_code(500);
-    echo "Error al registrar";
-}
 
-$stmt->close();
-$conn->close();
+} catch (PDOException $e) {
+    // Correo duplicado (unique constraint)
+    if ($e->getCode() === '23505') {
+        http_response_code(409);
+        echo "Este correo ya está registrado";
+    } else {
+        http_response_code(500);
+        echo "Error al registrar";
+    }
+}
