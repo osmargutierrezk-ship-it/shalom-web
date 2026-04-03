@@ -397,7 +397,7 @@
     <div class="contact-info">
       <div class="contact-item reveal" style="transition-delay:.05s"><div class="contact-icon-wrap">📍</div><div><h4>Dirección</h4><p>12 Calle 5-42, Zona 1<br/>Ciudad de Guatemala, Guatemala</p></div></div>
       <div class="contact-item reveal" style="transition-delay:.12s"><div class="contact-icon-wrap">📞</div><div><h4>Teléfonos</h4><a href="tel:+50222345678">(502) 2234-5678</a><br/><a href="https://api.whatsapp.com/send?phone=50241778833&text=mensaje">(502) 5567-8901 — WhatsApp</a></div></div>
-      <div class="contact-item reveal" style="transition-delay:.19s"><div class="contact-icon-wrap">✉️</div><div><h4>Correo Electrónico</h4><a href="/cdn-cgi/l/email-protection#a8c9ccc5c1dbc1c7c6cddbe8cdccddcbc9cbc1c7c6dbc0c9c4c7c586cdccdd86cfdc"><span class="__cf_email__" data-cfemail="a0c1c4cdc9d3c9cfcec5d3e0c5c4d5c3c1c3c9cfced3c8c1cccfcd8ec5c4d58ec7d4">[email&#160;protected]</span></a><br/><a href="/cdn-cgi/l/email-protection#ef86818980af8a8b9a8c8e8c8680819c878e838082c18a8b9ac1889b"><span class="__cf_email__" data-cfemail="aac3c4ccc5eacfcedfc9cbc9c3c5c4d9c2cbc6c5c784cfcedf84cdde">[email&#160;protected]</span></a></div></div>
+      <div class="contact-item reveal" style="transition-delay:.19s"><div class="contact-icon-wrap">✉️</div><div><h4>Correo Electrónico</h4><a href="mailto:admisiones@educacionshalom.edu.gt">admisiones@educacionshalom.edu.gt</a><br/><a href="mailto:info@educacionshalom.edu.gt">info@educacionshalom.edu.gt</a></div></div>
       <div class="contact-item reveal" style="transition-delay:.26s"><div class="contact-icon-wrap">⏰</div><div><h4>Horario de Oficina</h4><p>Lunes a Viernes: 8:00 a.m. – 5:00 p.m.<br/>Sábados: 8:00 a.m. – 12:00 p.m.</p></div></div>
       <div class="contact-item reveal" style="transition-delay:.33s"><div class="contact-icon-wrap">📱</div><div><h4>Redes Sociales</h4><a href="#">Facebook: /Colegio Bautista Shalom</a><br/><a href="#">Instagram: @Colegio_Bautista_Shalom_gt</a></div></div>
     </div>
@@ -447,7 +447,7 @@
   &nbsp;·&nbsp; <a href="index.html" style="color:var(--gold);text-decoration:none;">Volver al Inicio</a>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 /* ══════════════════════════════════════════
    TOAST NOTIFICATION SYSTEM
 ══════════════════════════════════════════ */
@@ -593,4 +593,13 @@ document.querySelectorAll('.faq-q').forEach(btn => {
   });
 });
 
-/* ═══════════════�
+/* ══════════════════════════════════════════
+   NAVBAR LOGO FALLBACK
+══════════════════════════════════════════ */
+document.querySelector('.logo img').addEventListener('error', function () {
+  this.style.display = 'none';
+  this.nextElementSibling.style.display = 'flex';
+});
+</script>
+</body>
+</html>
