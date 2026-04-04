@@ -29,6 +29,7 @@ try {
     if (password_verify($password, $user['password'])) {
         $_SESSION['usuario'] = $user['nombre'];
         $_SESSION['codigo']  = $user['codigo'];
+        $_SESSION['logged_in'] = true;
         echo "Login exitoso";
     } else {
         http_response_code(401);
