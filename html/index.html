@@ -94,6 +94,7 @@
     .nav-links a:hover::after { width: 100%; }
     .nav-links a:hover, .nav-links a.active { color:var(--gold); }
     .nav-links a:hover::after, .nav-links a.active::after { width:100%; }
+
     .btn-apply {
       background: var(--gold);
       color: var(--navy);
@@ -122,8 +123,6 @@
       align-items: center;
       padding: 60px 5% 100px;
     }
-
-    /* Wavy bottom */
     .hero::after {
       content: '';
       position: absolute;
@@ -132,8 +131,6 @@
       background: var(--white);
       clip-path: ellipse(55% 100% at 50% 100%);
     }
-
-    /* Gold decorative curve top-right */
     .hero-gold-arc {
       position: absolute;
       bottom: 0; right: 0;
@@ -144,7 +141,6 @@
       opacity: .18;
       pointer-events: none;
     }
-
     .hero-content {
       position: relative;
       z-index: 2;
@@ -155,7 +151,6 @@
       from { opacity: 0; transform: translateY(40px); }
       to   { opacity: 1; transform: translateY(0); }
     }
-
     .hero-content h1 {
       font-family: 'Montserrat', sans-serif;
       font-weight: 900;
@@ -165,7 +160,6 @@
       margin-bottom: 8px;
     }
     .hero-content h1 span { color: var(--gold); }
-
     .hero-content p {
       font-size: 1.05rem;
       color: rgba(255,255,255,.85);
@@ -173,12 +167,7 @@
       font-style: italic;
     }
     .hero-content p strong { font-style: normal; font-weight: 700; color: var(--white); }
-
-    .hero-buttons {
-      display: flex;
-      gap: 16px;
-      flex-wrap: wrap;
-    }
+    .hero-buttons { display: flex; gap: 16px; flex-wrap: wrap; }
     .btn-primary {
       background: var(--gold);
       color: var(--navy);
@@ -213,8 +202,6 @@
       background: rgba(255,255,255,.1);
       transform: translateY(-3px);
     }
-
-    /* Hero image */
     .hero-image {
       position: absolute;
       right: 5%;
@@ -235,8 +222,6 @@
       object-fit: contain;
       filter: drop-shadow(0 20px 40px rgba(0,0,0,.35));
     }
-
-    /* Floating icons */
     .float-icon {
       position: absolute;
       z-index: 3;
@@ -273,7 +258,6 @@
     .feature-item:last-child { border-right: none; }
     .feature-item:nth-child(2) { animation-delay: .15s; }
     .feature-item:nth-child(3) { animation-delay: .3s; }
-
     .feature-icon {
       font-size: 2.4rem;
       flex-shrink: 0;
@@ -301,11 +285,7 @@
       background: var(--white);
       clip-path: ellipse(55% 100% at 50% 0%);
     }
-
-    .section-header {
-      text-align: left;
-      margin-bottom: 40px;
-    }
+    .section-header { text-align: left; margin-bottom: 40px; }
     .section-header h2 {
       font-family: 'Montserrat', sans-serif;
       font-weight: 900;
@@ -313,18 +293,8 @@
       color: var(--white);
       margin-bottom: 6px;
     }
-    .section-header p {
-      color: rgba(255,255,255,.75);
-      font-style: italic;
-      font-size: 1rem;
-    }
-
-    .cards-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 28px;
-    }
-
+    .section-header p { color: rgba(255,255,255,.75); font-style: italic; font-size: 1rem; }
+    .cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
     .card {
       background: var(--white);
       border-radius: 16px;
@@ -333,22 +303,11 @@
       transition: transform .3s, box-shadow .3s;
       animation: fadeInUp .7s ease both;
     }
-    .card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 20px 48px rgba(13,34,96,.22);
-    }
+    .card:hover { transform: translateY(-8px); box-shadow: 0 20px 48px rgba(13,34,96,.22); }
     .card:nth-child(2) { animation-delay: .15s; }
     .card:nth-child(3) { animation-delay: .3s; }
-
-    .card-img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-      display: block;
-    }
-    .card-body {
-      padding: 22px 22px 28px;
-    }
+    .card-img { width: 100%; height: 200px; object-fit: cover; display: block; }
+    .card-body { padding: 22px 22px 28px; }
     .card-body h3 {
       font-family: 'Montserrat', sans-serif;
       font-weight: 800;
@@ -356,19 +315,9 @@
       color: var(--navy);
       margin-bottom: 10px;
     }
-    .card-lines {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      margin-bottom: 18px;
-    }
-    .card-line {
-      height: 8px;
-      background: #e8eaf0;
-      border-radius: 4px;
-    }
+    .card-lines { display: flex; flex-direction: column; gap: 6px; margin-bottom: 18px; }
+    .card-line { height: 8px; background: #e8eaf0; border-radius: 4px; }
     .card-line:last-child { width: 70%; }
-
     .btn-card {
       display: inline-flex;
       align-items: center;
@@ -395,8 +344,6 @@
       background: var(--navy);
       padding: 0 5% 70px;
     }
-
-    /* Admissions card */
     .admissions-card {
       background: var(--navy-dark);
       border: 2px solid var(--gold);
@@ -428,8 +375,6 @@
       font-size: 1rem;
       margin-bottom: 24px;
     }
-
-    /* Events card */
     .events-card {
       background: var(--white);
       border-radius: 16px;
@@ -447,30 +392,58 @@
       align-items: center;
       gap: 10px;
     }
-    .events-card h2::after {
-      content: '✨';
-      font-size: 1rem;
-    }
-
+    .events-card h2::after { content: '✨'; font-size: 1rem; }
     .event-item {
       display: flex;
       align-items: center;
       gap: 14px;
       padding: 14px 0;
       border-bottom: 1px solid #e8eaf0;
-      transition: background .2s;
     }
     .event-item:last-child { border-bottom: none; }
-    .event-icon {
-      font-size: 1.5rem;
-      width: 36px;
-      text-align: center;
-    }
+    .event-icon { font-size: 1.5rem; width: 36px; text-align: center; }
     .event-text {
       font-family: 'Montserrat', sans-serif;
       font-weight: 700;
       font-size: .95rem;
       color: var(--navy);
+    }
+    .event-date {
+      font-family: 'Montserrat', sans-serif;
+      font-size: .75rem;
+      font-weight: 600;
+      color: var(--gold);
+      display: block;
+      margin-top: 2px;
+    }
+
+    /* Skeleton loader for events */
+    .event-skeleton {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 0;
+      border-bottom: 1px solid #e8eaf0;
+    }
+    .event-skeleton:last-child { border-bottom: none; }
+    .sk-icon {
+      width: 36px; height: 36px; flex-shrink: 0;
+      border-radius: 50%;
+      background: linear-gradient(90deg, #e8eaf0 25%, #f4f6fa 50%, #e8eaf0 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.4s infinite;
+    }
+    .sk-lines { flex: 1; display: flex; flex-direction: column; gap: 6px; }
+    .sk-line {
+      height: 10px; border-radius: 4px;
+      background: linear-gradient(90deg, #e8eaf0 25%, #f4f6fa 50%, #e8eaf0 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.4s infinite;
+    }
+    .sk-line.short { width: 55%; }
+    @keyframes shimmer {
+      0%   { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
     }
 
     /* ── FOOTER ── */
@@ -489,10 +462,7 @@
       transform: translateY(30px);
       transition: opacity .7s ease, transform .7s ease;
     }
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
 
     /* ── RESPONSIVE ── */
     @media (max-width: 900px) {
@@ -507,9 +477,7 @@
       nav { padding: 0 4%; }
       .nav-links { gap: 16px; }
     }
-    @media (max-width: 600px) {
-      .nav-links { display: none; }
-    }
+    @media (max-width: 600px) { .nav-links { display: none; } }
   </style>
 </head>
 <body>
@@ -534,13 +502,10 @@
 <!-- HERO -->
 <section class="hero">
   <div class="hero-gold-arc"></div>
-
-  <!-- Floating decorative icons -->
   <div class="float-icon fi-bulb">💡</div>
   <div class="float-icon fi-globe">🌍</div>
   <div class="float-icon fi-plane">✈️</div>
   <div class="float-icon fi-paint">🎨</div>
-
   <div class="hero-content">
     <h1>Inspirando<br><span>Futuros Brillantes.</span></h1>
     <p>Empoderando a los estudiantes para <strong>alcanzar sus sueños.</strong></p>
@@ -549,14 +514,8 @@
       <a href="#" class="btn-outline">Tomar un Tour &nbsp;›</a>
     </div>
   </div>
-
-  <!-- Hero visual placeholder (graduation student) -->
   <div class="hero-image">
-    <img
-      src="https://images.unsplash.com/photo-1627556704302-624286467c65?w=500&q=80"
-      alt="Estudiante graduada"
-      onerror="this.style.display='none'"
-    />
+    <img src="https://images.unsplash.com/photo-1627556704302-624286467c65?w=500&q=80" alt="Estudiante graduada" onerror="this.style.display='none'"/>
   </div>
 </section>
 
@@ -582,55 +541,28 @@
     <h2>Nuestros Programas</h2>
     <p>Explora nuestros cursos y actividades diversas.</p>
   </div>
-
   <div class="cards-grid">
-    <!-- Card 1 -->
     <div class="card reveal">
-      <img
-        src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80"
-        alt="Nivel-Preprimaria"
-        class="card-img"
-      />
+      <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80" alt="Nivel-Preprimaria" class="card-img"/>
       <div class="card-body">
         <h3>Preprimaria</h3>
-        <div class="card-lines">
-          <div class="card-line"></div>
-          <div class="card-line"></div>
-        </div>
+        <div class="card-lines"><div class="card-line"></div><div class="card-line"></div></div>
         <a href="#" class="btn-card">Saber Más &nbsp;›</a>
       </div>
     </div>
-
-    <!-- Card 2 -->
     <div class="card reveal">
-      <img
-        src="https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=600&q=80"
-        alt="Nivel-Primaria"
-        class="card-img"
-      />
+      <img src="https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=600&q=80" alt="Nivel-Primaria" class="card-img"/>
       <div class="card-body">
         <h3>Primaria</h3>
-        <div class="card-lines">
-          <div class="card-line"></div>
-          <div class="card-line"></div>
-        </div>
+        <div class="card-lines"><div class="card-line"></div><div class="card-line"></div></div>
         <a href="#" class="btn-card dark">Saber Más &nbsp;›</a>
       </div>
     </div>
-
-    <!-- Card 3 -->
     <div class="card reveal">
-      <img
-        src="https://images.unsplash.com/photo-1587560699334-cc4ff634909a?w=600&q=80"
-        alt="Basicos-Diversificado"
-        class="card-img"
-      />
+      <img src="https://images.unsplash.com/photo-1587560699334-cc4ff634909a?w=600&q=80" alt="Basicos-Diversificado" class="card-img"/>
       <div class="card-body">
         <h3>Basicos y Diversificado</h3>
-        <div class="card-lines">
-          <div class="card-line"></div>
-          <div class="card-line"></div>
-        </div>
+        <div class="card-lines"><div class="card-line"></div><div class="card-line"></div></div>
         <a href="#" class="btn-card">Saber Más &nbsp;›</a>
       </div>
     </div>
@@ -646,20 +578,23 @@
     <a href="#" class="btn-primary">Aplica Ahora &nbsp;›</a>
   </div>
 
-  <!-- Events -->
+  <!-- Events — cargados dinámicamente desde la BD (categoría: general) -->
   <div class="events-card reveal">
     <h2>Próximos Eventos</h2>
-    <div class="event-item">
-      <span class="event-icon">🌊</span>
-      <span class="event-text">Splash day - 26 de Marzo</span>
-    </div>
-    <div class="event-item">
-      <span class="event-icon">🔬</span>
-      <span class="event-text">Feria de Ciencias - 10 de Junio</span>
-    </div>
-    <div class="event-item">
-      <span class="event-icon">🏆</span>
-      <span class="event-text">Día Deportivo - 8 de Julio</span>
+    <div id="events-list">
+      <!-- Skeleton mientras carga -->
+      <div class="event-skeleton">
+        <div class="sk-icon"></div>
+        <div class="sk-lines"><div class="sk-line"></div><div class="sk-line short"></div></div>
+      </div>
+      <div class="event-skeleton">
+        <div class="sk-icon"></div>
+        <div class="sk-lines"><div class="sk-line"></div><div class="sk-line short"></div></div>
+      </div>
+      <div class="event-skeleton">
+        <div class="sk-icon"></div>
+        <div class="sk-lines"><div class="sk-line"></div><div class="sk-line short"></div></div>
+      </div>
     </div>
   </div>
 </div>
@@ -670,7 +605,7 @@
 </footer>
 
 <script>
-  // Scroll-reveal
+  // ── Scroll-reveal ───────────────────────────────────────────
   const revealEls = document.querySelectorAll('.reveal');
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry, i) => {
@@ -682,13 +617,93 @@
   }, { threshold: 0.15 });
   revealEls.forEach(el => observer.observe(el));
 
-  // Navbar active link highlight
+  // ── Navbar active link ──────────────────────────────────────
   document.querySelectorAll('.nav-links a').forEach(link => {
     link.addEventListener('click', function() {
-      document.querySelectorAll('.nav-links a').forEach(l => l.style.color = '');
-      this.style.color = 'var(--gold)';
+      document.querySelectorAll('.nav-links a').forEach(l => l.classList.remove('active'));
+      this.classList.add('active');
     });
   });
+
+  // ── Iconos por categoría (para eventos generales mostramos 📌 por defecto,
+  //    pero se puede personalizar por título/lugar si se desea) ──
+  const CATEGORY_ICONS = {
+    general:  '📌',
+    examen:   '📝',
+    deporte:  '🏆',
+    cultural: '🎭',
+    entrega:  '📋',
+  };
+
+  // Nombres de meses en español
+  const MESES = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+
+  function formatFecha(isoDate) {
+    // isoDate viene como "2026-04-22"
+    const [y, m, d] = isoDate.split('-');
+    return `${parseInt(d)} de ${['enero','febrero','marzo','abril','mayo','junio',
+      'julio','agosto','septiembre','octubre','noviembre','diciembre'][parseInt(m)-1]} ${y}`;
+  }
+
+  // ── Cargar eventos desde la BD (solo categoría "general") ──
+  async function loadEventos() {
+    const container = document.getElementById('events-list');
+
+    try {
+      const res  = await fetch('get_eventos.php?categoria=general');
+
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+      const json = await res.json();
+
+      if (!json.success) throw new Error(json.error || 'Error desconocido');
+
+      const eventos = json.data;
+
+      if (!eventos.length) {
+        container.innerHTML = `
+          <div class="event-item">
+            <span class="event-icon">📭</span>
+            <span class="event-text">No hay eventos generales próximos.</span>
+          </div>`;
+        return;
+      }
+
+      container.innerHTML = eventos.map(ev => {
+        const icon = CATEGORY_ICONS[ev.categoria] || '📌';
+        const hora = ev.hora_fmt ? ` · ${ev.hora_fmt} hrs` : '';
+        const lugar = ev.lugar   ? ` · ${ev.lugar}` : '';
+        return `
+          <div class="event-item">
+            <span class="event-icon">${icon}</span>
+            <div>
+              <span class="event-text">${ev.titulo}</span>
+              <span class="event-date">${formatFecha(ev.fecha)}${hora}${lugar}</span>
+            </div>
+          </div>`;
+      }).join('');
+
+    } catch (err) {
+      console.error('Error al cargar eventos:', err);
+      // Fallback: mostrar datos estáticos si la BD no responde
+      container.innerHTML = `
+        <div class="event-item">
+          <span class="event-icon">🌊</span>
+          <span class="event-text">Splash Day – 26 de Marzo</span>
+        </div>
+        <div class="event-item">
+          <span class="event-icon">🔬</span>
+          <span class="event-text">Feria de Ciencias – 10 de Junio</span>
+        </div>
+        <div class="event-item">
+          <span class="event-icon">🏆</span>
+          <span class="event-text">Día Deportivo – 8 de Julio</span>
+        </div>`;
+    }
+  }
+
+  // Ejecutar al cargar la página
+  loadEventos();
 </script>
 </body>
 </html>
