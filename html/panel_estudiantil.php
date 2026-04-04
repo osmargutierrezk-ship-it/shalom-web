@@ -1003,7 +1003,7 @@ window.addEventListener('load', () => {
   // Cargar datos del panel inicial
   loadEventos();
   loadInasistencias();
-  loadNotas();
+  loadNotas(1);
 });
 </script>
 </body>
