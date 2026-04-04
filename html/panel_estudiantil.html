@@ -1,0 +1,2175 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Panel Estudiantil – CBS</title>
+<link rel="icon" type="image/png" href="logo_cbs.png">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Lato:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet"/>
+<style>
+/* ════════════════════════════════════════
+   CBS DESIGN SYSTEM
+════════════════════════════════════════ */
+:root {
+  --navy:       #0d2260;
+  --navy-mid:   #142d7a;
+  --navy-dark:  #091a4d;
+  --gold:       #f5a800;
+  --gold-dark:  #e09500;
+  --gold-light: rgba(245,168,0,0.10);
+  --gold-glow:  rgba(245,168,0,0.22);
+  --white:      #ffffff;
+  --surface:    #f5f7fc;
+  --surface2:   #edf0f8;
+  --border:     #dde3f0;
+  --text:       #1a1e38;
+  --text-mid:   #4a5280;
+  --text-soft:  #8a90b0;
+  --success:    #18a05a;
+  --warn:       #e08c00;
+  --danger:     #d93b2b;
+  --info:       #1e5fc2;
+  --sidebar-w:  260px;
+  --sidebar-w-c:72px;
+  --top-h:      64px;
+  --radius:     14px;
+  --shadow:     0 4px 24px rgba(13,34,96,0.10);
+  --shadow-lg:  0 12px 48px rgba(13,34,96,0.18);
+  --trans:      220ms cubic-bezier(.4,0,.2,1);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Lato', sans-serif;
+  background: var(--surface);
+  color: var(--text);
+  display: flex;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ────────────────────────────
+   SCROLLBAR
+──────────────────────────── */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-soft); }
+
+/* ════════════════════════════════════════
+   SIDEBAR
+════════════════════════════════════════ */
+.sidebar {
+  position: fixed;
+  left: 0; top: 0; bottom: 0;
+  width: var(--sidebar-w);
+  background: linear-gradient(175deg, var(--navy-dark) 0%, var(--navy-mid) 60%, #152f82 100%);
+  display: flex;
+  flex-direction: column;
+  z-index: 200;
+  transition: width var(--trans);
+  overflow: hidden;
+  box-shadow: 4px 0 32px rgba(9,26,77,0.30);
+}
+.sidebar::before {
+  content: '';
+  position: absolute;
+  bottom: -80px; right: -80px;
+  width: 280px; height: 280px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(245,168,0,0.10), transparent 70%);
+  pointer-events: none;
+}
+
+/* collapsed */
+body.sb-collapsed .sidebar { width: var(--sidebar-w-c); }
+body.sb-collapsed .sb-label,
+body.sb-collapsed .sb-section-title,
+body.sb-collapsed .brand-text { opacity: 0; pointer-events: none; width: 0; overflow: hidden; }
+body.sb-collapsed .nav-item { justify-content: center; }
+body.sb-collapsed .nav-item .sb-label { display: none; }
+
+/* Brand */
+.sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 18px;
+  height: var(--top-h);
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  flex-shrink: 0;
+}
+.brand-logo {
+  width: 38px; height: 38px; flex-shrink: 0;
+  background: var(--gold);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.2rem;
+  box-shadow: 0 4px 14px rgba(245,168,0,0.35);
+}
+.brand-logo img { width: 30px; height: 30px; object-fit: contain; }
+.brand-text {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 900; font-size: .82rem;
+  color: var(--white);
+  line-height: 1.25;
+  white-space: nowrap;
+  transition: opacity var(--trans), width var(--trans);
+}
+.brand-text span { color: var(--gold); display: block; font-size: .7rem; font-weight: 600; }
+
+/* Nav */
+.sidebar-nav {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 16px 0;
+}
+.sb-section-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: .64rem; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase;
+  color: rgba(255,255,255,0.30);
+  padding: 12px 20px 6px;
+  white-space: nowrap;
+  transition: opacity var(--trans);
+}
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 11px 18px;
+  cursor: pointer;
+  border-radius: 10px;
+  margin: 2px 10px;
+  position: relative;
+  transition: background var(--trans), transform var(--trans);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.nav-item:hover {
+  background: rgba(255,255,255,0.07);
+}
+.nav-item.active {
+  background: linear-gradient(90deg, rgba(245,168,0,0.20), rgba(245,168,0,0.06));
+  border-left: 3px solid var(--gold);
+}
+.nav-item.active .nav-icon { color: var(--gold); }
+.nav-item.active .sb-label { color: var(--white); font-weight: 700; }
+.nav-icon {
+  font-size: 1.15rem;
+  width: 22px; text-align: center;
+  color: rgba(255,255,255,0.55);
+  flex-shrink: 0;
+  transition: color var(--trans);
+}
+.sb-label {
+  font-family: 'Montserrat', sans-serif;
+  font-size: .83rem; font-weight: 600;
+  color: rgba(255,255,255,0.70);
+  transition: opacity var(--trans), color var(--trans);
+}
+.sb-badge {
+  margin-left: auto;
+  background: var(--gold);
+  color: var(--navy);
+  font-family: 'Montserrat', sans-serif;
+  font-size: .62rem; font-weight: 800;
+  padding: 2px 7px;
+  border-radius: 99px;
+}
+body.sb-collapsed .sb-badge { display: none; }
+
+/* Sidebar footer */
+.sidebar-footer {
+  padding: 14px 10px;
+  border-top: 1px solid rgba(255,255,255,0.07);
+  flex-shrink: 0;
+}
+.sidebar-user {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 10px 10px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.05);
+  cursor: pointer;
+  transition: background var(--trans);
+}
+.sidebar-user:hover { background: rgba(255,255,255,0.10); }
+.user-avatar {
+  width: 36px; height: 36px; flex-shrink: 0;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; font-weight: 800;
+  color: var(--navy);
+  font-family: 'Montserrat', sans-serif;
+}
+.user-info { overflow: hidden; }
+.user-name {
+  font-family: 'Montserrat', sans-serif;
+  font-size: .82rem; font-weight: 700;
+  color: var(--white);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.user-role {
+  font-size: .72rem; color: rgba(255,255,255,0.45);
+  white-space: nowrap;
+}
+
+/* ════════════════════════════════════════
+   TOPBAR
+════════════════════════════════════════ */
+.topbar {
+  position: fixed;
+  top: 0;
+  left: var(--sidebar-w);
+  right: 0;
+  height: var(--top-h);
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  padding: 0 28px;
+  gap: 16px;
+  z-index: 100;
+  transition: left var(--trans);
+  box-shadow: 0 2px 16px rgba(13,34,96,0.06);
+}
+body.sb-collapsed .topbar { left: var(--sidebar-w-c); }
+
+.toggle-btn {
+  background: none; border: none; cursor: pointer;
+  width: 36px; height: 36px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 8px;
+  color: var(--text-mid);
+  font-size: 1.1rem;
+  transition: background var(--trans);
+  flex-shrink: 0;
+}
+.toggle-btn:hover { background: var(--surface2); }
+
+.topbar-title {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800; font-size: 1.05rem;
+  color: var(--navy);
+}
+.topbar-subtitle {
+  font-size: .82rem;
+  color: var(--text-soft);
+  margin-left: 4px;
+}
+.topbar-spacer { flex: 1; }
+
+.search-box {
+  display: flex; align-items: center; gap: 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 7px 14px;
+  width: 220px;
+  transition: border-color var(--trans), box-shadow var(--trans);
+}
+.search-box:focus-within {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px var(--gold-light);
+}
+.search-box input {
+  background: none; border: none; outline: none;
+  font-size: .88rem; color: var(--text);
+  width: 100%;
+  font-family: 'Lato', sans-serif;
+}
+.search-box input::placeholder { color: var(--text-soft); }
+.search-icon { color: var(--text-soft); font-size: .9rem; }
+
+.topbar-icon-btn {
+  width: 36px; height: 36px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; font-size: 1rem;
+  position: relative;
+  transition: background var(--trans);
+}
+.topbar-icon-btn:hover { background: var(--surface2); }
+.notif-dot {
+  position: absolute; top: 6px; right: 6px;
+  width: 7px; height: 7px;
+  background: var(--gold);
+  border-radius: 50%;
+  border: 2px solid var(--white);
+}
+
+/* ════════════════════════════════════════
+   MAIN CONTENT
+════════════════════════════════════════ */
+.main {
+  margin-left: var(--sidebar-w);
+  margin-top: var(--top-h);
+  padding: 32px 28px;
+  flex: 1;
+  min-height: calc(100vh - var(--top-h));
+  transition: margin-left var(--trans);
+}
+body.sb-collapsed .main { margin-left: var(--sidebar-w-c); }
+
+/* Panels */
+.panel { display: none; animation: panelIn .35s ease both; }
+.panel.active { display: block; }
+@keyframes panelIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Page header */
+.page-header {
+  display: flex; align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 28px;
+  gap: 16px;
+}
+.page-title-group {}
+.page-label {
+  font-family: 'Montserrat', sans-serif;
+  font-size: .7rem; font-weight: 700;
+  letter-spacing: 2.5px; text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 4px;
+}
+.page-title {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 900; font-size: 1.65rem;
+  color: var(--navy); line-height: 1.1;
+}
+.page-desc {
+  font-size: .9rem; color: var(--text-soft);
+  margin-top: 4px; font-style: italic;
+}
+
+/* Cards grid */
+.cards-row {
+  display: grid;
+  gap: 18px;
+}
+.cols-4 { grid-template-columns: repeat(4,1fr); }
+.cols-3 { grid-template-columns: repeat(3,1fr); }
+.cols-2 { grid-template-columns: 1fr 1fr; }
+.cols-1-2 { grid-template-columns: 1fr 2fr; }
+.cols-2-1 { grid-template-columns: 2fr 1fr; }
+
+/* Base card */
+.card {
+  background: var(--white);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+.card-header {
+  padding: 18px 22px 12px;
+  display: flex; align-items: center; justify-content: space-between;
+  border-bottom: 1px solid var(--border);
+}
+.card-header h3 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800; font-size: .95rem;
+  color: var(--navy);
+}
+.card-body { padding: 20px 22px; }
+
+/* ════════════════════════════════════════
+   STAT CARDS (Inicio)
+════════════════════════════════════════ */
+.stat-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  padding: 22px 22px;
+  display: flex; gap: 16px; align-items: center;
+  transition: transform var(--trans), box-shadow var(--trans);
+  animation: fadeUp .5s ease both;
+}
+.stat-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+.stat-card:nth-child(1) { animation-delay: .05s; }
+.stat-card:nth-child(2) { animation-delay: .10s; }
+.stat-card:nth-child(3) { animation-delay: .15s; }
+.stat-card:nth-child(4) { animation-delay: .20s; }
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.stat-icon {
+  width: 50px; height: 50px; flex-shrink: 0;
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem;
+}
+.stat-icon.navy  { background: rgba(13,34,96,0.08); }
+.stat-icon.gold  { background: rgba(245,168,0,0.13); }
+.stat-icon.green { background: rgba(24,160,90,0.10); }
+.stat-icon.blue  { background: rgba(30,95,194,0.10); }
+.stat-num {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 900; font-size: 1.8rem;
+  color: var(--navy); line-height: 1;
+}
+.stat-num span { color: var(--gold); }
+.stat-label {
+  font-size: .8rem; color: var(--text-soft);
+  font-family: 'Montserrat', sans-serif; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 1px;
+  margin-top: 3px;
+}
+
+/* ════════════════════════════════════════
+   WELCOME BANNER
+════════════════════════════════════════ */
+.welcome-banner {
+  background: linear-gradient(120deg, var(--navy) 0%, var(--navy-mid) 60%, #1a3a9c 100%);
+  border-radius: var(--radius);
+  padding: 28px 32px;
+  margin-bottom: 22px;
+  display: flex; align-items: center; justify-content: space-between;
+  overflow: hidden;
+  position: relative;
+  animation: fadeUp .4s ease both;
+}
+.welcome-banner::before {
+  content: '';
+  position: absolute; top: -60px; right: 100px;
+  width: 220px; height: 220px;
+  border-radius: 50%;
+  background: rgba(245,168,0,0.08);
+  pointer-events: none;
+}
+.welcome-banner::after {
+  content: '🎓';
+  position: absolute; right: 32px; bottom: -8px;
+  font-size: 5.5rem; opacity: .12;
+}
+.welcome-text h2 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 900; font-size: 1.4rem;
+  color: var(--white); margin-bottom: 6px;
+}
+.welcome-text h2 span { color: var(--gold); }
+.welcome-text p { color: rgba(255,255,255,.65); font-size: .9rem; font-style: italic; }
+.welcome-chips { display: flex; gap: 10px; margin-top: 14px; flex-wrap: wrap; }
+.w-chip {
+  background: rgba(245,168,0,0.14);
+  border: 1px solid rgba(245,168,0,0.25);
+  color: var(--gold);
+  font-family: 'Montserrat', sans-serif;
+  font-size: .75rem; font-weight: 700;
+  padding: 5px 12px; border-radius: 99px;
+}
+
+/* ════════════════════════════════════════
+   NOTAS
+════════════════════════════════════════ */
+.grade-table { width: 100%; border-collapse: collapse; }
+.grade-table thead tr {
+  background: var(--surface);
+}
+.grade-table th {
+  font-family: 'Montserrat', sans-serif;
+  font-size: .72rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 1px;
+  color: var(--text-soft);
+  padding: 11px 16px;
+  text-align: left;
+  border-bottom: 2px solid var(--border);
+}
+.grade-table td {
+  padding: 13px 16px;
+  font-size: .9rem;
+  border-bottom: 1px solid var(--border);
+  vertical-align: middle;
+}
+.grade-table tbody tr {
+  transition: background var(--trans);
+}
+.grade-table tbody tr:hover { background: var(--surface); }
+.subject-dot {
+  display: inline-block;
+  width: 8px; height: 8px;
+  border-radius: 50%; margin-right: 8px;
+}
+.grade-pill {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 38px; height: 26px;
+  border-radius: 8px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: .82rem; font-weight: 800;
+}
+.grade-a { background: rgba(24,160,90,0.12); color: #18a05a; }
+.grade-b { background: rgba(30,95,194,0.10); color: #1e5fc2; }
+.grade-c { background: rgba(245,168,0,0.12); color: #b07800; }
+.grade-d { background: rgba(217,59,43,0.10); color: #d93b2b; }
+.progress-bar {
+  height: 5px; background: var(--surface2); border-radius: 99px; overflow: hidden; width: 80px;
+}
+.progress-fill {
+  height: 100%; border-radius: 99px;
+  background: linear-gradient(90deg, var(--gold), var(--navy));
+  transition: width .8s ease;
+}
+
+/* Bimestre tabs */
+.bim-tabs { display: flex; gap: 6px; margin-bottom: 18px; }
+.bim-tab {
+  padding: 7px 16px; border-radius: 8px; cursor: pointer;
+  font-family: 'Montserrat', sans-serif; font-size: .8rem; font-weight: 700;
+  background: var(--surface); border: 1px solid var(--border);
+  color: var(--text-mid); transition: all var(--trans);
+}
+.bim-tab.active {
+  background: var(--navy); color: var(--white);
+  border-color: var(--navy);
+  box-shadow: 0 4px 14px rgba(13,34,96,0.20);
+}
+
+/* ════════════════════════════════════════
+   HORARIO
+════════════════════════════════════════ */
+.schedule-grid {
+  display: grid;
+  grid-template-columns: 70px repeat(5, 1fr);
+  gap: 4px;
+  font-size: .8rem;
+}
+.sched-header {
+  background: var(--navy);
+  color: rgba(255,255,255,.9);
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700; font-size: .72rem;
+  padding: 10px 6px; text-align: center;
+  border-radius: 8px;
+  letter-spacing: .5px;
+}
+.sched-time {
+  font-family: 'Montserrat', sans-serif;
+  font-size: .7rem; font-weight: 700;
+  color: var(--text-soft);
+  display: flex; align-items: center; justify-content: center;
+  text-align: center; padding: 4px 2px;
+}
+.sched-cell {
+  border-radius: 8px;
+  padding: 9px 8px;
+  font-size: .76rem;
+  line-height: 1.3;
+  min-height: 60px;
+  display: flex; flex-direction: column; justify-content: center;
+  transition: transform var(--trans), box-shadow var(--trans);
+  cursor: default;
+}
+.sched-cell:hover { transform: scale(1.03); box-shadow: 0 4px 16px rgba(0,0,0,0.10); }
+.sched-cell.empty { background: var(--surface); }
+.sched-subject { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: .74rem; }
+.sched-teacher { font-size: .68rem; opacity: .75; margin-top: 2px; }
+.sched-room { font-size: .65rem; opacity: .55; }
+
+/* Subject colors */
+.s-mat { background: rgba(13,34,96,0.08); border-left: 3px solid #0d2260; }
+.s-len { background: rgba(30,95,194,0.09); border-left: 3px solid #1e5fc2; }
+.s-bio { background: rgba(24,160,90,0.09); border-left: 3px solid #18a05a; }
+.s-his { background: rgba(245,168,0,0.12); border-left: 3px solid #f5a800; }
+.s-fis { background: rgba(217,59,43,0.08); border-left: 3px solid #d93b2b; }
+.s-ing { background: rgba(147,51,234,0.08); border-left: 3px solid #9333ea; }
+.s-edu { background: rgba(234,88,12,0.08); border-left: 3px solid #ea580c; }
+.s-tec { background: rgba(2,132,199,0.08); border-left: 3px solid #0284c7; }
+.s-rel { background: rgba(245,168,0,0.07); border-left: 3px solid #d97706; }
+
+/* ════════════════════════════════════════
+   NOTICIAS / EVENTOS
+════════════════════════════════════════ */
+.news-list { display: flex; flex-direction: column; gap: 14px; }
+.news-item {
+  display: flex; gap: 16px; align-items: flex-start;
+  padding: 16px;
+  background: var(--white);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  transition: transform var(--trans), box-shadow var(--trans);
+  animation: fadeUp .4s ease both;
+  cursor: pointer;
+}
+.news-item:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+.news-date-box {
+  flex-shrink: 0;
+  width: 50px;
+  background: var(--navy);
+  border-radius: 10px;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 8px 4px;
+}
+.news-day { font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 1.3rem; color: var(--gold); line-height: 1; }
+.news-month { font-family: 'Montserrat', sans-serif; font-size: .6rem; font-weight: 700; color: rgba(255,255,255,.6); text-transform: uppercase; letter-spacing: 1px; }
+.news-content { flex: 1; }
+.news-tag {
+  display: inline-block;
+  font-family: 'Montserrat', sans-serif;
+  font-size: .62rem; font-weight: 700;
+  letter-spacing: 1px; text-transform: uppercase;
+  padding: 2px 9px; border-radius: 99px;
+  margin-bottom: 6px;
+}
+.tag-deporte  { background: rgba(234,88,12,0.12); color: #ea580c; }
+.tag-examen   { background: rgba(217,59,43,0.12); color: #d93b2b; }
+.tag-cultural { background: rgba(147,51,234,0.10); color: #9333ea; }
+.tag-general  { background: rgba(13,34,96,0.10); color: var(--navy); }
+.tag-entrega  { background: rgba(24,160,90,0.10); color: #18a05a; }
+.news-title {
+  font-family: 'Montserrat', sans-serif; font-weight: 800;
+  font-size: .92rem; color: var(--navy); margin-bottom: 4px;
+}
+.news-desc { font-size: .84rem; color: var(--text-soft); line-height: 1.5; }
+.news-meta {
+  font-size: .75rem; color: var(--text-soft);
+  margin-top: 6px;
+  display: flex; gap: 12px; align-items: center;
+}
+
+/* ════════════════════════════════════════
+   INASISTENCIAS FORM
+════════════════════════════════════════ */
+.form-grid { display: grid; gap: 18px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.form-group { display: flex; flex-direction: column; gap: 6px; }
+.form-label {
+  font-family: 'Montserrat', sans-serif;
+  font-size: .72rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 1px;
+  color: var(--text-mid);
+}
+.form-input, .form-select, .form-textarea {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  font-family: 'Lato', sans-serif;
+  font-size: .92rem;
+  color: var(--text);
+  background: var(--white);
+  outline: none;
+  transition: border-color var(--trans), box-shadow var(--trans);
+}
+.form-input:focus, .form-select:focus, .form-textarea:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px var(--gold-light);
+}
+.form-textarea { resize: vertical; min-height: 90px; }
+.file-drop {
+  border: 2px dashed var(--border);
+  border-radius: 12px;
+  padding: 28px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color var(--trans), background var(--trans);
+}
+.file-drop:hover {
+  border-color: var(--gold);
+  background: var(--gold-light);
+}
+.file-drop .drop-icon { font-size: 2.2rem; margin-bottom: 8px; }
+.file-drop p { font-size: .85rem; color: var(--text-soft); }
+.file-drop span { color: var(--gold); font-weight: 700; }
+
+.btn-submit {
+  background: linear-gradient(90deg, var(--gold), var(--gold-dark));
+  color: var(--navy);
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800; font-size: .9rem;
+  padding: 12px 28px;
+  border: none; border-radius: 10px; cursor: pointer;
+  box-shadow: 0 6px 22px rgba(245,168,0,0.30);
+  transition: transform var(--trans), box-shadow var(--trans);
+}
+.btn-submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(245,168,0,0.42);
+}
+
+.inasistencia-history { }
+.inas-item {
+  display: flex; align-items: center; gap: 14px;
+  padding: 13px 0;
+  border-bottom: 1px solid var(--border);
+}
+.inas-item:last-child { border-bottom: none; }
+.inas-status {
+  width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+}
+.inas-pending  { background: #f5a800; }
+.inas-approved { background: #18a05a; }
+.inas-rejected { background: #d93b2b; }
+.inas-text { flex: 1; }
+.inas-date { font-family: 'Montserrat', sans-serif; font-size: .8rem; font-weight: 700; color: var(--navy); }
+.inas-reason { font-size: .8rem; color: var(--text-soft); }
+.inas-badge {
+  font-family: 'Montserrat', sans-serif;
+  font-size: .68rem; font-weight: 700;
+  padding: 3px 10px; border-radius: 99px;
+}
+.badge-pending  { background: rgba(245,168,0,0.12); color: #9a6d00; }
+.badge-approved { background: rgba(24,160,90,0.12); color: #18a05a; }
+.badge-rejected { background: rgba(217,59,43,0.10); color: #d93b2b; }
+
+/* ════════════════════════════════════════
+   BIBLIOTECA
+════════════════════════════════════════ */
+.book-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 18px;
+}
+.book-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: transform var(--trans), box-shadow var(--trans);
+  animation: fadeUp .4s ease both;
+  cursor: pointer;
+}
+.book-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+.book-cover {
+  height: 130px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 3.5rem;
+  position: relative; overflow: hidden;
+}
+.book-cover .cover-bg {
+  position: absolute; inset: 0;
+  opacity: .12;
+}
+.book-info { padding: 12px 14px 14px; }
+.book-title {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800; font-size: .83rem;
+  color: var(--navy); line-height: 1.3;
+  margin-bottom: 4px;
+}
+.book-sub { font-size: .75rem; color: var(--text-soft); }
+.book-actions {
+  display: flex; gap: 8px; margin-top: 10px;
+}
+.btn-book {
+  flex: 1; padding: 7px 8px;
+  border-radius: 8px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: .72rem; font-weight: 700;
+  border: none; cursor: pointer;
+  transition: all var(--trans);
+}
+.btn-book.view  { background: rgba(13,34,96,0.08); color: var(--navy); }
+.btn-book.dl    { background: linear-gradient(90deg, var(--gold), var(--gold-dark)); color: var(--navy); }
+.btn-book:hover { opacity: .85; transform: translateY(-1px); }
+
+/* ════════════════════════════════════════
+   TAREAS
+════════════════════════════════════════ */
+.tareas-list { display: flex; flex-direction: column; gap: 10px; }
+.tarea-item {
+  display: flex; gap: 14px; align-items: center;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  box-shadow: var(--shadow);
+  transition: transform var(--trans), box-shadow var(--trans);
+  animation: fadeUp .4s ease both;
+}
+.tarea-item:hover { transform: translateX(4px); box-shadow: var(--shadow-lg); }
+.tarea-check {
+  width: 22px; height: 22px; flex-shrink: 0;
+  border: 2px solid var(--border);
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all var(--trans);
+  font-size: .8rem;
+}
+.tarea-check.done { background: var(--success); border-color: var(--success); color: #fff; }
+.tarea-main { flex: 1; }
+.tarea-title {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800; font-size: .88rem;
+  color: var(--navy);
+}
+.tarea-title.done-text { text-decoration: line-through; color: var(--text-soft); }
+.tarea-meta { display: flex; gap: 10px; margin-top: 4px; align-items: center; }
+.tarea-subject-tag {
+  font-family: 'Montserrat', sans-serif;
+  font-size: .68rem; font-weight: 700;
+  padding: 2px 9px; border-radius: 99px;
+  background: var(--gold-light); color: var(--warn);
+}
+.tarea-date {
+  font-size: .75rem; color: var(--text-soft);
+  display: flex; align-items: center; gap: 4px;
+}
+.tarea-urgent { border-left: 3px solid var(--danger); }
+.tarea-soon   { border-left: 3px solid var(--gold); }
+.tarea-ok     { border-left: 3px solid var(--success); }
+.urgency-badge {
+  font-family: 'Montserrat', sans-serif;
+  font-size: .65rem; font-weight: 700;
+  padding: 3px 9px; border-radius: 99px;
+  flex-shrink: 0;
+}
+.u-red   { background: rgba(217,59,43,0.10); color: #d93b2b; }
+.u-gold  { background: rgba(245,168,0,0.12); color: #9a6d00; }
+.u-green { background: rgba(24,160,90,0.10); color: #18a05a; }
+
+/* Kanban view */
+.kanban { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+.kanban-col {}
+.kanban-col-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: .75rem; font-weight: 800;
+  text-transform: uppercase; letter-spacing: 1.5px;
+  margin-bottom: 12px;
+  display: flex; align-items: center; gap: 8px;
+}
+.k-dot { width: 8px; height: 8px; border-radius: 50%; }
+
+/* ════════════════════════════════════════
+   CLASSROOM
+════════════════════════════════════════ */
+.classroom-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 18px;
+}
+.class-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: transform var(--trans), box-shadow var(--trans);
+  animation: fadeUp .4s ease both;
+}
+.class-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); }
+.class-banner {
+  height: 64px;
+  display: flex; align-items: center;
+  padding: 0 20px;
+  gap: 12px;
+}
+.class-banner-icon { font-size: 1.8rem; }
+.class-banner-title {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 900; font-size: .9rem;
+  color: #fff;
+}
+.class-body { padding: 14px 18px 18px; }
+.class-teacher {
+  font-size: .8rem; color: var(--text-soft);
+  margin-bottom: 10px;
+  display: flex; align-items: center; gap: 6px;
+}
+.class-links { display: flex; flex-direction: column; gap: 6px; }
+.class-link {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: var(--surface);
+  text-decoration: none;
+  transition: background var(--trans), transform var(--trans);
+  color: var(--text);
+}
+.class-link:hover {
+  background: var(--surface2);
+  transform: translateX(4px);
+}
+.class-link-icon { font-size: .95rem; }
+.class-link-text {
+  font-family: 'Montserrat', sans-serif;
+  font-size: .78rem; font-weight: 700;
+  color: var(--navy);
+}
+.class-link-sub { font-size: .7rem; color: var(--text-soft); margin-top: 1px; }
+.class-link-arrow { margin-left: auto; color: var(--text-soft); font-size: .8rem; }
+.class-link.primary {
+  background: linear-gradient(90deg, var(--gold), var(--gold-dark));
+}
+.class-link.primary .class-link-text,
+.class-link.primary .class-link-arrow { color: var(--navy); }
+
+/* ════════════════════════════════════════
+   MINI CALENDAR (Inicio)
+════════════════════════════════════════ */
+.mini-cal { }
+.cal-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 12px;
+}
+.cal-nav {
+  background: none; border: none; cursor: pointer;
+  color: var(--text-soft); font-size: 1rem;
+  width: 28px; height: 28px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 6px; transition: background var(--trans);
+}
+.cal-nav:hover { background: var(--surface2); }
+.cal-month {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800; font-size: .88rem; color: var(--navy);
+}
+.cal-grid { display: grid; grid-template-columns: repeat(7,1fr); gap: 2px; }
+.cal-day-name {
+  font-family: 'Montserrat', sans-serif;
+  font-size: .62rem; font-weight: 700;
+  color: var(--text-soft); text-align: center; padding: 4px 0;
+}
+.cal-day {
+  font-family: 'Montserrat', sans-serif;
+  font-size: .78rem; font-weight: 600;
+  text-align: center; padding: 5px 0;
+  border-radius: 6px; cursor: pointer;
+  color: var(--text-mid);
+  transition: background var(--trans), color var(--trans);
+}
+.cal-day:hover { background: var(--surface2); }
+.cal-day.today {
+  background: var(--navy);
+  color: var(--white);
+  font-weight: 800;
+}
+.cal-day.has-event { position: relative; }
+.cal-day.has-event::after {
+  content: '';
+  position: absolute; bottom: 2px; left: 50%; transform: translateX(-50%);
+  width: 4px; height: 4px;
+  background: var(--gold); border-radius: 50%;
+}
+.cal-day.other-month { color: var(--border); }
+
+/* ════════════════════════════════════════
+   UTILITY
+════════════════════════════════════════ */
+.divider { height: 1px; background: var(--border); margin: 20px 0; }
+.mt-18 { margin-top: 18px; }
+.mt-24 { margin-top: 24px; }
+.flex-between { display: flex; align-items: center; justify-content: space-between; }
+.flex-center  { display: flex; align-items: center; }
+.gap-8  { gap: 8px; }
+.gap-12 { gap: 12px; }
+
+.chip-filter {
+  padding: 6px 14px; border-radius: 99px; cursor: pointer;
+  font-family: 'Montserrat', sans-serif; font-size: .76rem; font-weight: 700;
+  background: var(--surface); border: 1px solid var(--border);
+  color: var(--text-mid); transition: all var(--trans);
+}
+.chip-filter.active {
+  background: var(--navy); color: var(--white); border-color: var(--navy);
+}
+.chip-filter:hover:not(.active) { border-color: var(--navy); color: var(--navy); }
+
+.section-sep {
+  display: flex; align-items: center; gap: 12px;
+  margin: 28px 0 18px;
+}
+.section-sep h4 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800; font-size: .85rem;
+  color: var(--navy); white-space: nowrap;
+}
+.section-sep::after {
+  content: ''; flex: 1; height: 1px;
+  background: var(--border);
+}
+
+/* Toast */
+.toast {
+  position: fixed; bottom: 28px; right: 28px;
+  background: var(--navy);
+  color: #fff;
+  font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: .85rem;
+  padding: 13px 20px; border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(9,26,77,0.35);
+  opacity: 0; transform: translateY(12px);
+  transition: all .3s ease;
+  z-index: 999; pointer-events: none;
+  display: flex; align-items: center; gap: 10px;
+}
+.toast.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
+.toast.success .t-dot { background: #18a05a; }
+.toast.error   .t-dot { background: #d93b2b; }
+.t-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--gold); flex-shrink: 0; }
+
+/* Mobile overlay */
+.sb-overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(9,26,77,0.45);
+  z-index: 150; backdrop-filter: blur(2px);
+}
+@media (max-width: 900px) {
+  .sidebar { left: calc(-1 * var(--sidebar-w)); transition: left var(--trans); }
+  body.sb-open .sidebar { left: 0; }
+  body.sb-open .sb-overlay { display: block; }
+  .topbar { left: 0 !important; }
+  .main { margin-left: 0 !important; padding: 20px 16px; }
+  .cols-4 { grid-template-columns: 1fr 1fr; }
+  .cols-3 { grid-template-columns: 1fr; }
+  .cols-2 { grid-template-columns: 1fr; }
+  .form-row { grid-template-columns: 1fr; }
+  .kanban { grid-template-columns: 1fr; }
+  .schedule-grid { grid-template-columns: 60px repeat(5, 1fr); font-size: .68rem; }
+  .search-box { display: none; }
+}
+@media (max-width: 480px) {
+  .cols-4 { grid-template-columns: 1fr 1fr; }
+  .book-grid { grid-template-columns: repeat(2,1fr); }
+  .classroom-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ════ SIDEBAR ════ -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <div class="brand-logo">
+      <img src="logo_cbs.png" alt="CBS" onerror="this.textContent='🎓'; this.style.fontSize='1.2rem'">
+    </div>
+    <div class="brand-text">
+      Colegio Bautista
+      <span>SHALOM · Panel CBS</span>
+    </div>
+  </div>
+
+  <nav class="sidebar-nav">
+    <div class="sb-section-title">Principal</div>
+    <div class="nav-item active" data-panel="inicio" onclick="goTo('inicio', this)">
+      <span class="nav-icon">🏠</span>
+      <span class="sb-label">Inicio</span>
+    </div>
+
+    <div class="sb-section-title">Académico</div>
+    <div class="nav-item" data-panel="notas" onclick="goTo('notas', this)">
+      <span class="nav-icon">📊</span>
+      <span class="sb-label">Mis Notas</span>
+    </div>
+    <div class="nav-item" data-panel="horario" onclick="goTo('horario', this)">
+      <span class="nav-icon">🗓️</span>
+      <span class="sb-label">Horario</span>
+    </div>
+    <div class="nav-item" data-panel="tareas" onclick="goTo('tareas', this)">
+      <span class="nav-icon">✅</span>
+      <span class="sb-label">Tareas</span>
+      <span class="sb-badge">5</span>
+    </div>
+    <div class="nav-item" data-panel="classroom" onclick="goTo('classroom', this)">
+      <span class="nav-icon">💻</span>
+      <span class="sb-label">Classroom</span>
+    </div>
+
+    <div class="sb-section-title">Recursos</div>
+    <div class="nav-item" data-panel="biblioteca" onclick="goTo('biblioteca', this)">
+      <span class="nav-icon">📚</span>
+      <span class="sb-label">Biblioteca</span>
+    </div>
+    <div class="nav-item" data-panel="noticias" onclick="goTo('noticias', this)">
+      <span class="nav-icon">📢</span>
+      <span class="sb-label">Noticias & Eventos</span>
+      <span class="sb-badge">3</span>
+    </div>
+
+    <div class="sb-section-title">Gestión</div>
+    <div class="nav-item" data-panel="inasistencias" onclick="goTo('inasistencias', this)">
+      <span class="nav-icon">📋</span>
+      <span class="sb-label">Inasistencias</span>
+    </div>
+  </nav>
+
+  <div class="sidebar-footer">
+    <div class="sidebar-user">
+      <div class="user-avatar">MG</div>
+      <div class="user-info brand-text">
+        <div class="user-name">María García</div>
+        <div class="user-role">4to Básico · Sección A</div>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<!-- Mobile overlay -->
+<div class="sb-overlay" id="sbOverlay" onclick="closeSb()"></div>
+
+<!-- ════ TOPBAR ════ -->
+<header class="topbar">
+  <button class="toggle-btn" onclick="toggleSb()" aria-label="Menú">
+    <svg width="18" height="14" viewBox="0 0 18 14" fill="none">
+      <rect width="18" height="2" rx="1" fill="currentColor"/>
+      <rect y="6" width="12" height="2" rx="1" fill="currentColor"/>
+      <rect y="12" width="18" height="2" rx="1" fill="currentColor"/>
+    </svg>
+  </button>
+  <div>
+    <div class="topbar-title" id="topbarTitle">Inicio</div>
+  </div>
+  <div class="topbar-spacer"></div>
+  <div class="search-box">
+    <span class="search-icon">🔍</span>
+    <input type="text" placeholder="Buscar...">
+  </div>
+  <div class="topbar-icon-btn" title="Notificaciones">
+    🔔<span class="notif-dot"></span>
+  </div>
+  <div class="topbar-icon-btn" title="Perfil" onclick="showToast('Perfil del estudiante', 'success')">
+    👤
+  </div>
+</header>
+
+<!-- ════ MAIN ════ -->
+<main class="main" id="main">
+
+<!-- ─── INICIO ─── -->
+<div class="panel active" id="panel-inicio">
+  <div class="page-header">
+    <div class="page-title-group">
+      <div class="page-label">Panel Estudiantil</div>
+      <h1 class="page-title">¡Buen día, María! 👋</h1>
+      <p class="page-desc">Viernes, 4 de abril de 2026 · 4to Básico · Sección A</p>
+    </div>
+  </div>
+
+  <div class="welcome-banner">
+    <div class="welcome-text">
+      <h2>Bienvenida a tu <span>Panel CBS</span></h2>
+      <p>Tienes 5 tareas pendientes y 2 exámenes esta semana.</p>
+      <div class="welcome-chips">
+        <span class="w-chip">📅 Examen Matemática – Lun 7 abr</span>
+        <span class="w-chip">📝 Entrega Ciencias – Mié 9 abr</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="cards-row cols-4" style="margin-bottom:22px">
+    <div class="stat-card">
+      <div class="stat-icon gold">📊</div>
+      <div>
+        <div class="stat-num">87<span>%</span></div>
+        <div class="stat-label">Promedio General</div>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon green">✅</div>
+      <div>
+        <div class="stat-num">12</div>
+        <div class="stat-label">Tareas Completadas</div>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon navy">📋</div>
+      <div>
+        <div class="stat-num">5</div>
+        <div class="stat-label">Tareas Pendientes</div>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon blue">🏅</div>
+      <div>
+        <div class="stat-num">96<span>%</span></div>
+        <div class="stat-label">Asistencia</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cards-row cols-2-1">
+    <!-- Próximos eventos -->
+    <div class="card">
+      <div class="card-header">
+        <h3>Próximos Eventos</h3>
+        <span style="font-size:.8rem;color:var(--text-soft);cursor:pointer" onclick="goTo('noticias', document.querySelector('[data-panel=noticias]'))">Ver todos →</span>
+      </div>
+      <div class="card-body">
+        <div class="news-list">
+          <div class="news-item" style="padding:12px 14px">
+            <div class="news-date-box"><div class="news-day">07</div><div class="news-month">Abr</div></div>
+            <div class="news-content">
+              <span class="news-tag tag-examen">Examen</span>
+              <div class="news-title">Matemática – 1er Parcial</div>
+              <div class="news-desc">Cubre álgebra básica y geometría. Aula 204.</div>
+            </div>
+          </div>
+          <div class="news-item" style="padding:12px 14px">
+            <div class="news-date-box"><div class="news-day">10</div><div class="news-month">Abr</div></div>
+            <div class="news-content">
+              <span class="news-tag tag-deporte">Deporte</span>
+              <div class="news-title">Torneo Interclases Fútbol</div>
+              <div class="news-desc">Cancha principal, 14:00 hrs.</div>
+            </div>
+          </div>
+          <div class="news-item" style="padding:12px 14px">
+            <div class="news-date-box"><div class="news-day">15</div><div class="news-month">Abr</div></div>
+            <div class="news-content">
+              <span class="news-tag tag-cultural">Cultural</span>
+              <div class="news-title">Festival de Arte Primavera</div>
+              <div class="news-desc">Salón de actos, 10:00 hrs.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mini calendario -->
+    <div class="card">
+      <div class="card-header"><h3>📅 Abril 2026</h3></div>
+      <div class="card-body">
+        <div class="mini-cal">
+          <div class="cal-grid">
+            <div class="cal-day-name">L</div><div class="cal-day-name">M</div>
+            <div class="cal-day-name">X</div><div class="cal-day-name">J</div>
+            <div class="cal-day-name">V</div><div class="cal-day-name">S</div>
+            <div class="cal-day-name">D</div>
+            <div class="cal-day other-month">31</div>
+            <div class="cal-day">1</div><div class="cal-day">2</div>
+            <div class="cal-day">3</div><div class="cal-day today">4</div>
+            <div class="cal-day">5</div><div class="cal-day">6</div>
+            <div class="cal-day has-event">7</div><div class="cal-day">8</div>
+            <div class="cal-day has-event">9</div><div class="cal-day has-event">10</div>
+            <div class="cal-day">11</div><div class="cal-day">12</div><div class="cal-day">13</div>
+            <div class="cal-day">14</div><div class="cal-day has-event">15</div>
+            <div class="cal-day">16</div><div class="cal-day">17</div>
+            <div class="cal-day">18</div><div class="cal-day">19</div><div class="cal-day">20</div>
+            <div class="cal-day">21</div><div class="cal-day">22</div>
+            <div class="cal-day">23</div><div class="cal-day">24</div>
+            <div class="cal-day">25</div><div class="cal-day">26</div><div class="cal-day">27</div>
+            <div class="cal-day">28</div><div class="cal-day">29</div>
+            <div class="cal-day">30</div><div class="cal-day other-month">1</div>
+            <div class="cal-day other-month">2</div><div class="cal-day other-month">3</div><div class="cal-day other-month">4</div>
+          </div>
+          <div style="margin-top:14px; display:flex; align-items:center; gap:6px; font-size:.75rem; color:var(--text-soft);">
+            <span style="width:8px;height:8px;border-radius:50%;background:var(--gold);display:inline-block"></span> Eventos programados
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── NOTAS ─── -->
+<div class="panel" id="panel-notas">
+  <div class="page-header">
+    <div>
+      <div class="page-label">Académico</div>
+      <h1 class="page-title">Mis Notas</h1>
+      <p class="page-desc">Ciclo Escolar 2026 · 4to Básico</p>
+    </div>
+  </div>
+
+  <div class="bim-tabs">
+    <div class="bim-tab active" onclick="setBim(this,'b1')">1er Bimestre</div>
+    <div class="bim-tab" onclick="setBim(this,'b2')">2do Bimestre</div>
+    <div class="bim-tab" onclick="setBim(this,'b3')">3er Bimestre</div>
+    <div class="bim-tab" onclick="setBim(this,'b4')">4to Bimestre</div>
+    <div class="bim-tab" onclick="setBim(this,'final')">Final</div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <h3>Calificaciones – 1er Bimestre</h3>
+      <div style="font-family:'Montserrat',sans-serif;font-size:.8rem;color:var(--text-soft)">Promedio: <strong style="color:var(--navy)">87.3</strong></div>
+    </div>
+    <div class="card-body" style="padding:0">
+      <table class="grade-table">
+        <thead>
+          <tr>
+            <th>Materia</th>
+            <th>Z1</th><th>Z2</th><th>Z3</th>
+            <th>Examen</th>
+            <th>Final</th>
+            <th>Progreso</th>
+            <th>Estado</th>
+          </tr>
+        </thead>
+        <tbody id="grades-tbody">
+          <tr>
+            <td><span class="subject-dot" style="background:#0d2260"></span><strong>Matemática</strong></td>
+            <td>90</td><td>88</td><td>92</td><td>85</td>
+            <td><span class="grade-pill grade-a">89</span></td>
+            <td><div class="progress-bar"><div class="progress-fill" style="width:89%;background:linear-gradient(90deg,#18a05a,#0d5c38)"></div></div></td>
+            <td><span class="sb-badge" style="background:rgba(24,160,90,0.12);color:#18a05a">Aprobado</span></td>
+          </tr>
+          <tr>
+            <td><span class="subject-dot" style="background:#1e5fc2"></span><strong>Comunicación y Lenguaje</strong></td>
+            <td>85</td><td>80</td><td>88</td><td>82</td>
+            <td><span class="grade-pill grade-b">84</span></td>
+            <td><div class="progress-bar"><div class="progress-fill" style="width:84%;background:linear-gradient(90deg,#1e5fc2,#0d3880)"></div></div></td>
+            <td><span class="sb-badge" style="background:rgba(24,160,90,0.12);color:#18a05a">Aprobado</span></td>
+          </tr>
+          <tr>
+            <td><span class="subject-dot" style="background:#18a05a"></span><strong>Ciencias Naturales</strong></td>
+            <td>95</td><td>92</td><td>90</td><td>94</td>
+            <td><span class="grade-pill grade-a">93</span></td>
+            <td><div class="progress-bar"><div class="progress-fill" style="width:93%;background:linear-gradient(90deg,#18a05a,#0d5c38)"></div></div></td>
+            <td><span class="sb-badge" style="background:rgba(24,160,90,0.12);color:#18a05a">Aprobado</span></td>
+          </tr>
+          <tr>
+            <td><span class="subject-dot" style="background:#f5a800"></span><strong>Estudios Sociales</strong></td>
+            <td>78</td><td>75</td><td>80</td><td>70</td>
+            <td><span class="grade-pill grade-c">76</span></td>
+            <td><div class="progress-bar"><div class="progress-fill" style="width:76%;background:linear-gradient(90deg,#f5a800,#c47e00)"></div></div></td>
+            <td><span class="sb-badge" style="background:rgba(245,168,0,0.12);color:#9a6d00">Regular</span></td>
+          </tr>
+          <tr>
+            <td><span class="subject-dot" style="background:#d93b2b"></span><strong>Física</strong></td>
+            <td>88</td><td>84</td><td>90</td><td>86</td>
+            <td><span class="grade-pill grade-a">87</span></td>
+            <td><div class="progress-bar"><div class="progress-fill" style="width:87%;background:linear-gradient(90deg,#d93b2b,#8f1e14)"></div></div></td>
+            <td><span class="sb-badge" style="background:rgba(24,160,90,0.12);color:#18a05a">Aprobado</span></td>
+          </tr>
+          <tr>
+            <td><span class="subject-dot" style="background:#9333ea"></span><strong>Inglés</strong></td>
+            <td>92</td><td>95</td><td>91</td><td>93</td>
+            <td><span class="grade-pill grade-a">93</span></td>
+            <td><div class="progress-bar"><div class="progress-fill" style="width:93%;background:linear-gradient(90deg,#9333ea,#5b1f96)"></div></div></td>
+            <td><span class="sb-badge" style="background:rgba(24,160,90,0.12);color:#18a05a">Aprobado</span></td>
+          </tr>
+          <tr>
+            <td><span class="subject-dot" style="background:#ea580c"></span><strong>Ed. Física</strong></td>
+            <td>90</td><td>88</td><td>92</td><td>—</td>
+            <td><span class="grade-pill grade-a">90</span></td>
+            <td><div class="progress-bar"><div class="progress-fill" style="width:90%;background:linear-gradient(90deg,#ea580c,#7c2b05)"></div></div></td>
+            <td><span class="sb-badge" style="background:rgba(24,160,90,0.12);color:#18a05a">Aprobado</span></td>
+          </tr>
+          <tr>
+            <td><span class="subject-dot" style="background:#d97706"></span><strong>Religión</strong></td>
+            <td>98</td><td>96</td><td>99</td><td>97</td>
+            <td><span class="grade-pill grade-a">98</span></td>
+            <td><div class="progress-bar"><div class="progress-fill" style="width:98%;background:linear-gradient(90deg,#f5a800,#0d2260)"></div></div></td>
+            <td><span class="sb-badge" style="background:rgba(24,160,90,0.12);color:#18a05a">Excelente</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ─── HORARIO ─── -->
+<div class="panel" id="panel-horario">
+  <div class="page-header">
+    <div>
+      <div class="page-label">Académico</div>
+      <h1 class="page-title">Horario de Clases</h1>
+      <p class="page-desc">4to Básico · Sección A · Ciclo 2026</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <h3>Semana Actual</h3>
+      <div class="flex-center gap-8">
+        <div class="chip-filter active" onclick="setSchedView('semana',this)">Semana</div>
+        <div class="chip-filter" onclick="setSchedView('hoy',this)">Hoy</div>
+      </div>
+    </div>
+    <div class="card-body" style="overflow-x:auto; padding:16px">
+      <div class="schedule-grid">
+        <!-- Headers -->
+        <div></div>
+        <div class="sched-header">Lunes</div>
+        <div class="sched-header">Martes</div>
+        <div class="sched-header">Miércoles</div>
+        <div class="sched-header">Jueves</div>
+        <div class="sched-header">Viernes</div>
+
+        <!-- 7:00 -->
+        <div class="sched-time">7:00<br>8:00</div>
+        <div class="sched-cell s-mat"><div class="sched-subject">Matemática</div><div class="sched-teacher">Prof. Ramírez</div><div class="sched-room">Aula 204</div></div>
+        <div class="sched-cell s-len"><div class="sched-subject">Lenguaje</div><div class="sched-teacher">Prof. López</div><div class="sched-room">Aula 106</div></div>
+        <div class="sched-cell s-bio"><div class="sched-subject">Ciencias</div><div class="sched-teacher">Prof. Torres</div><div class="sched-room">Lab. Bio</div></div>
+        <div class="sched-cell s-ing"><div class="sched-subject">Inglés</div><div class="sched-teacher">Miss Johnson</div><div class="sched-room">Aula 301</div></div>
+        <div class="sched-cell s-rel"><div class="sched-subject">Religión</div><div class="sched-teacher">Prof. Morales</div><div class="sched-room">Aula 102</div></div>
+
+        <!-- 8:00 -->
+        <div class="sched-time">8:00<br>9:00</div>
+        <div class="sched-cell s-his"><div class="sched-subject">Est. Sociales</div><div class="sched-teacher">Prof. Cifuentes</div><div class="sched-room">Aula 205</div></div>
+        <div class="sched-cell s-fis"><div class="sched-subject">Física</div><div class="sched-teacher">Prof. Vasquez</div><div class="sched-room">Lab. Física</div></div>
+        <div class="sched-cell s-mat"><div class="sched-subject">Matemática</div><div class="sched-teacher">Prof. Ramírez</div><div class="sched-room">Aula 204</div></div>
+        <div class="sched-cell s-len"><div class="sched-subject">Lenguaje</div><div class="sched-teacher">Prof. López</div><div class="sched-room">Aula 106</div></div>
+        <div class="sched-cell s-bio"><div class="sched-subject">Ciencias</div><div class="sched-teacher">Prof. Torres</div><div class="sched-room">Lab. Bio</div></div>
+
+        <!-- 9:00 RECESO -->
+        <div class="sched-time">9:00<br>9:20</div>
+        <div class="sched-cell empty" style="text-align:center;color:var(--text-soft);font-size:.75rem">☕ Receso</div>
+        <div class="sched-cell empty" style="text-align:center;color:var(--text-soft);font-size:.75rem">☕ Receso</div>
+        <div class="sched-cell empty" style="text-align:center;color:var(--text-soft);font-size:.75rem">☕ Receso</div>
+        <div class="sched-cell empty" style="text-align:center;color:var(--text-soft);font-size:.75rem">☕ Receso</div>
+        <div class="sched-cell empty" style="text-align:center;color:var(--text-soft);font-size:.75rem">☕ Receso</div>
+
+        <!-- 9:20 -->
+        <div class="sched-time">9:20<br>10:20</div>
+        <div class="sched-cell s-ing"><div class="sched-subject">Inglés</div><div class="sched-teacher">Miss Johnson</div><div class="sched-room">Aula 301</div></div>
+        <div class="sched-cell s-his"><div class="sched-subject">Est. Sociales</div><div class="sched-teacher">Prof. Cifuentes</div><div class="sched-room">Aula 205</div></div>
+        <div class="sched-cell s-fis"><div class="sched-subject">Física</div><div class="sched-teacher">Prof. Vasquez</div><div class="sched-room">Lab. Física</div></div>
+        <div class="sched-cell s-tec"><div class="sched-subject">Tecnología</div><div class="sched-teacher">Prof. Méndez</div><div class="sched-room">Lab. Cómp.</div></div>
+        <div class="sched-cell s-mat"><div class="sched-subject">Matemática</div><div class="sched-teacher">Prof. Ramírez</div><div class="sched-room">Aula 204</div></div>
+
+        <!-- 10:20 -->
+        <div class="sched-time">10:20<br>11:20</div>
+        <div class="sched-cell s-bio"><div class="sched-subject">Ciencias</div><div class="sched-teacher">Prof. Torres</div><div class="sched-room">Lab. Bio</div></div>
+        <div class="sched-cell s-ing"><div class="sched-subject">Inglés</div><div class="sched-teacher">Miss Johnson</div><div class="sched-room">Aula 301</div></div>
+        <div class="sched-cell s-len"><div class="sched-subject">Lenguaje</div><div class="sched-teacher">Prof. López</div><div class="sched-room">Aula 106</div></div>
+        <div class="sched-cell s-rel"><div class="sched-subject">Religión</div><div class="sched-teacher">Prof. Morales</div><div class="sched-room">Aula 102</div></div>
+        <div class="sched-cell s-his"><div class="sched-subject">Est. Sociales</div><div class="sched-teacher">Prof. Cifuentes</div><div class="sched-room">Aula 205</div></div>
+
+        <!-- 11:20 ALMUERZO -->
+        <div class="sched-time">11:20<br>12:00</div>
+        <div class="sched-cell empty" style="text-align:center;color:var(--text-soft);font-size:.75rem">🍽 Almuerzo</div>
+        <div class="sched-cell empty" style="text-align:center;color:var(--text-soft);font-size:.75rem">🍽 Almuerzo</div>
+        <div class="sched-cell empty" style="text-align:center;color:var(--text-soft);font-size:.75rem">🍽 Almuerzo</div>
+        <div class="sched-cell empty" style="text-align:center;color:var(--text-soft);font-size:.75rem">🍽 Almuerzo</div>
+        <div class="sched-cell empty" style="text-align:center;color:var(--text-soft);font-size:.75rem">🍽 Almuerzo</div>
+
+        <!-- 12:00 -->
+        <div class="sched-time">12:00<br>13:00</div>
+        <div class="sched-cell s-edu"><div class="sched-subject">Ed. Física</div><div class="sched-teacher">Prof. Santos</div><div class="sched-room">Cancha</div></div>
+        <div class="sched-cell s-tec"><div class="sched-subject">Tecnología</div><div class="sched-teacher">Prof. Méndez</div><div class="sched-room">Lab. Cómp.</div></div>
+        <div class="sched-cell s-his"><div class="sched-subject">Est. Sociales</div><div class="sched-teacher">Prof. Cifuentes</div><div class="sched-room">Aula 205</div></div>
+        <div class="sched-cell s-fis"><div class="sched-subject">Física</div><div class="sched-teacher">Prof. Vasquez</div><div class="sched-room">Lab. Física</div></div>
+        <div class="sched-cell s-edu"><div class="sched-subject">Ed. Física</div><div class="sched-teacher">Prof. Santos</div><div class="sched-room">Cancha</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── NOTICIAS ─── -->
+<div class="panel" id="panel-noticias">
+  <div class="page-header">
+    <div>
+      <div class="page-label">Recursos</div>
+      <h1 class="page-title">Noticias & Eventos</h1>
+      <p class="page-desc">Mantente al día con todo lo que pasa en el CBS.</p>
+    </div>
+  </div>
+
+  <div class="flex-center gap-8" style="margin-bottom:22px; flex-wrap:wrap;">
+    <div class="chip-filter active" onclick="filterNews('all',this)">Todos</div>
+    <div class="chip-filter" onclick="filterNews('examen',this)">📝 Exámenes</div>
+    <div class="chip-filter" onclick="filterNews('deporte',this)">⚽ Deportes</div>
+    <div class="chip-filter" onclick="filterNews('cultural',this)">🎭 Cultural</div>
+    <div class="chip-filter" onclick="filterNews('general',this)">📌 General</div>
+  </div>
+
+  <div class="news-list" id="news-list">
+    <div class="news-item" data-tag="examen">
+      <div class="news-date-box"><div class="news-day">07</div><div class="news-month">Abr</div></div>
+      <div class="news-content">
+        <span class="news-tag tag-examen">Examen</span>
+        <div class="news-title">Primer Parcial de Matemática</div>
+        <div class="news-desc">El examen cubrirá álgebra básica, ecuaciones lineales y geometría plana. Aula 204. Se debe llevar calculadora científica y regla.</div>
+        <div class="news-meta"><span>⏰ 7:00 AM</span><span>📍 Aula 204</span></div>
+      </div>
+    </div>
+    <div class="news-item" data-tag="deporte">
+      <div class="news-date-box"><div class="news-day">10</div><div class="news-month">Abr</div></div>
+      <div class="news-content">
+        <span class="news-tag tag-deporte">Deportes</span>
+        <div class="news-title">Torneo Interclases de Fútbol 2026</div>
+        <div class="news-desc">¡Arranca el campeonato! La sección A jugará contra la B a las 14:00 hrs en la cancha principal. ¡Ven a apoyar!</div>
+        <div class="news-meta"><span>⏰ 14:00 hrs</span><span>📍 Cancha Principal</span></div>
+      </div>
+    </div>
+    <div class="news-item" data-tag="cultural">
+      <div class="news-date-box"><div class="news-day">15</div><div class="news-month">Abr</div></div>
+      <div class="news-content">
+        <span class="news-tag tag-cultural">Cultural</span>
+        <div class="news-title">Festival de Arte Primavera CBS</div>
+        <div class="news-desc">Exhibición de proyectos artísticos de todos los grados. Participación de la banda del colegio y coro estudiantil. Entrada libre para padres.</div>
+        <div class="news-meta"><span>⏰ 10:00 AM</span><span>📍 Salón de Actos</span></div>
+      </div>
+    </div>
+    <div class="news-item" data-tag="examen">
+      <div class="news-date-box"><div class="news-day">17</div><div class="news-month">Abr</div></div>
+      <div class="news-content">
+        <span class="news-tag tag-examen">Examen</span>
+        <div class="news-title">Examen de Inglés – Listening & Reading</div>
+        <div class="news-desc">Evaluación del módulo 3. Se requiere traer audífonos para la sección de listening. Material: Unit 3 y 4 del libro.</div>
+        <div class="news-meta"><span>⏰ 9:20 AM</span><span>📍 Aula 301</span></div>
+      </div>
+    </div>
+    <div class="news-item" data-tag="general">
+      <div class="news-date-box"><div class="news-day">22</div><div class="news-month">Abr</div></div>
+      <div class="news-content">
+        <span class="news-tag tag-general">General</span>
+        <div class="news-title">Día del Planeta – Campaña de Reciclaje</div>
+        <div class="news-desc">El CBS se une al Día de la Tierra con una campaña de reciclaje y conciencia ambiental. Actividades para todos los grados durante el día.</div>
+        <div class="news-meta"><span>⏰ Todo el día</span><span>📍 Patio Central</span></div>
+      </div>
+    </div>
+    <div class="news-item" data-tag="deporte">
+      <div class="news-date-box"><div class="news-day">08</div><div class="news-month">Jul</div></div>
+      <div class="news-content">
+        <span class="news-tag tag-deporte">Deportes</span>
+        <div class="news-title">Día Deportivo Anual 2026</div>
+        <div class="news-desc">El gran evento deportivo del año. Atletismo, básquetbol, voleibol y más. ¡Inscripciones abiertas hasta el 30 de junio!</div>
+        <div class="news-meta"><span>⏰ 8:00 AM</span><span>📍 Instalaciones CBS</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── INASISTENCIAS ─── -->
+<div class="panel" id="panel-inasistencias">
+  <div class="page-header">
+    <div>
+      <div class="page-label">Gestión</div>
+      <h1 class="page-title">Registrar Inasistencia</h1>
+      <p class="page-desc">Notifica tu ausencia con anticipación para tramitar justificante.</p>
+    </div>
+  </div>
+
+  <div class="cards-row cols-2">
+    <!-- Formulario -->
+    <div class="card">
+      <div class="card-header"><h3>📋 Nueva Solicitud</h3></div>
+      <div class="card-body">
+        <div class="form-grid">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Nombre Completo</label>
+              <input type="text" class="form-input" value="María García Pérez" readonly style="background:var(--surface)">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Código Estudiantil</label>
+              <input type="text" class="form-input" value="CBS-2026-0245" readonly style="background:var(--surface)">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Fecha de Ausencia</label>
+              <input type="date" class="form-input" id="inas-fecha">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Tipo de Inasistencia</label>
+              <select class="form-select" id="inas-tipo">
+                <option>Enfermedad</option>
+                <option>Cita médica</option>
+                <option>Emergencia familiar</option>
+                <option>Evento deportivo</option>
+                <option>Otro</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Materias Afectadas</label>
+            <select class="form-select" id="inas-materias" multiple style="height:80px">
+              <option>Matemática</option>
+              <option>Comunicación y Lenguaje</option>
+              <option>Ciencias Naturales</option>
+              <option>Estudios Sociales</option>
+              <option>Física</option>
+              <option>Inglés</option>
+              <option>Ed. Física</option>
+              <option>Religión</option>
+            </select>
+            <span style="font-size:.75rem;color:var(--text-soft)">Mantén Ctrl para seleccionar varias</span>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Motivo Detallado</label>
+            <textarea class="form-textarea" id="inas-motivo" placeholder="Describe el motivo de tu ausencia..."></textarea>
+          </div>
+          <div class="file-drop" onclick="showToast('Selecciona un archivo adjunto','success')">
+            <div class="drop-icon">📎</div>
+            <p><span>Sube un justificante</span> o arrástralo aquí</p>
+            <p style="font-size:.75rem;margin-top:4px">PDF, JPG o PNG · Máx 5 MB</p>
+          </div>
+          <button class="btn-submit" onclick="submitInasistencia()">Enviar Solicitud →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Historial -->
+    <div class="card">
+      <div class="card-header"><h3>📜 Historial 2026</h3>
+        <div style="font-size:.8rem;color:var(--text-soft)">3 inasistencias registradas</div>
+      </div>
+      <div class="card-body">
+        <div class="inasistencia-history">
+          <div class="inas-item">
+            <div class="inas-status inas-approved"></div>
+            <div class="inas-text">
+              <div class="inas-date">Lunes, 10 de marzo · Enfermedad</div>
+              <div class="inas-reason">Fiebre alta – presentó constancia médica</div>
+            </div>
+            <span class="inas-badge badge-approved">Aprobada</span>
+          </div>
+          <div class="inas-item">
+            <div class="inas-status inas-approved"></div>
+            <div class="inas-text">
+              <div class="inas-date">Miércoles, 19 de marzo · Cita médica</div>
+              <div class="inas-reason">Cita de ortodoncia – con justificante</div>
+            </div>
+            <span class="inas-badge badge-approved">Aprobada</span>
+          </div>
+          <div class="inas-item">
+            <div class="inas-status inas-pending"></div>
+            <div class="inas-text">
+              <div class="inas-date">Viernes, 28 de marzo · Emergencia familiar</div>
+              <div class="inas-reason">Pendiente de documentación adicional</div>
+            </div>
+            <span class="inas-badge badge-pending">Pendiente</span>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;text-align:center">
+          <div style="background:rgba(24,160,90,0.07);border-radius:10px;padding:14px 8px">
+            <div style="font-family:'Montserrat',sans-serif;font-weight:900;font-size:1.5rem;color:#18a05a">2</div>
+            <div style="font-size:.72rem;color:var(--text-soft);font-family:'Montserrat',sans-serif;font-weight:700;text-transform:uppercase">Aprobadas</div>
+          </div>
+          <div style="background:rgba(245,168,0,0.08);border-radius:10px;padding:14px 8px">
+            <div style="font-family:'Montserrat',sans-serif;font-weight:900;font-size:1.5rem;color:#9a6d00">1</div>
+            <div style="font-size:.72rem;color:var(--text-soft);font-family:'Montserrat',sans-serif;font-weight:700;text-transform:uppercase">Pendientes</div>
+          </div>
+          <div style="background:rgba(217,59,43,0.07);border-radius:10px;padding:14px 8px">
+            <div style="font-family:'Montserrat',sans-serif;font-weight:900;font-size:1.5rem;color:#d93b2b">0</div>
+            <div style="font-size:.72rem;color:var(--text-soft);font-family:'Montserrat',sans-serif;font-weight:700;text-transform:uppercase">Rechazadas</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── BIBLIOTECA ─── -->
+<div class="panel" id="panel-biblioteca">
+  <div class="page-header">
+    <div>
+      <div class="page-label">Recursos</div>
+      <h1 class="page-title">Biblioteca Digital</h1>
+      <p class="page-desc">Accede y descarga tus libros de texto del ciclo escolar.</p>
+    </div>
+  </div>
+
+  <div class="flex-center gap-8" style="margin-bottom:22px; flex-wrap:wrap;">
+    <div class="chip-filter active">Todos</div>
+    <div class="chip-filter">Matemática</div>
+    <div class="chip-filter">Ciencias</div>
+    <div class="chip-filter">Sociales</div>
+    <div class="chip-filter">Idiomas</div>
+  </div>
+
+  <div class="book-grid">
+    <div class="book-card" style="animation-delay:.05s">
+      <div class="book-cover" style="background:rgba(13,34,96,0.07)"><div class="cover-bg" style="background:var(--navy)"></div>📐</div>
+      <div class="book-info">
+        <div class="book-title">Matemática 4to Básico</div>
+        <div class="book-sub">Ciclo 2026 · 320 págs</div>
+        <div class="book-actions">
+          <button class="btn-book view" onclick="showToast('Abriendo libro...','success')">👁 Ver</button>
+          <button class="btn-book dl" onclick="showToast('Descargando PDF...','success')">⬇ PDF</button>
+        </div>
+      </div>
+    </div>
+    <div class="book-card" style="animation-delay:.10s">
+      <div class="book-cover" style="background:rgba(30,95,194,0.07)"><div class="cover-bg" style="background:#1e5fc2"></div>📖</div>
+      <div class="book-info">
+        <div class="book-title">Comunicación y Lenguaje L1</div>
+        <div class="book-sub">Ciclo 2026 · 280 págs</div>
+        <div class="book-actions">
+          <button class="btn-book view" onclick="showToast('Abriendo libro...','success')">👁 Ver</button>
+          <button class="btn-book dl" onclick="showToast('Descargando PDF...','success')">⬇ PDF</button>
+        </div>
+      </div>
+    </div>
+    <div class="book-card" style="animation-delay:.15s">
+      <div class="book-cover" style="background:rgba(24,160,90,0.07)"><div class="cover-bg" style="background:#18a05a"></div>🔬</div>
+      <div class="book-info">
+        <div class="book-title">Ciencias Naturales</div>
+        <div class="book-sub">Ciclo 2026 · 260 págs</div>
+        <div class="book-actions">
+          <button class="btn-book view" onclick="showToast('Abriendo libro...','success')">👁 Ver</button>
+          <button class="btn-book dl" onclick="showToast('Descargando PDF...','success')">⬇ PDF</button>
+        </div>
+      </div>
+    </div>
+    <div class="book-card" style="animation-delay:.20s">
+      <div class="book-cover" style="background:rgba(245,168,0,0.08)"><div class="cover-bg" style="background:var(--gold)"></div>🌎</div>
+      <div class="book-info">
+        <div class="book-title">Estudios Sociales</div>
+        <div class="book-sub">Ciclo 2026 · 240 págs</div>
+        <div class="book-actions">
+          <button class="btn-book view" onclick="showToast('Abriendo libro...','success')">👁 Ver</button>
+          <button class="btn-book dl" onclick="showToast('Descargando PDF...','success')">⬇ PDF</button>
+        </div>
+      </div>
+    </div>
+    <div class="book-card" style="animation-delay:.25s">
+      <div class="book-cover" style="background:rgba(217,59,43,0.07)"><div class="cover-bg" style="background:#d93b2b"></div>⚡</div>
+      <div class="book-info">
+        <div class="book-title">Física Fundamental</div>
+        <div class="book-sub">Ciclo 2026 · 300 págs</div>
+        <div class="book-actions">
+          <button class="btn-book view" onclick="showToast('Abriendo libro...','success')">👁 Ver</button>
+          <button class="btn-book dl" onclick="showToast('Descargando PDF...','success')">⬇ PDF</button>
+        </div>
+      </div>
+    </div>
+    <div class="book-card" style="animation-delay:.30s">
+      <div class="book-cover" style="background:rgba(147,51,234,0.07)"><div class="cover-bg" style="background:#9333ea"></div>🇬🇧</div>
+      <div class="book-info">
+        <div class="book-title">English Connections 4</div>
+        <div class="book-sub">Ciclo 2026 · 200 págs</div>
+        <div class="book-actions">
+          <button class="btn-book view" onclick="showToast('Abriendo libro...','success')">👁 Ver</button>
+          <button class="btn-book dl" onclick="showToast('Descargando PDF...','success')">⬇ PDF</button>
+        </div>
+      </div>
+    </div>
+    <div class="book-card" style="animation-delay:.35s">
+      <div class="book-cover" style="background:rgba(2,132,199,0.07)"><div class="cover-bg" style="background:#0284c7"></div>💻</div>
+      <div class="book-info">
+        <div class="book-title">Tecnología e Informática</div>
+        <div class="book-sub">Ciclo 2026 · 180 págs</div>
+        <div class="book-actions">
+          <button class="btn-book view" onclick="showToast('Abriendo libro...','success')">👁 Ver</button>
+          <button class="btn-book dl" onclick="showToast('Descargando PDF...','success')">⬇ PDF</button>
+        </div>
+      </div>
+    </div>
+    <div class="book-card" style="animation-delay:.40s">
+      <div class="book-cover" style="background:rgba(245,168,0,0.07)"><div class="cover-bg" style="background:#d97706"></div>✝️</div>
+      <div class="book-info">
+        <div class="book-title">Educación Cristiana</div>
+        <div class="book-sub">Ciclo 2026 · 160 págs</div>
+        <div class="book-actions">
+          <button class="btn-book view" onclick="showToast('Abriendo libro...','success')">👁 Ver</button>
+          <button class="btn-book dl" onclick="showToast('Descargando PDF...','success')">⬇ PDF</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── TAREAS ─── -->
+<div class="panel" id="panel-tareas">
+  <div class="page-header">
+    <div>
+      <div class="page-label">Académico</div>
+      <h1 class="page-title">Cronograma de Tareas</h1>
+      <p class="page-desc">Organiza y sigue el progreso de tus asignaciones.</p>
+    </div>
+    <div class="flex-center gap-8">
+      <div class="chip-filter active" onclick="setTareaView('lista',this)">Lista</div>
+      <div class="chip-filter" onclick="setTareaView('kanban',this)">Kanban</div>
+    </div>
+  </div>
+
+  <!-- Lista view -->
+  <div id="tareas-lista">
+    <div class="section-sep"><h4>🔴 Urgentes – Esta semana</h4></div>
+    <div class="tareas-list">
+      <div class="tarea-item tarea-urgent">
+        <div class="tarea-check" onclick="toggleTarea(this)"></div>
+        <div class="tarea-main">
+          <div class="tarea-title">Resolver ejercicios álgebra – págs 88–92</div>
+          <div class="tarea-meta">
+            <span class="tarea-subject-tag">Matemática</span>
+            <span class="tarea-date">📅 Lunes 7 de abril</span>
+          </div>
+        </div>
+        <span class="urgency-badge u-red">Hoy</span>
+      </div>
+      <div class="tarea-item tarea-urgent">
+        <div class="tarea-check" onclick="toggleTarea(this)"></div>
+        <div class="tarea-main">
+          <div class="tarea-title">Informe de laboratorio – Fotosíntesis</div>
+          <div class="tarea-meta">
+            <span class="tarea-subject-tag" style="background:rgba(24,160,90,0.10);color:#18a05a">Ciencias</span>
+            <span class="tarea-date">📅 Miércoles 9 de abril</span>
+          </div>
+        </div>
+        <span class="urgency-badge u-red">2 días</span>
+      </div>
+    </div>
+
+    <div class="section-sep"><h4>🟡 Próximamente</h4></div>
+    <div class="tareas-list">
+      <div class="tarea-item tarea-soon">
+        <div class="tarea-check" onclick="toggleTarea(this)"></div>
+        <div class="tarea-main">
+          <div class="tarea-title">Essay – "My favorite place in Guatemala"</div>
+          <div class="tarea-meta">
+            <span class="tarea-subject-tag" style="background:rgba(147,51,234,0.10);color:#9333ea">Inglés</span>
+            <span class="tarea-date">📅 Viernes 11 de abril</span>
+          </div>
+        </div>
+        <span class="urgency-badge u-gold">7 días</span>
+      </div>
+      <div class="tarea-item tarea-soon">
+        <div class="tarea-check" onclick="toggleTarea(this)"></div>
+        <div class="tarea-main">
+          <div class="tarea-title">Línea de tiempo – Independencia de Guatemala</div>
+          <div class="tarea-meta">
+            <span class="tarea-subject-tag" style="background:rgba(245,168,0,0.12);color:#9a6d00">Sociales</span>
+            <span class="tarea-date">📅 Martes 15 de abril</span>
+          </div>
+        </div>
+        <span class="urgency-badge u-gold">11 días</span>
+      </div>
+      <div class="tarea-item tarea-soon">
+        <div class="tarea-check" onclick="toggleTarea(this)"></div>
+        <div class="tarea-main">
+          <div class="tarea-title">Problemas de cinemática – Ejerc. 1–20</div>
+          <div class="tarea-meta">
+            <span class="tarea-subject-tag" style="background:rgba(217,59,43,0.10);color:#d93b2b">Física</span>
+            <span class="tarea-date">📅 Jueves 17 de abril</span>
+          </div>
+        </div>
+        <span class="urgency-badge u-gold">13 días</span>
+      </div>
+    </div>
+
+    <div class="section-sep"><h4>✅ Completadas</h4></div>
+    <div class="tareas-list">
+      <div class="tarea-item tarea-ok" style="opacity:.6">
+        <div class="tarea-check done" onclick="toggleTarea(this)">✓</div>
+        <div class="tarea-main">
+          <div class="tarea-title done-text">Resumen del Capítulo 3 – Lenguaje</div>
+          <div class="tarea-meta">
+            <span class="tarea-subject-tag" style="background:rgba(30,95,194,0.10);color:#1e5fc2">Lenguaje</span>
+            <span class="tarea-date">📅 Entregada el 2 de abril</span>
+          </div>
+        </div>
+        <span class="urgency-badge u-green">Entregada</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Kanban view (hidden by default) -->
+  <div id="tareas-kanban" style="display:none">
+    <div class="kanban">
+      <div class="kanban-col">
+        <div class="kanban-col-title"><span class="k-dot" style="background:#d93b2b"></span>Por Hacer</div>
+        <div class="tareas-list">
+          <div class="tarea-item tarea-urgent" style="flex-direction:column;align-items:flex-start;gap:8px">
+            <div class="tarea-title">Ejercicios álgebra – págs 88–92</div>
+            <div class="tarea-meta"><span class="tarea-subject-tag">Matemática</span><span class="tarea-date">📅 7 abr</span></div>
+          </div>
+          <div class="tarea-item tarea-soon" style="flex-direction:column;align-items:flex-start;gap:8px">
+            <div class="tarea-title">Essay – "My favorite place"</div>
+            <div class="tarea-meta"><span class="tarea-subject-tag" style="background:rgba(147,51,234,0.10);color:#9333ea">Inglés</span><span class="tarea-date">📅 11 abr</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="kanban-col">
+        <div class="kanban-col-title"><span class="k-dot" style="background:#f5a800"></span>En Progreso</div>
+        <div class="tareas-list">
+          <div class="tarea-item tarea-urgent" style="flex-direction:column;align-items:flex-start;gap:8px">
+            <div class="tarea-title">Informe de lab – Fotosíntesis</div>
+            <div class="tarea-meta"><span class="tarea-subject-tag" style="background:rgba(24,160,90,0.10);color:#18a05a">Ciencias</span><span class="tarea-date">📅 9 abr</span></div>
+          </div>
+          <div class="tarea-item tarea-soon" style="flex-direction:column;align-items:flex-start;gap:8px">
+            <div class="tarea-title">Línea de tiempo – Independencia</div>
+            <div class="tarea-meta"><span class="tarea-subject-tag" style="background:rgba(245,168,0,0.12);color:#9a6d00">Sociales</span><span class="tarea-date">📅 15 abr</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="kanban-col">
+        <div class="kanban-col-title"><span class="k-dot" style="background:#18a05a"></span>Completadas</div>
+        <div class="tareas-list">
+          <div class="tarea-item tarea-ok" style="flex-direction:column;align-items:flex-start;gap:8px;opacity:.65">
+            <div class="tarea-title done-text">Resumen Capítulo 3 – Lenguaje</div>
+            <div class="tarea-meta"><span class="tarea-subject-tag" style="background:rgba(30,95,194,0.10);color:#1e5fc2">Lenguaje</span><span class="tarea-date" style="color:#18a05a">✓ 2 abr</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── CLASSROOM ─── -->
+<div class="panel" id="panel-classroom">
+  <div class="page-header">
+    <div>
+      <div class="page-label">Académico</div>
+      <h1 class="page-title">Google Classroom</h1>
+      <p class="page-desc">Accede directamente a tus clases y plataformas digitales.</p>
+    </div>
+  </div>
+
+  <div class="classroom-grid">
+    <div class="class-card" style="animation-delay:.05s">
+      <div class="class-banner" style="background:linear-gradient(135deg,#0d2260,#1e3799)">
+        <span class="class-banner-icon">📐</span>
+        <div class="class-banner-title">Matemática</div>
+      </div>
+      <div class="class-body">
+        <div class="class-teacher">👨‍🏫 Prof. Roberto Ramírez</div>
+        <div class="class-links">
+          <a href="#" class="class-link primary" onclick="showToast('Abriendo Classroom...','success');return false">
+            <span class="class-link-icon">🎓</span>
+            <div><div class="class-link-text">Abrir en Classroom</div><div class="class-link-sub">Ver tareas y anuncios</div></div>
+            <span class="class-link-arrow">→</span>
+          </a>
+          <a href="#" class="class-link" onclick="showToast('Iniciando Meet...','success');return false">
+            <span class="class-link-icon">📹</span>
+            <div><div class="class-link-text">Google Meet</div><div class="class-link-sub">Unirse a la clase virtual</div></div>
+            <span class="class-link-arrow">→</span>
+          </a>
+          <a href="#" class="class-link" onclick="showToast('Abriendo Drive...','success');return false">
+            <span class="class-link-icon">📁</span>
+            <div><div class="class-link-text">Material del Curso</div><div class="class-link-sub">Drive compartido</div></div>
+            <span class="class-link-arrow">→</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="class-card" style="animation-delay:.10s">
+      <div class="class-banner" style="background:linear-gradient(135deg,#1e5fc2,#1043a0)">
+        <span class="class-banner-icon">📖</span>
+        <div class="class-banner-title">Comunicación y Lenguaje</div>
+      </div>
+      <div class="class-body">
+        <div class="class-teacher">👩‍🏫 Prof. Andrea López</div>
+        <div class="class-links">
+          <a href="#" class="class-link primary" onclick="showToast('Abriendo Classroom...','success');return false">
+            <span class="class-link-icon">🎓</span>
+            <div><div class="class-link-text">Abrir en Classroom</div><div class="class-link-sub">Ver tareas y anuncios</div></div>
+            <span class="class-link-arrow">→</span>
+          </a>
+          <a href="#" class="class-link" onclick="showToast('Iniciando Meet...','success');return false">
+            <span class="class-link-icon">📹</span>
+            <div><div class="class-link-text">Google Meet</div><div class="class-link-sub">Unirse a la clase virtual</div></div>
+            <span class="class-link-arrow">→</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="class-card" style="animation-delay:.15s">
+      <div class="class-banner" style="background:linear-gradient(135deg,#18a05a,#0d6e3d)">
+        <span class="class-banner-icon">🔬</span>
+        <div class="class-banner-title">Ciencias Naturales</div>
+      </div>
+      <div class="class-body">
+        <div class="class-teacher">👨‍🏫 Prof. Carlos Torres</div>
+        <div class="class-links">
+          <a href="#" class="class-link primary" onclick="showToast('Abriendo Classroom...','success');return false">
+            <span class="class-link-icon">🎓</span>
+            <div><div class="class-link-text">Abrir en Classroom</div><div class="class-link-sub">Ver tareas y anuncios</div></div>
+            <span class="class-link-arrow">→</span>
+          </a>
+          <a href="#" class="class-link" onclick="showToast('Iniciando Meet...','success');return false">
+            <span class="class-link-icon">📹</span>
+            <div><div class="class-link-text">Google Meet</div><div class="class-link-sub">Unirse a la clase virtual</div></div>
+            <span class="class-link-arrow">→</span>
+          </a>
+          <a href="#" class="class-link" onclick="showToast('Abriendo Drive...','success');return false">
+            <span class="class-link-icon">📁</span>
+            <div><div class="class-link-text">Material del Curso</div><div class="class-link-sub">Guías y laboratorios</div></div>
+            <span class="class-link-arrow">→</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="class-card" style="animation-delay:.20s">
+      <div class="class-banner" style="background:linear-gradient(135deg,#9333ea,#5b1f96)">
+        <span class="class-banner-icon">🇬🇧</span>
+        <div class="class-banner-title">Inglés</div>
+      </div>
+      <div class="class-body">
+        <div class="class-teacher">👩‍🏫 Miss Sarah Johnson</div>
+        <div class="class-links">
+          <a href="#" class="class-link primary" onclick="showToast('Abriendo Classroom...','success');return false">
+            <span class="class-link-icon">🎓</span>
+            <div><div class="class-link-text">Abrir en Classroom</div><div class="class-link-sub">Ver tareas y anuncios</div></div>
+            <span class="class-link-arrow">→</span>
+          </a>
+          <a href="#" class="class-link" onclick="showToast('Abriendo Duolingo for Schools...','success');return false">
+            <span class="class-link-icon">🦜</span>
+            <div><div class="class-link-text">Duolingo for Schools</div><div class="class-link-sub">Práctica diaria</div></div>
+            <span class="class-link-arrow">→</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="class-card" style="animation-delay:.25s">
+      <div class="class-banner" style="background:linear-gradient(135deg,#d93b2b,#8f1e14)">
+        <span class="class-banner-icon">⚡</span>
+        <div class="class-banner-title">Física</div>
+      </div>
+      <div class="class-body">
+        <div class="class-teacher">👨‍🏫 Prof. Luis Vasquez</div>
+        <div class="class-links">
+          <a href="#" class="class-link primary" onclick="showToast('Abriendo Classroom...','success');return false">
+            <span class="class-link-icon">🎓</span>
+            <div><div class="class-link-text">Abrir en Classroom</div><div class="class-link-sub">Ver tareas y anuncios</div></div>
+            <span class="class-link-arrow">→</span>
+          </a>
+          <a href="#" class="class-link" onclick="showToast('Abriendo PhET...','success');return false">
+            <span class="class-link-icon">🧪</span>
+            <div><div class="class-link-text">PhET Simulaciones</div><div class="class-link-sub">Laboratorio virtual</div></div>
+            <span class="class-link-arrow">→</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="class-card" style="animation-delay:.30s">
+      <div class="class-banner" style="background:linear-gradient(135deg,#f5a800,#c47e00)">
+        <span class="class-banner-icon">🌎</span>
+        <div class="class-banner-title">Estudios Sociales</div>
+      </div>
+      <div class="class-body">
+        <div class="class-teacher">👩‍🏫 Prof. Rosa Cifuentes</div>
+        <div class="class-links">
+          <a href="#" class="class-link primary" onclick="showToast('Abriendo Classroom...','success');return false">
+            <span class="class-link-icon">🎓</span>
+            <div><div class="class-link-text">Abrir en Classroom</div><div class="class-link-sub">Ver tareas y anuncios</div></div>
+            <span class="class-link-arrow">→</span>
+          </a>
+          <a href="#" class="class-link" onclick="showToast('Abriendo Drive...','success');return false">
+            <span class="class-link-icon">🗺</span>
+            <div><div class="class-link-text">Mapas y Recursos</div><div class="class-link-sub">Cartografía digital</div></div>
+            <span class="class-link-arrow">→</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<!-- Toast -->
+<div class="toast" id="toast"><div class="t-dot"></div><span id="toast-msg"></span></div>
+
+<script>
+// ─── NAVIGATION ───
+const panelTitles = {
+  inicio: 'Panel de Inicio',
+  notas: 'Mis Notas',
+  horario: 'Horario de Clases',
+  noticias: 'Noticias & Eventos',
+  inasistencias: 'Registrar Inasistencia',
+  biblioteca: 'Biblioteca Digital',
+  tareas: 'Cronograma de Tareas',
+  classroom: 'Google Classroom'
+};
+
+function goTo(id, el) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  const panel = document.getElementById('panel-' + id);
+  if (panel) panel.classList.add('active');
+  if (el) el.classList.add('active');
+  document.getElementById('topbarTitle').textContent = panelTitles[id] || id;
+  // close mobile sidebar
+  if (window.innerWidth < 900) closeSb();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ─── SIDEBAR TOGGLE ───
+function toggleSb() {
+  if (window.innerWidth < 900) {
+    document.body.classList.toggle('sb-open');
+  } else {
+    document.body.classList.toggle('sb-collapsed');
+  }
+}
+function closeSb() {
+  document.body.classList.remove('sb-open');
+}
+
+// ─── BIMESTRE TABS ───
+function setBim(el, bim) {
+  document.querySelectorAll('.bim-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  showToast('Cargando ' + el.textContent + '...', 'success');
+}
+
+// ─── SCHEDULE VIEW ───
+function setSchedView(v, el) {
+  document.querySelectorAll('.card-header .chip-filter').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+}
+
+// ─── TAREAS ───
+function setTareaView(v, el) {
+  document.querySelectorAll('#panel-tareas .page-header .chip-filter').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('tareas-lista').style.display  = v === 'lista'  ? 'block' : 'none';
+  document.getElementById('tareas-kanban').style.display = v === 'kanban' ? 'block' : 'none';
+}
+
+function toggleTarea(el) {
+  el.classList.toggle('done');
+  const titleEl = el.parentElement.querySelector('.tarea-title');
+  if (el.classList.contains('done')) {
+    el.textContent = '✓';
+    titleEl.classList.add('done-text');
+    el.parentElement.style.opacity = '.55';
+    showToast('¡Tarea marcada como completada!', 'success');
+  } else {
+    el.textContent = '';
+    titleEl.classList.remove('done-text');
+    el.parentElement.style.opacity = '1';
+  }
+}
+
+// ─── NEWS FILTER ───
+function filterNews(tag, el) {
+  document.querySelectorAll('.chip-filter').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  document.querySelectorAll('.news-item').forEach(item => {
+    if (tag === 'all' || item.dataset.tag === tag) {
+      item.style.display = 'flex';
+    } else {
+      item.style.display = 'none';
+    }
+  });
+}
+
+// ─── INASISTENCIAS ───
+function submitInasistencia() {
+  const fecha = document.getElementById('inas-fecha').value;
+  const motivo = document.getElementById('inas-motivo').value;
+  if (!fecha) { showToast('Selecciona la fecha de ausencia', 'error'); return; }
+  if (!motivo) { showToast('Escribe el motivo de la ausencia', 'error'); return; }
+  showToast('✅ Solicitud enviada a administración', 'success');
+  document.getElementById('inas-fecha').value = '';
+  document.getElementById('inas-motivo').value = '';
+}
+
+// ─── TOAST ───
+let toastTimer;
+function showToast(msg, type = 'success') {
+  clearTimeout(toastTimer);
+  const t = document.getElementById('toast');
+  document.getElementById('toast-msg').textContent = msg;
+  t.className = 'toast show ' + type;
+  toastTimer = setTimeout(() => { t.className = 'toast'; }, 3000);
+}
+
+// ─── SET DATE DEFAULT ───
+window.addEventListener('load', () => {
+  const d = new Date();
+  const pad = n => String(n).padStart(2,'0');
+  const iso = d.getFullYear() + '-' + pad(d.getMonth()+1) + '-' + pad(d.getDate());
+  const fechaEl = document.getElementById('inas-fecha');
+  if (fechaEl) fechaEl.value = iso;
+});
+</script>
+</body>
+</html>
