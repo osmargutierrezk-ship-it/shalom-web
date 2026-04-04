@@ -304,7 +304,7 @@ body.sb-collapsed .main{margin-left:var(--sidebar-w-c)}
 <aside class="sidebar" id="sidebar">
   <div class="sidebar-brand">
     <div class="brand-logo">
-      <img src="logo_cbs.png" alt="CBS" onerror="this.textContent='🎓';this.style.fontSize='1.2rem'">
+      <img src="logo_shalom.png" alt="CBS" onerror="this.textContent='🎓';this.style.fontSize='1.2rem'">
     </div>
     <div class="brand-text">Colegio Bautista<span>SHALOM · Panel CBS</span></div>
   </div>
@@ -374,6 +374,7 @@ body.sb-collapsed .main{margin-left:var(--sidebar-w-c)}
       </div>
     </div>
   </div>
+  
   <div class="cards-row cols-4" style="margin-bottom:22px" id="stat-cards">
     <div class="stat-card"><div class="stat-icon gold">📊</div><div><div class="stat-num" id="stat-promedio">—</div><div class="stat-label">Promedio General</div></div></div>
     <div class="stat-card"><div class="stat-icon navy">📋</div><div><div class="stat-num" id="stat-inas">—</div><div class="stat-label">Inasistencias</div></div></div>
@@ -1001,6 +1002,7 @@ window.addEventListener('load', () => {
 
   // Cargar datos del panel inicial
   loadEventos();
+  loadInasistencias();
 });
 </script>
 </body>
