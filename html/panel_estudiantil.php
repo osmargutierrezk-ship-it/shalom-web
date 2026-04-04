@@ -751,6 +751,25 @@ function renderEventos(data) {
       : '<p style="color:var(--text-soft);text-align:center;padding:24px">No hay eventos registrados.</p>';
   }
 
+  // Marcar días en el calendario
+  const grid = document.getElementById('cal-grid');
+  if (grid) {
+    // Limpiar marcas previas
+    grid.querySelectorAll('.cal-day').forEach(day => day.classList.remove('has-event'));
+
+    data.forEach(ev => {
+      const dia = parseInt(ev.dia, 10);
+      const dayCell = Array.from(grid.querySelectorAll('.cal-day'))
+        .find(cell => parseInt(cell.textContent, 10) === dia && !cell.classList.contains('other-month'));
+      if (dayCell) {
+        dayCell.classList.add('has-event');
+        // Opcional: tooltip con título
+        dayCell.title = ev.titulo;
+      }
+    });
+  }
+}
+
   // Panel Inicio: 3 primeros
   const ini = document.getElementById('inicio-eventos');
   if (ini) {
