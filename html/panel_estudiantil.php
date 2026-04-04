@@ -768,7 +768,6 @@ function renderEventos(data) {
       }
     });
   }
-}
 
   // Panel Inicio: 3 primeros
   const ini = document.getElementById('inicio-eventos');
