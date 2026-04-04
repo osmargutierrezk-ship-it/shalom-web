@@ -348,8 +348,6 @@ body.sb-collapsed .main{margin-left:var(--sidebar-w-c)}
   </button>
   <div class="topbar-title" id="topbarTitle">Inicio</div>
   <div class="topbar-spacer"></div>
-  <div class="search-box"><span>🔍</span><input type="text" placeholder="Buscar..."></div>
-  <div class="topbar-icon-btn" title="Notificaciones">🔔<span class="notif-dot"></span></div>
   <div class="topbar-icon-btn" title="Cerrar sesión" onclick="cerrarSesion()">🚪</div>
 </header>
 
