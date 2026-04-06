@@ -27,15 +27,28 @@ try {
     }
 
     if (password_verify($password, $user['password'])) {
-        $_SESSION['usuario'] = $user['nombre'];
-        $_SESSION['nombre'] = $user['nombre'];
-        $_SESSION['codigo']  = $user['codigo'];
+
+        // Obtener grado y sección desde la tabla estudiantes
+        $stmt2 = $pdo->prepare(
+            "SELECT grado, seccion FROM estudiantes WHERE codigo = :codigo LIMIT 1"
+        );
+        $stmt2->execute([':codigo' => $user['codigo']]);
+        $estudiante = $stmt2->fetch();
+
         $_SESSION['logged_in'] = true;
+        $_SESSION['nombre']    = $user['nombre'];
+        $_SESSION['usuario']   = $user['nombre'];
+        $_SESSION['codigo']    = $user['codigo'];
+        $_SESSION['grado']     = $estudiante['grado']   ?? 'Sin asignar';
+        $_SESSION['seccion']   = $estudiante['seccion']  ?? 'A';
+
         echo "Login exitoso";
+
     } else {
         http_response_code(401);
         echo "Contraseña incorrecta";
     }
+
 } catch (PDOException $e) {
     http_response_code(500);
     echo "Error del servidor";
