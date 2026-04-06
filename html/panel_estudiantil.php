@@ -387,7 +387,7 @@ body.sb-collapsed .main{margin-left:var(--sidebar-w-c)}
     <div class="card">
       <div class="card-header"><h3 id="cal-month-title">📅 —</h3><div style="display:flex;gap:6px;align-items:center"><button style="background:var(--surface);border:1px solid var(--border);border-radius:8px;width:32px;height:32px;cursor:pointer;display:flex;align-items:center;justify-content:center" onclick="currentMonthOffset--;renderCalendar()">◀</button><button style="background:var(--surface);border:1px solid var(--border);border-radius:8px;width:32px;height:32px;cursor:pointer;display:flex;align-items:center;justify-content:center" onclick="currentMonthOffset++;renderCalendar()">▶</button></div></div>
       <div class="card-body">
-        <div id="cal-grid"></div>
+        <div class="cal-grid" id="cal-grid"></div>
         <div style="margin-top:14px;display:flex;align-items:center;gap:6px;font-size:.75rem;color:var(--text-soft)"><span style="width:8px;height:8px;border-radius:50%;background:var(--gold);display:inline-block"></span>Eventos programados</div>
       </div>
     </div>
