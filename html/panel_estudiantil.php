@@ -385,17 +385,9 @@ body.sb-collapsed .main{margin-left:var(--sidebar-w-c)}
       <div class="card-body"><div class="news-list" id="inicio-eventos"><div class="sk-row skeleton"></div><div class="sk-row skeleton"></div><div class="sk-row skeleton"></div></div></div>
     </div>
     <div class="card">
-      <div class="card-header"><h3>📅 Abril 2026</h3></div>
+      <div class="card-header"><h3 id="cal-month-title">📅 —</h3><div style="display:flex;gap:6px;align-items:center"><button style="background:var(--surface);border:1px solid var(--border);border-radius:8px;width:32px;height:32px;cursor:pointer;display:flex;align-items:center;justify-content:center" onclick="currentMonthOffset--;renderCalendar()">◀</button><button style="background:var(--surface);border:1px solid var(--border);border-radius:8px;width:32px;height:32px;cursor:pointer;display:flex;align-items:center;justify-content:center" onclick="currentMonthOffset++;renderCalendar()">▶</button></div></div>
       <div class="card-body">
-        <div class="cal-grid" id="cal-grid">
-          <div class="cal-day-name">L</div><div class="cal-day-name">M</div><div class="cal-day-name">X</div><div class="cal-day-name">J</div><div class="cal-day-name">V</div><div class="cal-day-name">S</div><div class="cal-day-name">D</div>
-          <div class="cal-day other-month">31</div>
-          <div class="cal-day">1</div><div class="cal-day">2</div><div class="cal-day">3</div><div class="cal-day today">4</div><div class="cal-day">5</div><div class="cal-day">6</div>
-          <div class="cal-day has-event">7</div><div class="cal-day">8</div><div class="cal-day has-event">9</div><div class="cal-day has-event">10</div><div class="cal-day">11</div><div class="cal-day">12</div><div class="cal-day">13</div>
-          <div class="cal-day">14</div><div class="cal-day has-event">15</div><div class="cal-day">16</div><div class="cal-day">17</div><div class="cal-day">18</div><div class="cal-day">19</div><div class="cal-day">20</div>
-          <div class="cal-day">21</div><div class="cal-day has-event">22</div><div class="cal-day">23</div><div class="cal-day">24</div><div class="cal-day">25</div><div class="cal-day">26</div><div class="cal-day">27</div>
-          <div class="cal-day">28</div><div class="cal-day">29</div><div class="cal-day">30</div><div class="cal-day other-month">1</div><div class="cal-day other-month">2</div><div class="cal-day other-month">3</div><div class="cal-day other-month">4</div>
-        </div>
+        <div id="cal-grid"></div>
         <div style="margin-top:14px;display:flex;align-items:center;gap:6px;font-size:.75rem;color:var(--text-soft)"><span style="width:8px;height:8px;border-radius:50%;background:var(--gold);display:inline-block"></span>Eventos programados</div>
       </div>
     </div>
@@ -572,16 +564,18 @@ body.sb-collapsed .main{margin-left:var(--sidebar-w-c)}
 
 <!-- ─── BIBLIOTECA ─── -->
 <div class="panel" id="panel-biblioteca">
-  <div class="page-header"><div><div class="page-label">Recursos</div><h1 class="page-title">Biblioteca Digital</h1><p class="page-desc">Accede y descarga tus libros de texto del ciclo escolar.</p></div></div>
-  <div class="book-grid">
-    <div class="book-card"><div class="book-cover" style="background:rgba(13,34,96,.07)">📐</div><div class="book-info"><div class="book-title">Matemática 4to Básico</div><div class="book-sub">Ciclo 2026</div><div class="book-actions"><button class="btn-book view" onclick="showToast('Abriendo libro…','success')">👁 Ver</button><button class="btn-book dl" onclick="showToast('Descargando PDF…','success')">⬇ PDF</button></div></div></div>
-    <div class="book-card"><div class="book-cover" style="background:rgba(30,95,194,.07)">📖</div><div class="book-info"><div class="book-title">Comunicación y Lenguaje L1</div><div class="book-sub">Ciclo 2026</div><div class="book-actions"><button class="btn-book view" onclick="showToast('Abriendo libro…','success')">👁 Ver</button><button class="btn-book dl" onclick="showToast('Descargando PDF…','success')">⬇ PDF</button></div></div></div>
-    <div class="book-card"><div class="book-cover" style="background:rgba(24,160,90,.07)">📒</div><div class="book-info"><div class="book-title">Contabilidad</div><div class="book-sub">Ciclo 2026</div><div class="book-actions"><button class="btn-book view" onclick="showToast('Abriendo libro…','success');window.open('biblioteca/test.pdf', '_blank')">👁 Ver</button><button class="btn-book dl" onclick="showToast('Descargando PDF…','success'); window.location.href='biblioteca/test.pdf'">⬇ PDF</button></div></div></div>
-    <div class="book-card"><div class="book-cover" style="background:rgba(245,168,0,.08)">🌎</div><div class="book-info"><div class="book-title">Estudios Sociales</div><div class="book-sub">Ciclo 2026</div><div class="book-actions"><button class="btn-book view" onclick="showToast('Abriendo libro…','success')">👁 Ver</button><button class="btn-book dl" onclick="showToast('Descargando PDF…','success')">⬇ PDF</button></div></div></div>
-    <div class="book-card"><div class="book-cover" style="background:rgba(217,59,43,.07)">⚡</div><div class="book-info"><div class="book-title">Física Fundamental</div><div class="book-sub">Ciclo 2026</div><div class="book-actions"><button class="btn-book view" onclick="showToast('Abriendo libro…','success')">👁 Ver</button><button class="btn-book dl" onclick="showToast('Descargando PDF…','success')">⬇ PDF</button></div></div></div>
-    <div class="book-card"><div class="book-cover" style="background:rgba(147,51,234,.07)">🇬🇧</div><div class="book-info"><div class="book-title">English Connections 4</div><div class="book-sub">Ciclo 2026</div><div class="book-actions"><button class="btn-book view" onclick="showToast('Abriendo libro…','success')">👁 Ver</button><button class="btn-book dl" onclick="showToast('Descargando PDF…','success')">⬇ PDF</button></div></div></div>
-    <div class="book-card"><div class="book-cover" style="background:rgba(2,132,199,.07)">💻</div><div class="book-info"><div class="book-title">Tecnología e Informática</div><div class="book-sub">Ciclo 2026</div><div class="book-actions"><button class="btn-book view" onclick="showToast('Abriendo libro…','success')">👁 Ver</button><button class="btn-book dl" onclick="showToast('Descargando PDF…','success')">⬇ PDF</button></div></div></div>
-    <div class="book-card"><div class="book-cover" style="background:rgba(245,168,0,.07)">✝️</div><div class="book-info"><div class="book-title">Educación Cristiana</div><div class="book-sub">Ciclo 2026</div><div class="book-actions"><button class="btn-book view" onclick="showToast('Abriendo libro…','success')">👁 Ver</button><button class="btn-book dl" onclick="showToast('Descargando PDF…','success')">⬇ PDF</button></div></div></div>
+  <div class="page-header"><div>
+    <div class="page-label">Recursos</div>
+    <h1 class="page-title">Biblioteca Digital</h1>
+    <p class="page-desc" id="biblio-desc">Accede y descarga tus libros del ciclo escolar.</p>
+  </div></div>
+  <div class="flex-center gap-8" style="margin-bottom:22px;flex-wrap:wrap;" id="biblio-filters">
+    <div class="chip-filter active" onclick="filterBiblio('all',this)">Todos</div>
+  </div>
+  <div class="book-grid" id="book-grid">
+    <div class="sk-row skeleton" style="height:220px;border-radius:14px"></div>
+    <div class="sk-row skeleton" style="height:220px;border-radius:14px"></div>
+    <div class="sk-row skeleton" style="height:220px;border-radius:14px"></div>
   </div>
 </div>
 
@@ -641,10 +635,20 @@ const SLOTS = [
   { s:'12:00', e:'12:45', lbl:'12:00\n12:45' },
 ];
 
+const MESES_LARGOS = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+
+const MATERIA_COVER = {
+  'matemática':'📐', 'comunicación y lenguaje':'📖', 'ciencias naturales':'🔬',
+  'estudios sociales':'🌍', 'física':'⚛️', 'inglés':'🌐', 'ed. física':'⚽',
+  'educación física':'⚽', 'tecnología':'💻', 'informática':'💻', 'religión':'✨'
+};
+
 // ══ CACHE DE DATOS ════════════════════════════════════════
-let cachedEventos   = null;
-let cachedHorario   = null;
-let currentBimestre = 1;
+let cachedEventos      = null;
+let cachedHorario      = null;
+let cachedBiblioteca   = null;
+let currentBimestre    = 1;
+let currentMonthOffset = 0;  // Offset para navegación del calendario
 
 // ══ NAVEGACIÓN ═══════════════════════════════════════════
 function goTo(id, el) {
@@ -662,6 +666,7 @@ function goTo(id, el) {
   if (id === 'horario')                         loadHorario();
   if (id === 'notas')                           loadNotas(currentBimestre);
   if (id === 'inasistencias')                   loadInasistencias();
+  if (id === 'biblioteca')                      loadBiblioteca();
 }
 
 // ══ SIDEBAR ══════════════════════════════════════════════
@@ -1002,10 +1007,188 @@ async function submitInasistencia() {
   }
 }
 
+// ══ RENDERIZAR CALENDARIO ══════════════════════════════
+function renderCalendar() {
+  const now = new Date();
+  const displayDate = new Date(now.getFullYear(), now.getMonth() + currentMonthOffset, 1);
+  const year = displayDate.getFullYear();
+  const month = displayDate.getMonth();
+  const firstDay = new Date(year, month, 1).getDay() || 7;
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const daysInPrevMonth = new Date(year, month, 0).getDate();
+
+  // Actualizar título
+  document.getElementById('cal-month-title').textContent = `📅 ${MESES_LARGOS[month]} ${year}`;
+
+  // Generar grid
+  const grid = document.getElementById('cal-grid');
+  if (!grid) return;
+  grid.innerHTML = '';
+
+  // Día semana headers
+  const dayNames = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sab', 'Dom'];
+  dayNames.forEach(d => {
+    const h = document.createElement('div');
+    h.className = 'cal-day-name';
+    h.textContent = d;
+    grid.appendChild(h);
+  });
+
+  // Días del mes anterior
+  for (let i = firstDay - 2; i >= 0; i--) {
+    const cell = document.createElement('div');
+    cell.className = 'cal-day other-month';
+    cell.textContent = daysInPrevMonth - i;
+    grid.appendChild(cell);
+  }
+
+  // Días del mes actual
+  const todayDate = now.getDate();
+  const todayMonth = now.getMonth();
+  for (let d = 1; d <= daysInMonth; d++) {
+    const cell = document.createElement('div');
+    cell.className = 'cal-day';
+    if (d === todayDate && month === todayMonth) cell.classList.add('today');
+    cell.textContent = d;
+    grid.appendChild(cell);
+  }
+
+  // Días del mes siguiente
+  const totalCells = grid.children.length - 7;
+  for (let d = 1; d <= (42 - totalCells); d++) {
+    const cell = document.createElement('div');
+    cell.className = 'cal-day other-month';
+    cell.textContent = d;
+    grid.appendChild(cell);
+  }
+
+  // Marcar días con eventos
+  markEventDays();
+}
+
+function markEventDays() {
+  if (!cachedEventos) return;
+  const grid = document.getElementById('cal-grid');
+  if (!grid) return;
+
+  grid.querySelectorAll('.cal-day').forEach(cell => {
+    cell.classList.remove('has-event');
+  });
+
+  cachedEventos.forEach(ev => {
+    const day = parseInt(ev.dia, 10);
+    const dayCell = Array.from(grid.querySelectorAll('.cal-day'))
+      .find(c => parseInt(c.textContent, 10) === day && !c.classList.contains('other-month'));
+    if (dayCell) {
+      dayCell.classList.add('has-event');
+      dayCell.title = ev.titulo;
+    }
+  });
+}
+
+// ══ CARGAR BIBLIOTECA ═══════════════════════════════════════
+async function loadBiblioteca() {
+  if (cachedBiblioteca) { renderBiblioteca(cachedBiblioteca); return; }
+  try {
+    const res = await fetch(`get_biblioteca.php?grado=${encodeURIComponent(CBS.grado)}`);
+    const json = await res.json();
+    if (!json.success) throw new Error(json.error);
+    cachedBiblioteca = json.data;
+    renderBiblioteca(json.data);
+  } catch (e) {
+    console.error(e);
+    document.getElementById('book-grid').innerHTML =
+      `<p style="color:var(--danger);padding:20px;grid-column:1/-1">Error al cargar biblioteca: ${e.message}</p>`;
+  }
+}
+
+function renderBiblioteca(data) {
+  const grid = document.getElementById('book-grid');
+  if (!grid) return;
+
+  if (!data.length) {
+    grid.innerHTML = '<p style="color:var(--text-soft);padding:40px 20px;text-align:center;grid-column:1/-1">No hay libros disponibles para tu grado.</p>';
+    return;
+  }
+
+  // Agrupar por materia
+  const bySubject = {};
+  data.forEach(book => {
+    const subj = book.materia || 'General';
+    if (!bySubject[subj]) bySubject[subj] = [];
+    bySubject[subj].push(book);
+  });
+
+  // Actualizar filtros dinámicamente
+  const filterContainer = document.getElementById('biblio-filters');
+  if (filterContainer) {
+    let filterHtml = '<div class="chip-filter active" onclick="filterBiblio(\'all\',this)">Todos</div>';
+    Object.keys(bySubject).forEach(subject => {
+      filterHtml += `<div class="chip-filter" onclick="filterBiblio('${subject}',this)">${subject}</div>`;
+    });
+    filterContainer.innerHTML = filterHtml;
+  }
+
+  let html = '';
+  Object.entries(bySubject).forEach(([subject, books]) => {
+    const emojis = MATERIA_COVER[subject.toLowerCase()] || '📚';
+    html += `
+      <div class="book-card" style="grid-column:1/-1;background:linear-gradient(90deg,rgba(13,34,96,.06),rgba(245,168,0,.06));border:none;padding:16px;border-radius:12px;margin-bottom:12px">
+        <div style="font-family:'Montserrat',sans-serif;font-weight:800;color:var(--navy);font-size:.95rem">${emojis} ${subject}</div>
+      </div>
+    `;
+    books.forEach(book => {
+      html += `
+        <div class="book-card">
+          <div class="book-cover">${MATERIA_COVER[subject.toLowerCase()] || '📖'}</div>
+          <div class="book-info">
+            <div class="book-title">${book.titulo}</div>
+            <div class="book-sub">${book.descripcion || book.materia}</div>
+            <div class="book-actions">
+              <button class="btn-book view" onclick="event.preventDefault();event.stopPropagation()">👁 Ver</button>
+              ${book.pdf_url ? `<button class="btn-book dl" onclick="descargarPdf(${book.id}, '${book.titulo}')">⬇ PDF</button>` : ''}
+            </div>
+          </div>
+        </div>
+      `;
+    });
+  });
+
+  grid.innerHTML = html;
+}
+
+// ══ DESCARGAR PDF ════════════════════════════════════════════
+function descargarPdf(bookId, titulo) {
+  if (!cachedBiblioteca) return;
+  const book = cachedBiblioteca.find(b => b.id == bookId);
+  if (!book || !book.pdf_url) {
+    showToast('No se encontró el archivo PDF', 'error');
+    return;
+  }
+  const link = document.createElement('a');
+  link.href = book.pdf_url;
+  link.download = `${titulo}.pdf`;
+  link.target = '_blank';
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+
+// ══ FILTRAR BIBLIOTECA ══════════════════════════════════────
+function filterBiblio(materia, el) {
+  if (!cachedBiblioteca) return;
+  document.querySelectorAll('#panel-biblioteca .chip-filter').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+
+  const filtered = materia === 'all' ? cachedBiblioteca :
+    cachedBiblioteca.filter(b => b.materia?.toLowerCase() === materia.toLowerCase());
+  renderBiblioteca(filtered);
+}
+
 // ══ CERRAR SESIÓN ═════════════════════════════════════════
 function cerrarSesion() {
   if (confirm('¿Deseas cerrar sesión?')) {
-    window.location.href = 'logout.php';
+    window.location.href = 'index.html';
   }
 }
 
@@ -1017,7 +1200,9 @@ window.addEventListener('load', () => {
   if (fechaEl) fechaEl.value = hoy;
 
   // Cargar datos del panel inicial
+  renderCalendar();
   loadEventos();
+  loadBiblioteca();
   loadInasistencias();
   loadNotas(1);
 });
