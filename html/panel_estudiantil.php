@@ -1145,7 +1145,7 @@ function renderBiblioteca(data) {
             <div class="book-title">${book.titulo}</div>
             <div class="book-sub">${book.descripcion || book.materia}</div>
             <div class="book-actions">
-              <button class="btn-book view" onclick="event.preventDefault();event.stopPropagation()">👁 Ver</button>
+              <button class="btn-book view" onclick="verPdf(${book.id})">👁 Ver</button>
               ${book.pdf_url ? `<button class="btn-book dl" onclick="descargarPdf(${book.id}, '${book.titulo}')">⬇ PDF</button>` : ''}
             </div>
           </div>
@@ -1155,6 +1155,23 @@ function renderBiblioteca(data) {
   });
 
   grid.innerHTML = html;
+}
+// ══ VER PDF ════════════════════════════════════════════
+function verPdf(bookId) {
+  if (!cachedBiblioteca || cachedBiblioteca.length === 0) {
+    showToast('No hay datos disponibles', 'error');
+    return;
+  }
+
+  const book = cachedBiblioteca.find(b => b.id === Number(bookId));
+
+  if (!book || !book.pdf_url) {
+    showToast('No se encontró el archivo PDF', 'error');
+    return;
+  }
+
+  // Abrir PDF en nueva pestaña
+  window.open(book.pdf_url, '_blank');
 }
 
 // ══ DESCARGAR PDF ════════════════════════════════════════════
