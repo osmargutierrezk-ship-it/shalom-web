@@ -663,7 +663,7 @@ const MATERIA_BANNER = {
 let cachedEventos      = null;
 let cachedHorario      = null;
 let cachedBiblioteca   = null;
-let cachedClassroom = null;
+let cachedClassroom    = null;
 let currentBimestre    = 1;
 let currentMonthOffset = 0;  // Offset para navegación del calendario
 
@@ -730,47 +730,6 @@ function tagLabel(cat) {
 function schedClass(materia) {
   return SCHED_CLASS[materia.toLowerCase()] || 's-his';
 }
-
-// ══ CARGAR EVENTOS ════════════════════════════════════════
-async function loadEventos() {
-  if (cachedEventos) { renderEventos(cachedEventos); return; }
-  try {
-    const res  = await fetch('get_eventos.php');
-    const json = await res.json();
-    if (!json.success) throw new Error(json.error);
-    cachedEventos = json.data;
-    document.getElementById('badge-noticias').textContent = json.data.length;
-    document.getElementById('stat-eventos').textContent   = json.data.length;
-    renderEventos(json.data);
-  } catch (e) {
-    console.error(e);
-    showToast('Error al cargar eventos: ' + e.message, 'error');
-  }
-}
-
-function renderEventos(data) {
-  // Panel Noticias completo
-  const list = document.getElementById('news-list');
-  if (list) {
-    list.innerHTML = data.length
-      ? data.map(ev => `
-          <div class="news-item" data-tag="${ev.categoria}">
-            <div class="news-date-box">
-              <div class="news-day">${ev.dia}</div>
-              <div class="news-month">${ev.mes}</div>
-            </div>
-            <div class="news-content">
-              <span class="news-tag ${tagClass(ev.categoria)}">${tagLabel(ev.categoria)}</span>
-              <div class="news-title">${ev.titulo}</div>
-              <div class="news-desc">${ev.descripcion || ''}</div>
-              <div class="news-meta">
-                ${ev.hora_fmt ? `<span>⏰ ${ev.hora_fmt}</span>` : ''}
-                ${ev.lugar ? `<span>📍 ${ev.lugar}</span>` : ''}
-              </div>
-            </div>
-          </div>`).join('')
-      : '<p style="color:var(--text-soft);text-align:center;padding:24px">No hay eventos registrados.</p>';
-  }
 // ══ CARGAR CLASSROOM ═══════════════════════════════════════
 async function loadClassroom() {
   if (cachedClassroom) { renderClassroom(cachedClassroom); return; }
@@ -866,6 +825,47 @@ function renderClassroom(data) {
       </div>`;
   }).join('');
 }
+
+// ══ CARGAR EVENTOS ════════════════════════════════════════
+async function loadEventos() {
+  if (cachedEventos) { renderEventos(cachedEventos); return; }
+  try {
+    const res  = await fetch('get_eventos.php');
+    const json = await res.json();
+    if (!json.success) throw new Error(json.error);
+    cachedEventos = json.data;
+    document.getElementById('badge-noticias').textContent = json.data.length;
+    document.getElementById('stat-eventos').textContent   = json.data.length;
+    renderEventos(json.data);
+  } catch (e) {
+    console.error(e);
+    showToast('Error al cargar eventos: ' + e.message, 'error');
+  }
+}
+
+function renderEventos(data) {
+  // Panel Noticias completo
+  const list = document.getElementById('news-list');
+  if (list) {
+    list.innerHTML = data.length
+      ? data.map(ev => `
+          <div class="news-item" data-tag="${ev.categoria}">
+            <div class="news-date-box">
+              <div class="news-day">${ev.dia}</div>
+              <div class="news-month">${ev.mes}</div>
+            </div>
+            <div class="news-content">
+              <span class="news-tag ${tagClass(ev.categoria)}">${tagLabel(ev.categoria)}</span>
+              <div class="news-title">${ev.titulo}</div>
+              <div class="news-desc">${ev.descripcion || ''}</div>
+              <div class="news-meta">
+                ${ev.hora_fmt ? `<span>⏰ ${ev.hora_fmt}</span>` : ''}
+                ${ev.lugar ? `<span>📍 ${ev.lugar}</span>` : ''}
+              </div>
+            </div>
+          </div>`).join('')
+      : '<p style="color:var(--text-soft);text-align:center;padding:24px">No hay eventos registrados.</p>';
+  }
   // Marcar días en el calendario
   const grid = document.getElementById('cal-grid');
   if (grid) {
