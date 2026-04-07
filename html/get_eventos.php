@@ -6,7 +6,7 @@
  */
 header('Content-Type: application/json; charset=utf-8');
 require_once 'db.php';
-
+date_default_timezone_set('America/Guatemala');
 $categoria = trim($_GET['categoria'] ?? '');
 
 try {
@@ -15,13 +15,14 @@ try {
     if ($categoria && $categoria !== 'all') {
         $stmt = $pdo->prepare(
             "SELECT * FROM eventos
-             WHERE categoria = :cat
+             WHERE categoria = :cat AND fecha >= CURRENT_DATE
              ORDER BY fecha ASC, hora ASC"
         );
         $stmt->execute([':cat' => $categoria]);
     } else {
         $stmt = $pdo->query(
             "SELECT * FROM eventos
+             WHERE fecha >= CURRENT_DATE
              ORDER BY fecha ASC, hora ASC"
         );
     }
