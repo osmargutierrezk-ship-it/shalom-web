@@ -581,14 +581,17 @@ body.sb-collapsed .main{margin-left:var(--sidebar-w-c)}
 
 <!-- ─── CLASSROOM ─── -->
 <div class="panel" id="panel-classroom">
-  <div class="page-header"><div><div class="page-label">Académico</div><h1 class="page-title">Google Classroom</h1><p class="page-desc">Accede directamente a tus clases y plataformas digitales.</p></div></div>
-  <div class="classroom-grid">
-    <div class="class-card"><div class="class-banner" style="background:linear-gradient(135deg,#0d2260,#1e3799)"><span class="class-banner-icon">📐</span><div class="class-banner-title">Matemática</div></div><div class="class-body"><div class="class-teacher">👨‍🏫 Prof. Roberto Ramírez</div><div class="class-links"><a href="#" class="class-link primary" onclick="showToast('Abriendo Classroom…','success');return false"><span>🎓</span><div><div class="class-link-text">Abrir en Classroom</div><div class="class-link-sub">Ver tareas y anuncios</div></div><span class="class-link-arrow">→</span></a><a href="#" class="class-link" onclick="showToast('Iniciando Meet…','success');return false"><span>📹</span><div><div class="class-link-text">Google Meet</div><div class="class-link-sub">Clase virtual</div></div><span class="class-link-arrow">→</span></a></div></div></div>
-    <div class="class-card"><div class="class-banner" style="background:linear-gradient(135deg,#1e5fc2,#1043a0)"><span class="class-banner-icon">📖</span><div class="class-banner-title">Lenguaje</div></div><div class="class-body"><div class="class-teacher">👩‍🏫 Prof. Andrea López</div><div class="class-links"><a href="#" class="class-link primary" onclick="showToast('Abriendo Classroom…','success');return false"><span>🎓</span><div><div class="class-link-text">Abrir en Classroom</div><div class="class-link-sub">Ver tareas y anuncios</div></div><span class="class-link-arrow">→</span></a><a href="#" class="class-link" onclick="showToast('Iniciando Meet…','success');return false"><span>📹</span><div><div class="class-link-text">Google Meet</div><div class="class-link-sub">Clase virtual</div></div><span class="class-link-arrow">→</span></a></div></div></div>
-    <div class="class-card"><div class="class-banner" style="background:linear-gradient(135deg,#18a05a,#0d6e3d)"><span class="class-banner-icon">🔬</span><div class="class-banner-title">Ciencias Naturales</div></div><div class="class-body"><div class="class-teacher">👨‍🏫 Prof. Carlos Torres</div><div class="class-links"><a href="#" class="class-link primary" onclick="showToast('Abriendo Classroom…','success');return false"><span>🎓</span><div><div class="class-link-text">Abrir en Classroom</div><div class="class-link-sub">Ver tareas y anuncios</div></div><span class="class-link-arrow">→</span></a><a href="#" class="class-link" onclick="showToast('Iniciando Meet…','success');return false"><span>📹</span><div><div class="class-link-text">Google Meet</div><div class="class-link-sub">Clase virtual</div></div><span class="class-link-arrow">→</span></a></div></div></div>
-    <div class="class-card"><div class="class-banner" style="background:linear-gradient(135deg,#9333ea,#5b1f96)"><span class="class-banner-icon">🇬🇧</span><div class="class-banner-title">Inglés</div></div><div class="class-body"><div class="class-teacher">👩‍🏫 Miss Sarah Johnson</div><div class="class-links"><a href="#" class="class-link primary" onclick="showToast('Abriendo Classroom…','success');return false"><span>🎓</span><div><div class="class-link-text">Abrir en Classroom</div><div class="class-link-sub">Ver tareas y anuncios</div></div><span class="class-link-arrow">→</span></a><a href="#" class="class-link" onclick="showToast('Abriendo Duolingo…','success');return false"><span>🦜</span><div><div class="class-link-text">Duolingo for Schools</div><div class="class-link-sub">Práctica diaria</div></div><span class="class-link-arrow">→</span></a></div></div></div>
-    <div class="class-card"><div class="class-banner" style="background:linear-gradient(135deg,#d93b2b,#8f1e14)"><span class="class-banner-icon">⚡</span><div class="class-banner-title">Física</div></div><div class="class-body"><div class="class-teacher">👨‍🏫 Prof. Luis Vasquez</div><div class="class-links"><a href="#" class="class-link primary" onclick="showToast('Abriendo Classroom…','success');return false"><span>🎓</span><div><div class="class-link-text">Abrir en Classroom</div><div class="class-link-sub">Ver tareas y anuncios</div></div><span class="class-link-arrow">→</span></a><a href="#" class="class-link" onclick="showToast('Abriendo PhET…','success');return false"><span>🧪</span><div><div class="class-link-text">PhET Simulaciones</div><div class="class-link-sub">Laboratorio virtual</div></div><span class="class-link-arrow">→</span></a></div></div></div>
-    <div class="class-card"><div class="class-banner" style="background:linear-gradient(135deg,#f5a800,#c47e00)"><span class="class-banner-icon">🌎</span><div class="class-banner-title">Estudios Sociales</div></div><div class="class-body"><div class="class-teacher">👩‍🏫 Prof. Rosa Cifuentes</div><div class="class-links"><a href="#" class="class-link primary" onclick="showToast('Abriendo Classroom…','success');return false"><span>🎓</span><div><div class="class-link-text">Abrir en Classroom</div><div class="class-link-sub">Ver tareas y anuncios</div></div><span class="class-link-arrow">→</span></a><a href="#" class="class-link" onclick="showToast('Abriendo Drive…','success');return false"><span>📁</span><div><div class="class-link-text">Material del Curso</div><div class="class-link-sub">Drive compartido</div></div><span class="class-link-arrow">→</span></a></div></div></div>
+  <div class="page-header"><div>
+    <div class="page-label">Académico</div>
+    <h1 class="page-title">Google Classroom</h1>
+    <p class="page-desc" id="classroom-desc">Accede directamente a tus clases y plataformas digitales.</p>
+  </div></div>
+
+  <!-- Grid: se rellena dinámicamente desde BD -->
+  <div class="classroom-grid" id="classroom-grid">
+    <div class="sk-row skeleton" style="height:180px;border-radius:14px"></div>
+    <div class="sk-row skeleton" style="height:180px;border-radius:14px"></div>
+    <div class="sk-row skeleton" style="height:180px;border-radius:14px"></div>
   </div>
 </div>
 
@@ -642,11 +645,25 @@ const MATERIA_COVER = {
   'estudios sociales':'🌍', 'física':'⚛️', 'inglés':'🌐', 'ed. física':'⚽',
   'educación física':'⚽', 'tecnología':'💻', 'informática':'💻', 'religión':'✨'
 };
-
+const MATERIA_BANNER = {
+  'matemática':              { bg:'linear-gradient(135deg,#0d2260,#1e3799)', emoji:'📐' },
+  'comunicación y lenguaje': { bg:'linear-gradient(135deg,#1e5fc2,#1043a0)', emoji:'📖' },
+  'lenguaje':                { bg:'linear-gradient(135deg,#1e5fc2,#1043a0)', emoji:'📖' },
+  'ciencias naturales':      { bg:'linear-gradient(135deg,#18a05a,#0d6e3d)', emoji:'🔬' },
+  'estudios sociales':       { bg:'linear-gradient(135deg,#f5a800,#c47e00)', emoji:'🌎' },
+  'física':                  { bg:'linear-gradient(135deg,#d93b2b,#8f1e14)', emoji:'⚡' },
+  'inglés':                  { bg:'linear-gradient(135deg,#9333ea,#5b1f96)', emoji:'🇬🇧' },
+  'ed. física':              { bg:'linear-gradient(135deg,#ea580c,#7c2b05)', emoji:'⚽' },
+  'tecnología':              { bg:'linear-gradient(135deg,#0284c7,#01578a)', emoji:'💻' },
+  'religión':                { bg:'linear-gradient(135deg,#d97706,#92400e)', emoji:'✝️' },
+  'contabilidad':            { bg:'linear-gradient(135deg,#18a05a,#0d4e2e)', emoji:'📒' },
+  'default':                 { bg:'linear-gradient(135deg,#0d2260,#142d7a)', emoji:'🎓' },
+};
 // ══ CACHE DE DATOS ════════════════════════════════════════
 let cachedEventos      = null;
 let cachedHorario      = null;
 let cachedBiblioteca   = null;
+let cachedClassroom = null;
 let currentBimestre    = 1;
 let currentMonthOffset = 0;  // Offset para navegación del calendario
 
@@ -664,6 +681,7 @@ function goTo(id, el) {
   // Carga bajo demanda
   if (id === 'noticias' || id === 'inicio')    loadEventos();
   if (id === 'horario')                         loadHorario();
+  if (id === 'classroom')                       loadClassroom();
   if (id === 'notas')                           loadNotas(currentBimestre);
   if (id === 'inasistencias')                   loadInasistencias();
   if (id === 'biblioteca')                      loadBiblioteca();
@@ -753,7 +771,101 @@ function renderEventos(data) {
           </div>`).join('')
       : '<p style="color:var(--text-soft);text-align:center;padding:24px">No hay eventos registrados.</p>';
   }
+// ══ CARGAR CLASSROOM ═══════════════════════════════════════
+async function loadClassroom() {
+  if (cachedClassroom) { renderClassroom(cachedClassroom); return; }
 
+  document.getElementById('classroom-grid').innerHTML =
+    '<div class="sk-row skeleton" style="height:180px;border-radius:14px"></div>'.repeat(3);
+
+  try {
+    const res  = await fetch(
+      `get_classroom.php?grado=${encodeURIComponent(CBS.grado)}&seccion=${encodeURIComponent(CBS.seccion)}`
+    );
+    const json = await res.json();
+    if (!json.success) throw new Error(json.error);
+    cachedClassroom = json.data;
+    renderClassroom(json.data);
+  } catch (e) {
+    document.getElementById('classroom-grid').innerHTML =
+      `<p style="color:var(--danger);padding:20px;grid-column:1/-1">Error al cargar clases: ${e.message}</p>`;
+  }
+}
+
+function renderClassroom(data) {
+  const grid = document.getElementById('classroom-grid');
+  if (!grid) return;
+
+  if (!data.length) {
+    grid.innerHTML = `<p style="color:var(--text-soft);padding:40px;text-align:center;grid-column:1/-1">
+      No hay clases configuradas para ${CBS.grado} sección ${CBS.seccion}.</p>`;
+    const desc = document.getElementById('classroom-desc');
+    if (desc) desc.textContent = `${CBS.grado} · Sección ${CBS.seccion}`;
+    return;
+  }
+
+  const desc = document.getElementById('classroom-desc');
+  if (desc) desc.textContent =
+    `${data.length} clase${data.length !== 1 ? 's' : ''} · ${CBS.grado} · Sección ${CBS.seccion}`;
+
+  grid.innerHTML = data.map((c, i) => {
+    // Estilo del banner: usa color_banner de BD si existe, si no usa el mapeado
+    const mat    = (c.materia || '').toLowerCase();
+    const banner = MATERIA_BANNER[mat] || MATERIA_BANNER['default'];
+    const bg     = c.color_banner
+                   ? `linear-gradient(135deg,${c.color_banner})`
+                   : banner.bg;
+    const emoji  = c.icono || banner.emoji;
+
+    // Label del botón de videollamada según tipo
+    const meetLabel = c.tipo_meet === 'zoom' ? 'Unirse a Zoom'  : 'Google Meet';
+    const meetIcon  = c.tipo_meet === 'zoom' ? '📹'             : '📹';
+    const meetSub   = c.tipo_meet === 'zoom' ? 'Clase por Zoom' : 'Clase virtual';
+
+    // Construir links — solo mostrar si existen en BD
+    const linkClassroom = c.link_classroom
+      ? `<a href="${c.link_classroom}" target="_blank" class="class-link primary">
+           <span>🎓</span>
+           <div>
+             <div class="class-link-text">Abrir en Classroom</div>
+             <div class="class-link-sub">Ver tareas y anuncios</div>
+           </div>
+           <span class="class-link-arrow">→</span>
+         </a>`
+      : `<div class="class-link" style="opacity:.45;cursor:not-allowed">
+           <span>🎓</span>
+           <div><div class="class-link-text">Classroom no configurado</div></div>
+         </div>`;
+
+    const linkMeet = c.link_meet
+      ? `<a href="${c.link_meet}" target="_blank" class="class-link">
+           <span>${meetIcon}</span>
+           <div>
+             <div class="class-link-text">${meetLabel}</div>
+             <div class="class-link-sub">${meetSub}</div>
+           </div>
+           <span class="class-link-arrow">→</span>
+         </a>`
+      : '';   // No mostrar si no hay link de meet
+
+    return `
+      <div class="class-card" style="animation-delay:${(i * 0.06).toFixed(2)}s">
+        <div class="class-banner" style="background:${bg}">
+          <span class="class-banner-icon">${emoji}</span>
+          <div class="class-banner-title">${c.materia}</div>
+        </div>
+        <div class="class-body">
+          <div class="class-teacher">
+            ${c.profesor ? `👨‍🏫 ${c.profesor}` : ''}
+          </div>
+          <div class="class-links">
+            ${linkClassroom}
+            ${linkMeet}
+          </div>
+        </div>
+      </div>`;
+  }).join('');
+}
   // Marcar días en el calendario
   const grid = document.getElementById('cal-grid');
   if (grid) {
