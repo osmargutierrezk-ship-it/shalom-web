@@ -117,11 +117,20 @@ body.sb-collapsed .main{margin-left:var(--sidebar-w-c)}
 .page-label{font-family:'Montserrat',sans-serif;font-size:.7rem;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);margin-bottom:4px}
 .page-title{font-family:'Montserrat',sans-serif;font-weight:900;font-size:1.65rem;color:var(--navy);line-height:1.1}
 .page-desc{font-size:.9rem;color:var(--text-soft);margin-top:4px;font-style:italic}
-.cards-row{display:grid;gap:18px}
+.cards-row{display:grid;gap:12px}
 .cols-4{grid-template-columns:repeat(4,1fr)}
 .cols-3{grid-template-columns:repeat(3,1fr)}
 .cols-2{grid-template-columns:1fr 1fr}
 .cols-2-1{grid-template-columns:2fr 1fr}
+@media (max-width: 768px){
+  .cols-2-1{
+    grid-template-columns:1fr;
+  }
+
+  .cards-row{
+    gap:12px;
+  }
+}
 .card{background:#fff;border-radius:var(--radius);border:1px solid var(--border);box-shadow:var(--shadow);overflow:hidden}
 .card-header{padding:18px 22px 12px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border)}
 .card-header h3{font-family:'Montserrat',sans-serif;font-weight:800;font-size:.95rem;color:var(--navy)}
@@ -254,7 +263,7 @@ body.sb-collapsed .main{margin-left:var(--sidebar-w-c)}
 .class-link.primary .class-link-text,.class-link.primary .class-link-arrow{color:var(--navy)}
 
 /* ── MINI CALENDAR ── */
-.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:1.5px}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}
 .cal-day-name{font-family:'Montserrat',sans-serif;font-size:.62rem;font-weight:700;color:var(--text-soft);text-align:center;padding:4px 0}
 .cal-day{font-family:'Montserrat',sans-serif;font-size:.78rem;font-weight:600;text-align:center;padding:5px 0;border-radius:6px;cursor:pointer;color:var(--text-mid);transition:background var(--trans),color var(--trans)}
 .cal-day:hover{background:var(--surface2)}.cal-day.today{background:var(--navy);color:#fff;font-weight:800}
