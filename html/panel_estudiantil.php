@@ -539,7 +539,7 @@ body.sb-collapsed .main{margin-left:var(--sidebar-w-c)}
               <p style="font-size:.75rem;margin-top:4px;color:var(--text-soft)" id="file-name-label">PDF, JPG o PNG · Máx 5 MB</p>
               <input type="file" id="justificante-input" name="justificante" accept=".pdf,.jpg,.jpeg,.png" style="display:none" onchange="document.getElementById('file-name-label').textContent = this.files[0]?.name || 'PDF, JPG o PNG · Máx 5 MB'">
             </div>
-            <button class="btn-submit" id="btn-inas-submit" onclick="submitInasistencia()">Enviar Solicitud →</button>
+            <button type="button" class="btn-submit" id="btn-inas-submit" onclick="submitInasistencia()">Enviar Solicitud →</button>
           </div>
         </form>
       </div>
@@ -1086,12 +1086,18 @@ async function submitInasistencia() {
   btn.disabled    = true;
   btn.textContent = 'Enviando…';
 
-  const formData = new FormData(document.getElementById('form-inasistencia'));
+  const form = document.getElementById('form-inasistencia');
+  const formData = new FormData(form);
   // Asegurar que los campos se manden correctamente
   formData.set('fecha',    fecha);
   formData.set('tipo',     tipo);
   formData.set('materias', materias);
   formData.set('motivo',   motivo);
+
+  const justificanteInput = document.getElementById('justificante-input');
+  if (justificanteInput && justificanteInput.files.length > 0) {
+    formData.set('justificante', justificanteInput.files[0]);
+  }
 
   try {
     const res  = await fetch('registrar_inasistencia.php', { method:'POST', credentials:'same-origin', body: formData });
