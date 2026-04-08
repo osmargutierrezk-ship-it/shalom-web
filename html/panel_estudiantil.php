@@ -254,7 +254,7 @@ body.sb-collapsed .main{margin-left:var(--sidebar-w-c)}
 .class-link.primary .class-link-text,.class-link.primary .class-link-arrow{color:var(--navy)}
 
 /* ── MINI CALENDAR ── */
-.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:1.5px}
 .cal-day-name{font-family:'Montserrat',sans-serif;font-size:.62rem;font-weight:700;color:var(--text-soft);text-align:center;padding:4px 0}
 .cal-day{font-family:'Montserrat',sans-serif;font-size:.78rem;font-weight:600;text-align:center;padding:5px 0;border-radius:6px;cursor:pointer;color:var(--text-mid);transition:background var(--trans),color var(--trans)}
 .cal-day:hover{background:var(--surface2)}.cal-day.today{background:var(--navy);color:#fff;font-weight:800}
